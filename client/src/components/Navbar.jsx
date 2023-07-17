@@ -1,18 +1,25 @@
 import { useState } from 'react'
+import { AiOutlineHome } from 'react-icons/ai'
 import { BiSearch } from 'react-icons/bi'
+import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
+import { RiQuestionAnswerLine } from 'react-icons/ri'
 
 const links = [
     {
         id: 1,
         name: "Home",
+        icon: <AiOutlineHome size={20} />
     },
     {
         id: 2,
         name: "Explore Questions",
+        icon: <MdOutlineExplore size={20} />
     },
     {
         id: 3,
         name: "My Questions",
+        icon: <RiQuestionAnswerLine size={20} />
+
     },
 
 ]
@@ -32,7 +39,7 @@ const Navbar = () => {
                 <div>
                     <h1 className=' font-bold'>College<span className=' text-blue-600'>Buzz</span></h1>
                 </div>
-                <div className='hidden lg:flex '>
+                <div className='hidden md:flex '>
 
                     <div className="flex gap-2 text-gray-400 bg-gray-200 items-center px-2 py-1 rounded-lg">
                         <BiSearch className=' text-[22px]' />
@@ -53,22 +60,24 @@ const Navbar = () => {
                 {/*Options */}
                 {
                     options && (
-                        <div className='lg:hidden mr-2 absolute bg-white rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
+                        <div className='lg:hidden mr-2 absolute bg-white/70 backdrop-blur-sm rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
                             <div className='flex flex-col gap-2 w-full'>
-                                <input className='text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
+                                <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
                                 <div className='w-full flex justify-center'>
                                     <button className='bg-blue-700 w-full max-w-[200px] p-2 rounded-md text-white'>Ask Question</button>
                                 </div>
                                 {
                                     links.map((link) => (
-                                        <div key={link.id} className=' px-2 py-1 flex w-full border-l-4 border-blue-600 bg-blue-400 rounded-md'>
-                                            <span className=' whitespace-nowrap cursor-pointer font-semibold text-lg'>{link.name}</span>
+                                        <div key={link.id} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                            <span className='group-hover:text-gray-800'>{link.icon}</span>
+                                            <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
                                         </div>
                                     ))
                                 }
-                                <div className=' px-2 py-1 flex w-full border-l-4 border-blue-600 bg-blue-400 rounded-md'>
-                                            <span className=' cursor-pointer font-semibold text-lg'>Logout</span>
-                                        </div>
+                                <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                    <span className='group-hover:text-gray-800'><MdOutlineLogout size={20}/></span>
+                                    <p className=' whitespace-nowrap group-hover:text-gray-800'>Logout</p>
+                                </div>
                             </div>
                         </div>
                     )
