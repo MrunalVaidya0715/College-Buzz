@@ -1,5 +1,5 @@
 import { BiUpArrowAlt } from 'react-icons/bi'
-
+import {IoAddOutline} from 'react-icons/io5'
 const topQ = [
     {
         id: 1,
@@ -37,7 +37,7 @@ const Section = () => {
         <div className=" w-[25%] hidden md:flex flex-col gap-8 p-2">
             {/** */}
             <div className='w-full flex justify-center'>
-                <button className='bg-blue-700 w-full max-w-[200px] p-2 rounded-md text-white'>Ask Question</button>
+                <button className='bg-blue-700 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white'><IoAddOutline size={20}/>Ask Question</button>
             </div>
             {/**Top Questions */}
             <div className="border-[1px] bg-white shadow-md px-2 py-4 w-full flex flex-col gap-2">
