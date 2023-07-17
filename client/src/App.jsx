@@ -10,7 +10,7 @@ function App() {
 
   return (
     <Router>
-      <div className="App border-2 min-h-screen flex w-full flex-col justify-between">
+      <div className=" min-h-screen flex w-full flex-col justify-between">
         <Navbar />
         <Routes>
           <Route exact path='/' element={< Home />}></Route>
