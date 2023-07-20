@@ -26,7 +26,7 @@ const links = [
 ]
 
 const Navbar = () => {
-    const user = false
+    const user = true;
     const [active, setActive] = useState(false)
     const [options, setOptions] = useState(false)
 

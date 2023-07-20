@@ -4,32 +4,32 @@ const topQ = [
     {
         id: 1,
         rank: 1,
-        title: "What does the Fox says",
-        upvotes: 78,
+        title: "Cracking the College Admissions Code: Tips & Tricks",
+        upvotes: 37,
     },
     {
         id: 2,
         rank: 2,
-        title: "What does the Fox says",
-        upvotes: 65,
+        title: "Navigating Freshman Year: Tips for a Successful Start!",
+        upvotes: 35,
     },
     {
         id: 3,
         rank: 3,
-        title: "What does the Fox says",
-        upvotes: 61,
+        title: "Balancing Act: Juggling Academics, Work & Social Life",
+        upvotes: 34,
     },
     {
         id: 4,
         rank: 4,
-        title: "What does the Fox says",
-        upvotes: 55,
+        title: "Beyond the Pages: Book Club's Virtual Retreat",
+        upvotes: 28,
     },
     {
         id: 5,
         rank: 5,
-        title: "What does the Fox says",
-        upvotes: 49,
+        title: "Dorm Hacks 101: Transform Your Room into a Cozy Haven",
+        upvotes: 22,
     },
 ]
 const Section = () => {
