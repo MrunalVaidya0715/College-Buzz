@@ -1,9 +1,9 @@
 import Feed from "./Feed"
 import { posts } from "../data/posts"
-import { Link } from "react-router-dom"
+
 const Feeds = () => {
   return (
-    <Link to="/posts/111">
+    
       <div className=" h-full w-full flex flex-col gap-16">
         {
           posts.map((post) => (
@@ -12,7 +12,7 @@ const Feeds = () => {
         }
 
       </div>
-    </Link>
+    
   )
 }
 
