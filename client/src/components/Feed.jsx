@@ -29,7 +29,7 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                         <h1 className=" font-bold text-lg tracking-wide">{title}</h1>
                     </div>
                     {/*Body */}
-                    <div className=' max-h-[200px] pr-2 overflow-y-auto'>
+                    <div className=' max-h-[200px scrollbar-none pr-2 overflow-y-auto'>
                     <p className=" text-gray-800 text-justify">
                         
                             <LinesEllipsis
