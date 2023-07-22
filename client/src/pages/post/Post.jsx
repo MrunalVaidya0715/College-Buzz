@@ -50,7 +50,7 @@ const Post = () => {
           <h1 className=" font-bold text-lg tracking-wide">Navigating Freshman Year: Tips for a Successful Start!Navigating Freshman Year: Tips for a Successful Start!</h1>
         </div>
         {/* Desc */}
-        <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-w-4'>
+        <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-none'>
           <p className=" text-gray-800 text-justify">Are you about to begin your exciting college journey? Join this forum to get valuable insights and advice from experienced college students. From time management and study tips to making new friends and joining clubs, we've got you covered. Let's help each other make the most of our freshman year!
 
           </p>

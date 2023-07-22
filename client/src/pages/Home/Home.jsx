@@ -8,7 +8,10 @@ const Home = () => {
             <div className="w-full max-w-[1200px] flex lg:gap-4 justify-between">
                 <Sidebar />
 
-                <div className=" overflow-y-auto scrollbar scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar-thumb-rounded-lg scrollbar-track-gray-200 h-full w-full flex flex-col  p-2 scroll-smooth">
+                {/* <div className=" overflow-y-auto scrollbar scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar-thumb-rounded-lg scrollbar-track-gray-200 h-full w-full flex flex-col  p-2 scroll-smooth">
+                    <Outlet />
+                </div> */}
+                <div className=" overflow-y-auto scrollbar-none h-full w-full flex flex-col  p-2 scroll-smooth">
                     <Outlet />
                 </div>
 

@@ -37,7 +37,7 @@ const Review = () => {
                     </div>
                 </div>
             </div>
-            <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-thin scrollbar-w-4'>
+            <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-none'>
                 <p className=" text-gray-800 text-justify">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, delectus dolores nemo quaerat eius beatae provident rem iste numquam totam libero consequuntur distinctio, natus soluta, ut minus officiis? Dolores non mollitia corrupti nobis neque. Quia incidunt magni porro repudiandae cupiditate excepturi consequatur unde ipsa ut corporis, eveniet quas non expedita!
 
