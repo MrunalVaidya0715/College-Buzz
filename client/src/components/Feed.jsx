@@ -53,7 +53,7 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                         </div>
 
                     </div>
-                    <div className='mt-1 flex w-full  text-gray-500 items-center gap-1'>
+                    <div className='mt-1 flex flex-wrap w-full  text-gray-500 items-center gap-1'>
                         <div className='flex gap-1 items-center'>
                             <span>{up}</span>upvotes
                         </div>
