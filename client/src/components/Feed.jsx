@@ -1,6 +1,7 @@
 import { BiCommentDetail, BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom';
+import LinesEllipsis from 'react-lines-ellipsis';
 const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
     const vote = up - dwn;
     return (
@@ -29,7 +30,17 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                     </div>
                     {/*Body */}
                     <div className=' max-h-[200px] pr-2 overflow-y-auto'>
-                    <p className=" text-gray-800 text-justify">{desc}</p>
+                    <p className=" text-gray-800 text-justify">
+                        
+                            <LinesEllipsis
+                            text={desc}
+                            maxLine='2'
+                            ellipsis=' ...'
+                            trimRight
+                            basedOn='letters'
+                          />
+                        
+                    </p>
                 </div>
                     {/**User */}
                     <div className="border-t-[1px] pt-4 flex flex-wrap gap-2 items-center w-full justify-between">
