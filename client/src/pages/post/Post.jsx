@@ -3,6 +3,7 @@ import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiFlagLine } from 'react-icons/ri'
 import { useState } from "react"
+import Reviews from "../../components/Reviews"
 const Post = () => {
   const [vote, setVote] = useState(50)
   const handleUp = () => {
@@ -19,7 +20,8 @@ const Post = () => {
   return (
     <div className="flex flex-col w-full">
       {/**Post Details */}
-      <div className="px-4 py-2 bg-white border-[1px] shadow-sm flex flex-col w-full gap-2">
+      <div className=" relative px-4 py-2 bg-white border-[1px] shadow-sm flex flex-col w-full gap-2">
+        { isOption && <div onClick={()=>setisOption(false)} className=" absolute top-0 right-0 w-full h-full" />}
         {/**User, time */}
         <div className="flex w-full items-center justify-between">
           <div className="flex w-full gap-2 items-center">
@@ -73,6 +75,7 @@ const Post = () => {
 
 
       {/**Comments/replies */}
+      <Reviews/>
 
     </div>
   )
