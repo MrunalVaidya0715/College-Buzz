@@ -26,14 +26,17 @@ const links = [
 ]
 
 const Navbar = () => {
-    const user = true;
-    const [active, setActive] = useState(false)
+   const [user, setUser] = useState(true)
     const [options, setOptions] = useState(false)
 
     const handleOptions = () => {
-        setActive(prev => !prev)
+
         setOptions(prev => !prev)
 
+    }
+    const handleLogout = () =>{
+        setOptions(false)
+        setUser(false)
     }
     return (
         <div className=" z-[100] fixed top-0 left-0 h-16 w-full  bg-white flex justify-center  shadow-md">
@@ -64,14 +67,17 @@ const Navbar = () => {
                         )
                     }
                     <div onClick={handleOptions} className='z-[101] flex lg:hidden cursor-pointer relative w-8 h-[20px]'>
-                        <div className={` ${active ? 'opacity-0' : ''} absolute bg-gray-400 top-0 w-full h-[15%] rounded-md transition-all duration-200`}></div>
-                        <div className={` ${active ? 'rotate-45' : ''} absolute bg-gray-400 top-[40%] w-full h-[15%] rounded-md transition-all duration-200`}></div>
-                        <div className={` ${active ? '-rotate-45' : ''} absolute bg-gray-400 top-[40%] w-full h-[15%] rounded-md transition-all duration-200`}></div>
-                        <div className={` ${active ? 'opacity-0' : ''} absolute bg-gray-400 bottom-0 w-full h-[15%] rounded-md transition-all duration-200`}></div>
+                        <div className={` ${options ? 'opacity-0' : ''} absolute bg-gray-400 top-0 w-full h-[15%] rounded-md transition-all duration-200`}></div>
+                        <div className={` ${options ? 'rotate-45' : ''} absolute bg-gray-400 top-[40%] w-full h-[15%] rounded-md transition-all duration-200`}></div>
+                        <div className={` ${options ? '-rotate-45' : ''} absolute bg-gray-400 top-[40%] w-full h-[15%] rounded-md transition-all duration-200`}></div>
+                        <div className={` ${options ? 'opacity-0' : ''} absolute bg-gray-400 bottom-0 w-full h-[15%] rounded-md transition-all duration-200`}></div>
                     </div>
 
                 </div>
-
+                {/* Overlay */}
+                {
+                    options && <div onClick={()=>setOptions(false)} className=' absolute top-0 right-0 w-full h-screen'/>
+                }
                 {/*Options */}
                 {
                     options && (
@@ -83,10 +89,10 @@ const Navbar = () => {
                                         <button className='bg-blue-700 w-full max-w-[200px] p-2 rounded-md text-white'>Ask Question</button>
                                     </div>) : (
                                         <>
-                                            <Link to='/register'>
+                                            <Link onClick={()=>setOptions(false)} to='/register'>
                                                 <button className='w-full p-2 bg-blue-600 text-white rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign Up</button>
                                             </Link>
-                                            <Link to='/login'>
+                                            <Link onClick={()=>setOptions(false)} to='/login'>
                                                 <button className='w-full p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
                                             </Link>
                                         </>
@@ -95,7 +101,7 @@ const Navbar = () => {
 
                                 {
                                     links.map((link) => (
-                                        <div key={link.id} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                        <div onClick={()=>setOptions(false)} key={link.id} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                                             <span className='group-hover:text-gray-800'>{link.icon}</span>
                                             <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
                                         </div>
@@ -104,11 +110,11 @@ const Navbar = () => {
                                 {
                                     user && (
                                         <>
-                                            <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                            <div onClick={()=>setOptions(false)} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                                                 <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
                                                 <p className=' whitespace-nowrap group-hover:text-gray-800'>My Profile</p>
                                             </div>
-                                            <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                            <div onClick={handleLogout} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                                                 <span className='group-hover:text-gray-800'><MdOutlineLogout size={20} /></span>
                                                 <p className=' whitespace-nowrap group-hover:text-gray-800'>Logout</p>
                                             </div>
