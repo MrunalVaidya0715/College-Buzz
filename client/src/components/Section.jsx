@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { BiUpArrowAlt } from 'react-icons/bi'
 import { IoAddOutline, IoClose } from 'react-icons/io5'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 const topQ = [
     {
         id: 1,
@@ -35,20 +37,48 @@ const topQ = [
 ]
 const Section = () => {
     const [modal, setModal] = useState(false)
+    const [value, setValue] = useState('');
+    const handleSubmit = () =>{
+        alert("Ok");
+        setModal(false)
+    }
     return (
         <div className=" w-[20%] hidden md:flex flex-col gap-8 p-2">
             {/** */}
             <div className='w-full flex justify-center'>
-                <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white'><IoAddOutline size={20} />Ask Question</button>
+                <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
             </div>
             {
                 modal && (
                     <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
-                        <div onClick={()=>setModal(false)} className=' absolute top-4 right-4 p-2 bg-white rounded-full'>
-                            <IoClose size={16}/>
+                        <div onClick={() => setModal(false)} className=' cursor-pointer absolute top-4 right-4 p-2 bg-white rounded-full'>
+                            <IoClose size={16} />
                         </div>
-                        <div className=' flex flex-col items-center w-full max-w-[700px] h-[600px] p-4 bg-white'>
+                        <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
                             <h1 className=' text-xl font-semibold'>Ask Question</h1>
+                            <div className='flex flex-col w-full max-w-[500px]'>
+                                <p className=' font-semibold'>Title</p>
+                                <input className=' border-[1px] p-2' type="text" placeholder='Enter Title' name='title' />
+                            </div>
+                            <div className='flex flex-col w-full max-w-[500px]'>
+                                <p className=' font-semibold'>Select Category</p>
+                                <select className=' cursor-pointer border-[1px] p-2' name="category">
+                                    <option selected>--select category--</option>
+                                    <option value="general">General</option>
+                                    <option value="technology">Technology</option>
+                                    <option value="sports">Sports</option>
+                                    <option value="faculty">Faculty</option>
+                                    <option value="exams">Examinations</option>
+                                    <option value="canteen">Canteen</option>
+                                </select>
+                            </div>
+                            <div className=' flex flex-col w-full max-w-[500px]'>
+                                <p className=' font-semibold'>Enter Description</p>
+                                <ReactQuill theme="snow" value={value} onChange={setValue} />
+                            </div>
+                            <div className='mt-16 w-full flex justify-center'>
+                                <button onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            </div>
                         </div>
                     </div>
                 )
