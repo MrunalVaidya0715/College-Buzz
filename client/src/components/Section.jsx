@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { BiUpArrowAlt } from 'react-icons/bi'
-import {IoAddOutline} from 'react-icons/io5'
+import { IoAddOutline, IoClose } from 'react-icons/io5'
 const topQ = [
     {
         id: 1,
@@ -33,12 +34,25 @@ const topQ = [
     },
 ]
 const Section = () => {
+    const [modal, setModal] = useState(false)
     return (
         <div className=" w-[20%] hidden md:flex flex-col gap-8 p-2">
             {/** */}
             <div className='w-full flex justify-center'>
-                <button className='bg-blue-700 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white'><IoAddOutline size={20}/>Ask Question</button>
+                <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white'><IoAddOutline size={20} />Ask Question</button>
             </div>
+            {
+                modal && (
+                    <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
+                        <div onClick={()=>setModal(false)} className=' absolute top-4 right-4 p-2 bg-white rounded-full'>
+                            <IoClose size={16}/>
+                        </div>
+                        <div className=' flex flex-col items-center w-full max-w-[700px] h-[600px] p-4 bg-white'>
+                            <h1 className=' text-xl font-semibold'>Ask Question</h1>
+                        </div>
+                    </div>
+                )
+            }
             {/**Top Questions */}
             <div className="border-[1px] bg-white shadow-md px-2 py-4 w-full flex flex-col gap-2">
                 <h1 className=" font-bold">Top Questions</h1>
