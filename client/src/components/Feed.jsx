@@ -46,8 +46,11 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                     <div className="border-t-[1px] pt-4 flex flex-wrap gap-2 items-center w-full justify-between">
                         <div className="flex gap-2 items-center">
                             <img className=" w-8 h-8 object-cover object-center rounded-full" src="/assets/cbProfile.jpeg" alt="" />
-                            <div className=' overflow-x-auto flex flex-wrap items-center gap-2'>
+                            <div className=' overflow-x-auto flex flex-wrap items-center'>
                                 <p className=" text-gray-500 text-sm">posted by <span className=" whitespace-nowrap font-semibold text-blue-500">{pstby}</span></p>
+                                <div className=' flex'>
+                                    <RxDotFilled className=' text-gray-500' size={16} />
+                                </div>
                                 <p className=" whitespace-nowrap text-sm">{date}</p>
                             </div>
                         </div>
@@ -55,13 +58,13 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                     </div>
                     <div className='mt-1 flex flex-wrap w-full  text-gray-500 items-center gap-1'>
                         <div className='flex gap-1 items-center'>
-                            <span>{up}</span>upvotes
+                            <p className='flex gap-1 items-center'><span>{up}</span><span className='hidden md:block'>upvotes</span><BiUpArrowAlt className='md:hidden' size={20} /></p>
                         </div>
                         <div className=' flex'>
                             <RxDotFilled size={16} />
                         </div>
                         <div className='flex gap-1 items-center'>
-                            <span>{dwn}</span>downvotes
+                            <p className='flex gap-1 items-center'><span>{dwn}</span><span className='hidden md:block'>upvotes</span><BiDownArrowAlt className='md:hidden' size={20} /></p>
                         </div>
                         <div className=' flex'>
                             <RxDotFilled size={16} />

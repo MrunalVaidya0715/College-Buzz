@@ -7,7 +7,7 @@ export const posts = [
         upvote: 50,
         downvote: 15,
         postedBy: "Mrunal Vaidya",
-        date: "12hr ago",
+        date: "12hr",
         comments : 12
     },
     {
@@ -18,7 +18,7 @@ export const posts = [
         upvote: 15,
         downvote: 43,
         postedBy: "Sanket Patil",
-        date: "10hr ago",
+        date: "10hr",
         comments : 5
     },
     {
@@ -29,7 +29,7 @@ export const posts = [
         upvote: 48,
         downvote: 11,
         postedBy: "Yash Mahajan",
-        date: "9hr ago",
+        date: "9hr",
         comments : 5
     },
 ]
