@@ -30,18 +30,18 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                     </div>
                     {/*Body */}
                     <div className=' max-h-[200px scrollbar-none pr-2 overflow-y-auto'>
-                    <p className=" text-gray-800 text-justify">
-                        
-                            <LinesEllipsis
+
+
+                        <LinesEllipsis
                             text={desc}
                             maxLine='2'
                             ellipsis=' ...'
                             trimRight
                             basedOn='letters'
-                          />
-                        
-                    </p>
-                </div>
+                        />
+
+
+                    </div>
                     {/**User */}
                     <div className="border-t-[1px] pt-4 flex flex-wrap gap-2 items-center w-full justify-between">
                         <div className="flex gap-2 items-center">
