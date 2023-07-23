@@ -81,12 +81,12 @@ const Navbar = () => {
                 {/*Options */}
                 {
                     options && (
-                        <div className='lg:hidden mr-2 absolute bg-white/70 backdrop-blur-sm rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
+                        <div className='lg:hidden mr-2 absolute bg-white/70 backdrop-blur-md rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
                             <div className='flex flex-col gap-2 w-full'>
                                 <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
                                 {
                                     user ? (<div className='md:hidden w-full flex justify-center'>
-                                        <button className='bg-blue-700 w-full max-w-[200px] p-2 rounded-md text-white'>Ask Question</button>
+                                        <button className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
                                     </div>) : (
                                         <>
                                             <Link onClick={()=>setOptions(false)} to='/register'>
