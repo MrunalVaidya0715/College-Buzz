@@ -1,8 +1,10 @@
 import { AiOutlineHome } from 'react-icons/ai'
-import { MdOutlineExplore,MdOutlineLogout } from 'react-icons/md'
+import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
 import { RiQuestionAnswerLine } from 'react-icons/ri'
-import {CgProfile} from 'react-icons/cg'
+import { CgProfile } from 'react-icons/cg'
 import { DiGhostSmall } from 'react-icons/di'
+import { useNavigate } from 'react-router-dom'
+import newRequest from '../../utils/newRequest'
 const links = [
     {
         id: 1,
@@ -23,6 +25,19 @@ const links = [
 
 ]
 const Sidebar = () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    const navigate = useNavigate()
+    const handleLogout = async () => {
+        try {
+            await newRequest.post('auth/logout')
+            localStorage.setItem('currentUser', null)
+            navigate('/')
+            window.location.reload(true)
+        } catch (error) {
+            alert(error)
+        }
+    }
+
     const active = true;
     return (
         <div className=" w-[25%] hidden lg:flex flex-col justify-between gap-2 p-2">
@@ -40,16 +55,20 @@ const Sidebar = () => {
                     ))
                 }
             </div>
-            <div className='w-full flex flex-col gap-2'>
-                <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
-                    <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
-                    <p className='group-hover:text-gray-800'>My Profile</p>
-                </div>
-                <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
-                    <span className='group-hover:text-gray-800'><MdOutlineLogout size={20} /></span>
-                    <p className='group-hover:text-gray-800'>Logout</p>
-                </div>
-            </div>
+            {
+                user && (
+                    <div className='w-full flex flex-col gap-2'>
+                        <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                            <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
+                            <p className='group-hover:text-gray-800'>My Profile</p>
+                        </div>
+                        <div onClick={handleLogout} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                            <span className='group-hover:text-gray-800'><MdOutlineLogout size={20} /></span>
+                            <p className='group-hover:text-gray-800'>Logout</p>
+                        </div>
+                    </div>
+                )
+            }
         </div>
     )
 }

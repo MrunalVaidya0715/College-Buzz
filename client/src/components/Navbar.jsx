@@ -4,10 +4,11 @@ import { BiSearch } from 'react-icons/bi'
 import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
 import { RiQuestionAnswerLine } from 'react-icons/ri'
 import { CgProfile } from 'react-icons/cg'
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { IoAddOutline, IoClose } from 'react-icons/io5'
+import newRequest from '../../utils/newRequest'
 
 const links = [
     {
@@ -30,7 +31,8 @@ const links = [
 ]
 
 const Navbar = () => {
-   const [user, setUser] = useState(true)
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    const navigate = useNavigate()
     const [options, setOptions] = useState(false)
 
     const handleOptions = () => {
@@ -38,13 +40,19 @@ const Navbar = () => {
         setOptions(prev => !prev)
 
     }
-    const handleLogout = () =>{
-        setOptions(false)
-        setUser(false)
+    const handleLogout = async () => {
+        try {
+            await newRequest.post('auth/logout')
+            localStorage.setItem('currentUser', null)
+            navigate('/')
+            window.location.reload(true)
+        } catch (error) {
+            alert(error)
+        }
     }
     const [modal, setModal] = useState(false)
     const [value, setValue] = useState('');
-    const handleSubmit = () =>{
+    const handleSubmit = () => {
         alert("Ok");
         setModal(false)
     }
@@ -65,7 +73,7 @@ const Navbar = () => {
                 </div>
                 <div className='flex items-center gap-2'>
                     {
-                        user ? (<img className=" rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src="/assets/cbProfile.jpeg" alt="PI" />) : (
+                        user ? (<img className=" rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src={user.profileImg || "/assets/noProfile.png"} alt="PI" />) : (
                             <>
                                 <Link to='/register'>
                                     <button className='hidden lg:block p-2 bg-blue-600 text-white rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign Up</button>
@@ -86,7 +94,7 @@ const Navbar = () => {
                 </div>
                 {/* Overlay */}
                 {
-                    options && <div onClick={()=>setOptions(false)} className=' absolute top-0 right-0 w-full h-screen'/>
+                    options && <div onClick={() => setOptions(false)} className=' absolute top-0 right-0 w-full h-screen' />
                 }
                 {/*Options */}
                 {
@@ -96,13 +104,13 @@ const Navbar = () => {
                                 <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
                                 {
                                     user ? (<div className='md:hidden w-full flex justify-center'>
-                                        <button onClick={()=>setModal(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
+                                        <button onClick={() => setModal(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
                                     </div>) : (
                                         <>
-                                            <Link onClick={()=>setOptions(false)} to='/register'>
+                                            <Link onClick={() => setOptions(false)} to='/register'>
                                                 <button className='w-full p-2 bg-blue-600 text-white rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign Up</button>
                                             </Link>
-                                            <Link onClick={()=>setOptions(false)} to='/login'>
+                                            <Link onClick={() => setOptions(false)} to='/login'>
                                                 <button className='w-full p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
                                             </Link>
                                         </>
@@ -111,7 +119,7 @@ const Navbar = () => {
 
                                 {
                                     links.map((link) => (
-                                        <div onClick={()=>setOptions(false)} key={link.id} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                        <div onClick={() => setOptions(false)} key={link.id} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                                             <span className='group-hover:text-gray-800'>{link.icon}</span>
                                             <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
                                         </div>
@@ -120,7 +128,7 @@ const Navbar = () => {
                                 {
                                     user && (
                                         <>
-                                            <div onClick={()=>setOptions(false)} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                            <div onClick={() => setOptions(false)} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                                                 <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
                                                 <p className=' whitespace-nowrap group-hover:text-gray-800'>My Profile</p>
                                             </div>
