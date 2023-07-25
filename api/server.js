@@ -21,6 +21,16 @@ app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 app.use(express.json())
 app.use(cookieParser())
 
+app.use('/about', (req,res)=>{
+    res.send("About: CollegeBuzz is a student-focused web platform where students can ask questions and get answers from experienced college seniors and alumni, helping them with their academic queries and providing valuable guidance.")
+})
+
+
+app.use('/', (req,res)=>{
+    res.send("Reserved for CollegeBuzz")
+})
+
+
 
 
 app.use((err,req,res,next)=>{
