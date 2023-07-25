@@ -8,6 +8,11 @@ const questionSchema = new Schema(
       type: String,
       required: true,
     },
+    userInfo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
+    },
     title: {
       type: String,
       required: true,
@@ -19,6 +24,14 @@ const questionSchema = new Schema(
     category: {
       type: String,
       required: true,
+    },
+    upvote: {
+      type: Number,
+      default: 0, 
+    },
+    downvote: {
+      type: Number,
+      default: 0,
     },
     
   },
