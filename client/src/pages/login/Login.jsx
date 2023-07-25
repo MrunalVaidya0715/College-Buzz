@@ -36,7 +36,7 @@ const Login = () => {
           <h1 className=" text-xl lg:text-2xl font-bold">Login into your account</h1>
         </div>
 
-        <div className="mt-16 w-full flex flex-col justify-start items-start gap-1">
+        <div className="mt-8 w-full flex flex-col justify-start items-start gap-1">
           <h1>Username</h1>
           <input onChange={(e) => setUsername(e.target.value)} className=" rounded-md h-10 p-2 border-[1px] w-full" type="text" name="username" id="username" placeholder="Enter Username" />
         </div>
@@ -57,7 +57,7 @@ const Login = () => {
         </div>
         <div>
           <Link to="/register">
-          <p className=" text-sm text-blue-500">Already have an account ?</p>
+          <p className=" text-sm text-blue-500">Create an Account</p>
           </Link>
         </div>
 
