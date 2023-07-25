@@ -23,7 +23,7 @@ const Review = () => {
                 <div className="flex w-full gap-2 items-center">
                     <img className=" w-8 h-8 object-cover object-center rounded-full" src="/assets/cbProfile.jpeg" alt="" />
                     <div className=' overflow-x-auto flex flex-wrap items-center gap-1'>
-                        <p className=" text-gray-500 text-sm">answered by <span className=" whitespace-nowrap font-semibold text-blue-500">John Doe</span></p>
+                        <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span><span className=" whitespace-nowrap font-semibold text-blue-500">John Doe</span></p>
                         <RxDotFilled className=" text-gray-500" size={16} />
                         <p className=" whitespace-nowrap text-sm">4hr</p>
                     </div>
