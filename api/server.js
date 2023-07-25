@@ -2,8 +2,11 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 import cors from 'cors'
-
 import mongoose from 'mongoose';
+
+import authRoute from './routes/auth.route.js'
+import userRoute from './routes/user.route.js'
+
 const app = express()
 dotenv.config()
 mongoose.set('strictQuery',true)
@@ -20,6 +23,10 @@ const connect = async() =>{
 app.use(cors({ origin: ["http://localhost:5173"], credentials: true }));
 app.use(express.json())
 app.use(cookieParser())
+
+
+app.use('/api/auth', authRoute)
+app.use('/api/users', userRoute)
 
 app.use('/about', (req,res)=>{
     res.send("About: CollegeBuzz is a student-focused web platform where students can ask questions and get answers from experienced college seniors and alumni, helping them with their academic queries and providing valuable guidance.")
