@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { BiUpArrowAlt } from 'react-icons/bi'
 import { IoAddOutline, IoClose } from 'react-icons/io5'
 import ReactQuill from 'react-quill';
@@ -36,9 +37,10 @@ const topQ = [
     },
 ]
 const Section = () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
     const [modal, setModal] = useState(false)
     const [value, setValue] = useState('');
-    const handleSubmit = () =>{
+    const handleSubmit = () => {
         alert("Ok");
         setModal(false)
     }
@@ -46,7 +48,15 @@ const Section = () => {
         <div className=" w-[20%] hidden md:flex flex-col gap-8 p-2">
             {/** */}
             <div className='w-full flex justify-center'>
-                <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                {
+                    user ? (
+                        <button onClick={() => setModal(prev => !prev)}  className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                    ) : (
+                        <Link className='w-full' to="/login">
+                            <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                        </Link>
+                    )
+                }
             </div>
             {
                 modal && (
