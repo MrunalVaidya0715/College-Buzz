@@ -99,7 +99,7 @@ const Navbar = () => {
 
                     <div className="flex gap-2 text-gray-400 bg-gray-200 items-center px-2 py-1 rounded-lg">
                         <BiSearch className=' text-[22px]' />
-                        <input className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder={user.username} />
+                        <input className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder={user?.username} />
                     </div>
                 </div>
                 <div className='flex items-center gap-2'>
