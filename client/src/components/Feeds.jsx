@@ -4,7 +4,7 @@ import { posts } from "../data/posts"
 const Feeds = () => {
   return (
     
-      <div className=" h-full w-full flex flex-col gap-16">
+      <div className=" h-full w-full flex flex-col gap-4 md:gap-8">
         {
           posts.map((post) => (
             <Feed key={post.id} title={post.title} desc={post.desc} date={post.date} pstby={post.postedBy} up={post.upvote} dwn={post.downvote} cmt={post.comments} cat={post.category} />
