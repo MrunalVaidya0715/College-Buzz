@@ -147,8 +147,8 @@ const Navbar = () => {
             </div>
             {
                 modal && (
-                    <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
-                        <div onClick={() => setModal(false)} className=' cursor-pointer absolute top-4 left-4 p-2 bg-white rounded-full'>
+                    <div className='z-[101] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
+                        <div onClick={() => setModal(false)} className=' cursor-pointer absolute top-4 right-4 p-2 bg-white rounded-full'>
                             <IoClose size={16} />
                         </div>
                         <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
