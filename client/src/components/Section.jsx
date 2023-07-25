@@ -50,7 +50,7 @@ const Section = () => {
             <div className='w-full flex justify-center'>
                 {
                     user ? (
-                        <button onClick={() => setModal(prev => !prev)}  className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                        <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                     ) : (
                         <Link className='w-full' to="/login">
                             <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
@@ -72,8 +72,8 @@ const Section = () => {
                             </div>
                             <div className='flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Select Category</p>
-                                <select className=' cursor-pointer border-[1px] p-2' name="category">
-                                    <option selected>--select category--</option>
+                                <select className='cursor-pointer border-[1px] p-2' name="category" defaultValue="--select category--">
+                                    <option disabled>--select category--</option>
                                     <option value="general">General</option>
                                     <option value="technology">Technology</option>
                                     <option value="sports">Sports</option>
