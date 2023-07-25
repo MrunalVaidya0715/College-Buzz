@@ -34,7 +34,7 @@ const Navbar = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
     const [options, setOptions] = useState(false)
-
+    const [err, setErr] = useState(null)
     const handleOptions = () => {
 
         setOptions(prev => !prev)
@@ -47,14 +47,45 @@ const Navbar = () => {
             navigate('/')
             window.location.reload(true)
         } catch (error) {
+            setErr(err.response.data)
             alert(error)
         }
     }
     const [modal, setModal] = useState(false)
-    const [value, setValue] = useState('');
-    const handleSubmit = () => {
-        alert("Ok");
-        setModal(false)
+    const [description, setDescription] = useState('');
+    const [uploading, setUploading] = useState(false);
+    const [question, setQuestion] = useState({
+        title: "",
+        desc: description,
+        category: "",
+
+    });
+    console.log(question)
+    const handleChange = (e) => {
+        setQuestion((prev) => {
+            return { ...prev, [e.target.name]: e.target.value };
+        });
+    };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setUploading(true)
+        try {
+            await newRequest.post('/questions', {
+                ...question,
+
+            })
+            setUploading(false)
+            alert("Question Uploaded")
+            setModal(false)
+            navigate('/')
+
+        } catch (error) {
+            setErr(error.response.data)
+            setUploading(false)
+            console.log(error)
+
+        }
+
     }
     return (
         <div className=" z-[100] fixed top-0 left-0 h-16 w-full  bg-white flex justify-center  shadow-md">
@@ -147,7 +178,7 @@ const Navbar = () => {
             </div>
             {
                 modal && (
-                    <div className='z-[101] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
+                    <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
                         <div onClick={() => setModal(false)} className=' cursor-pointer absolute top-4 right-4 p-2 bg-white rounded-full'>
                             <IoClose size={16} />
                         </div>
@@ -155,12 +186,12 @@ const Navbar = () => {
                             <h1 className=' text-xl font-semibold'>Ask Question</h1>
                             <div className='flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Title</p>
-                                <input className=' border-[1px] p-2' type="text" placeholder='Enter Title' name='title' />
+                                <input onChange={handleChange} className=' border-[1px] p-2' type="text" placeholder='Enter Title' name='title' />
                             </div>
                             <div className='flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Select Category</p>
-                                <select className=' cursor-pointer border-[1px] p-2' name="category">
-                                    <option selected>--select category--</option>
+                                <select onChange={handleChange} className='cursor-pointer border-[1px] p-2' name="category" defaultValue="--select category--">
+                                    <option disabled>--select category--</option>
                                     <option value="general">General</option>
                                     <option value="technology">Technology</option>
                                     <option value="sports">Sports</option>
@@ -171,10 +202,13 @@ const Navbar = () => {
                             </div>
                             <div className=' flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Enter Description</p>
-                                <ReactQuill theme="snow" value={value} onChange={setValue} />
+                                <ReactQuill theme="snow" value={question.desc} onChange={(value) => setQuestion((prev) => ({ ...prev, desc: value }))} />
                             </div>
                             <div className='mt-16 w-full flex justify-center'>
                                 <button onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            </div>
+                            <div>
+                                <p className=" text-red-500 font-semibold">{err && err}</p>
                             </div>
                         </div>
                     </div>
