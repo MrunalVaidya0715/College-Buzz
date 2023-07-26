@@ -20,7 +20,7 @@ export const createQuestion = async (req, res, next) => {
 export const getQuestions = async (req, res, next) => {
   try {
 
-    const questions = await Question.find();
+    const questions = await Question.find().populate("userInfo");
 
     res.status(200).json(questions);
   } catch (error) {
