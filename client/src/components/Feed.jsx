@@ -2,6 +2,8 @@ import { BiCommentDetail, BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
+import parser from 'html-react-parser';
+
 const Feed = ({ title, desc, category, createdAt:date, userInfo:pstby, upvote:up, downvote:dwn, cmt }) => {
     const vote = up - dwn;
     return (
@@ -33,7 +35,7 @@ const Feed = ({ title, desc, category, createdAt:date, userInfo:pstby, upvote:up
 
 
                         <LinesEllipsis
-                            text={desc}
+                            text={parser(desc)}
                             maxLine='2'
                             ellipsis=' ...'
                             trimRight
