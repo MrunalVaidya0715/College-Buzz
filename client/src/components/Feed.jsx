@@ -2,7 +2,7 @@ import { BiCommentDetail, BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
-const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
+const Feed = ({ title, desc, category, createdAt:date, userInfo:pstby, upvote:up, downvote:dwn, cmt }) => {
     const vote = up - dwn;
     return (
         <Link to="/posts/111">
@@ -22,7 +22,7 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                 <div className="pb-2 flex gap-2 flex-col w-full ">
                     {/* Category */}
                     <div className='rounded-full w-fit px-4 py-1 bg-orange-400'>
-                        <p className=' text-white'>{cat}</p>
+                        <p className=' text-white'>{category}</p>
                     </div>
                     {/**Title */}
                     <div>
@@ -45,13 +45,13 @@ const Feed = ({ title, desc, cat, date, pstby, up, dwn, cmt }) => {
                     {/**User */}
                     <div className="border-t-[1px] pt-4 flex flex-wrap gap-2 items-center w-full justify-between">
                         <div className="flex gap-2 items-center">
-                            <img className=" w-8 h-8 object-cover object-center rounded-full" src="/assets/cbProfile.jpeg" alt="" />
+                            <img className=" w-8 h-8 object-cover object-center rounded-full" src={pstby.profileImg || "/assets/noProfile.png"} alt={pstby.username} />
                             <div className=' overflow-x-auto flex flex-wrap items-center'>
-                                <p className=" text-gray-500 text-sm">posted by <span className=" whitespace-nowrap font-semibold text-blue-500">{pstby}</span></p>
+                                <p className=" text-gray-500 text-sm">posted by <span className=" whitespace-nowrap font-semibold text-blue-500">{pstby.username}</span></p>
                                 <div className=' flex'>
                                     <RxDotFilled className=' text-gray-500' size={16} />
                                 </div>
-                                <p className=" whitespace-nowrap text-sm">{date}</p>
+                                <p className=" whitespace-nowrap text-sm">{date.slice(0,10)}</p>
                             </div>
                         </div>
 
