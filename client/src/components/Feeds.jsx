@@ -1,18 +1,26 @@
 import Feed from "./Feed"
-import { posts } from "../data/posts"
-
+import { useQuery } from "@tanstack/react-query"
+import newRequest from "../../utils/newRequest"
 const Feeds = () => {
-  return (
-    
-      <div className=" h-full w-full flex flex-col gap-4 md:gap-8">
-        {
-          posts.map((post) => (
-            <Feed key={post.id} title={post.title} desc={post.desc} date={post.date} pstby={post.postedBy} up={post.upvote} dwn={post.downvote} cmt={post.comments} cat={post.category} />
-          ))
-        }
+  const { isLoading, error, data, refetch } = useQuery({
+    queryKey: ['question._id'],
+    queryFn: () => newRequest.get(`/questions`).then((res) => {
+      return res.data
+    })
 
-      </div>
-    
+  })
+  
+  return (
+
+    <div className=" h-full w-full flex flex-col gap-4 md:gap-8">
+      {
+        isLoading? "Loading Questions...":
+        error? "Something went wrong":data.map((feed)=>(
+          <Feed key={feed._id} refetch={refetch} {...feed}  />
+        ))
+      }
+    </div>
+
   )
 }
 
