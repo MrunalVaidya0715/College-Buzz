@@ -15,7 +15,7 @@ const Feeds = () => {
 
     <>
     <FilterSort/>
-    <div className=" h-full w-full flex flex-col gap-4 md:gap-8">
+    <div className=" relative h-auto w-full flex flex-col gap-4 md:gap-8">
       {
         isLoading? (<h2 className=" text-center">Loading Questions...</h2>):
         error? (<h2 className=" text-center">Something went wrong</h2>):data.map((feed)=>(
