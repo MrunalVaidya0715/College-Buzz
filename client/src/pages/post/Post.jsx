@@ -2,8 +2,8 @@ import { BiCommentDetail } from "react-icons/bi"
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiFlagLine } from 'react-icons/ri'
-import {BiEditAlt} from 'react-icons/bi'
-import {MdOutlineDeleteOutline} from 'react-icons/md'
+import { BiEditAlt } from 'react-icons/bi'
+import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { useEffect, useState } from "react"
 import Reviews from "../../components/Reviews"
 import { RxDotFilled } from "react-icons/rx"
@@ -13,6 +13,7 @@ import newRequest from "../../../utils/newRequest";
 import parser from 'html-react-parser';
 import { formatDistanceToNow } from "date-fns"
 const Post = () => {
+  const user = JSON.parse(localStorage.getItem("currentUser"))
 
   const { id } = useParams()
   const { isLoading, error, data } = useQuery({
@@ -22,7 +23,7 @@ const Post = () => {
         return res.data;
       }),
   });
-  console.log(data)
+
 
   const [vote, setVote] = useState(0);
 
@@ -73,14 +74,22 @@ const Post = () => {
                       <RiFlagLine size={18} />
                       <p>Report</p>
                     </div>
-                    <div  className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
-                      <BiEditAlt size={20} />
-                      <p>Edit</p>
-                    </div>
-                    <div  className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
-                      <MdOutlineDeleteOutline className=" text-red-600" size={20} />
-                      <p>Delete</p>
-                    </div>
+                    {
+                      user._id === data.userInfo._id && (
+                        <>
+                          <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                            <BiEditAlt size={20} />
+                            <p>Edit</p>
+                          </div>
+                          <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                            <MdOutlineDeleteOutline className=" text-red-600" size={20} />
+                            <p>Delete</p>
+                          </div>
+                        </>
+                      )
+                    }
+
+
                   </div>
                 </div>
               </div>
