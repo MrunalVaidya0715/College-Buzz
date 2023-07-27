@@ -3,7 +3,7 @@ import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
 import { RiQuestionAnswerLine } from 'react-icons/ri'
 import { CgProfile } from 'react-icons/cg'
 import { DiGhostSmall } from 'react-icons/di'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import newRequest from '../../utils/newRequest'
 const links = [
     {
@@ -58,10 +58,12 @@ const Sidebar = () => {
             {
                 user && (
                     <div className='w-full flex flex-col gap-2'>
-                        <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
-                            <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
-                            <p className='group-hover:text-gray-800'>My Profile</p>
-                        </div>
+                        <Link to="/profile">
+                            <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
+                                <p className='group-hover:text-gray-800'>My Profile</p>
+                            </div>
+                        </Link>
                         <div onClick={handleLogout} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                             <span className='group-hover:text-gray-800'><MdOutlineLogout size={20} /></span>
                             <p className='group-hover:text-gray-800'>Logout</p>
