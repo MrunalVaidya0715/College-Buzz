@@ -2,6 +2,8 @@ import { BiCommentDetail } from "react-icons/bi"
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiFlagLine } from 'react-icons/ri'
+import {BiEditAlt} from 'react-icons/bi'
+import {MdOutlineDeleteOutline} from 'react-icons/md'
 import { useEffect, useState } from "react"
 import Reviews from "../../components/Reviews"
 import { RxDotFilled } from "react-icons/rx"
@@ -21,8 +23,8 @@ const Post = () => {
       }),
   });
   console.log(data)
-  
-  const [vote, setVote] = useState(0); 
+
+  const [vote, setVote] = useState(0);
 
   // Updating the vote state once the data is available or changes
   useEffect(() => {
@@ -55,7 +57,7 @@ const Post = () => {
               {/**User, time */}
               <div className="flex w-full items-center justify-between">
                 <div className="flex  gap-2 items-center">
-                  <img className=" w-8 h-8 object-cover object-center rounded-full" src={data.userInfo.profileImg ||"/assets/noProfile.png" } alt="" />
+                  <img className=" w-8 h-8 object-cover object-center rounded-full" src={data.userInfo.profileImg || "/assets/noProfile.png"} alt="" />
                   <div className=' overflow-x-auto flex gap-1 md:gap-0 flex-wrap items-center'>
                     <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span><span className=" whitespace-nowrap font-semibold text-blue-500">{data.userInfo.username}</span></p>
                     <RxDotFilled className="hidden sm:block text-gray-500" size={16} />
@@ -64,11 +66,21 @@ const Post = () => {
                 </div>
 
                 <div className=" relative flex items-center">
-                  
+
                   <BsThreeDotsVertical onClick={handleOption} className=" cursor-pointer text-gray-700 hover:text-black duration-150 transition-colors ease-in-out" size={22} />
-                  <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} cursor-pointer absolute right-5 px-4 py-2 items-center gap-2 bg-white hover:bg-gray-100 active:bg-gray-50 border-[1px] rounded-md transition-all ease-in-out duration-200 `}>
-                    <RiFlagLine size={16} />
-                    <p>Report</p>
+                  <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} absolute top-0 right-5 px-1 py-2 flex-col items-start bg-white  border-[1px] rounded-md  `}>
+                    <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                      <RiFlagLine size={18} />
+                      <p>Report</p>
+                    </div>
+                    <div  className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                      <BiEditAlt size={20} />
+                      <p>Edit</p>
+                    </div>
+                    <div  className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                      <MdOutlineDeleteOutline className=" text-red-600" size={20} />
+                      <p>Delete</p>
+                    </div>
                   </div>
                 </div>
               </div>
