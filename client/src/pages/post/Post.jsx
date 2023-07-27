@@ -7,7 +7,7 @@ import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { useEffect, useState } from "react"
 import Reviews from "../../components/Reviews"
 import { RxDotFilled } from "react-icons/rx"
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../utils/newRequest";
 import parser from 'html-react-parser';
@@ -67,19 +67,25 @@ const Post = () => {
               {isOption && <div onClick={() => setisOption(false)} className=" absolute top-0 right-0 w-full h-full" />}
               {/**User, time */}
               <div className="flex w-full items-center justify-between">
-                <div className="flex  gap-2 items-center">
-                  <img className=" w-8 h-8 object-cover object-center rounded-full" src={data.userInfo.profileImg || "/assets/noProfile.png"} alt="" />
-                  <div className=' overflow-x-auto flex gap-1 md:gap-0 flex-wrap items-center'>
-                    <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span>
-                      <span className=" whitespace-nowrap font-semibold text-blue-500">
-                        {
-                          user._id === data.userInfo._id ? "You":data.userInfo.username
-                        }
-                      </span></p>
-                    <RxDotFilled className="hidden sm:block text-gray-500" size={16} />
-                    <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(data.createdAt))}</p>
-                  </div>
+                <div className=" flex  gap-1 items-center">
+                  <Link to={`/profile/${data.userInfo._id}`}>
+                    <div className=" group  flex gap-2 items-center">
+                      <img className=" w-8 h-8 object-cover object-center rounded-full" src={data.userInfo.profileImg || "/assets/noProfile.png"} alt="" />
+                      <div className=' overflow-x-auto flex gap-1 md:gap-0 flex-wrap items-center'>
+                        <p className="group-hover:underline underline-offset-2  flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span>
+                          <span className=" whitespace-nowrap font-semibold text-blue-500">
+                            {
+                              user._id === data.userInfo._id ? "You" : data.userInfo.username
+                            }
+                          </span></p>
+
+                      </div>
+                    </div>
+                  </Link>
+                  <RxDotFilled className="hidden sm:block text-gray-500" size={16} />
+                  <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(data.createdAt))}</p>
                 </div>
+
 
                 <div className=" relative flex items-center">
 
