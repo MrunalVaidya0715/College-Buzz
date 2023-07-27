@@ -64,9 +64,9 @@ const Post = () => {
                 </div>
 
                 <div className=" relative flex items-center">
-                  <p className=" text-gray-500 text-sm whitespace-nowrap">Date: <span className=" text-gray-600 font-semibold">21-07-23</span></p>
+                  
                   <BsThreeDotsVertical onClick={handleOption} className=" cursor-pointer text-gray-700 hover:text-black duration-150 transition-colors ease-in-out" size={22} />
-                  <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} cursor-pointer absolute -left-2 px-4 py-2 items-center gap-2 bg-white hover:bg-gray-100 active:bg-gray-50 border-[1px] rounded-md transition-all ease-in-out duration-200 `}>
+                  <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} cursor-pointer absolute right-5 px-4 py-2 items-center gap-2 bg-white hover:bg-gray-100 active:bg-gray-50 border-[1px] rounded-md transition-all ease-in-out duration-200 `}>
                     <RiFlagLine size={16} />
                     <p>Report</p>
                   </div>
