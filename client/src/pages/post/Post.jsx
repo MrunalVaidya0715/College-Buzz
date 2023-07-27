@@ -117,9 +117,9 @@ const Post = () => {
               </div>
               {/* Desc */}
               <div className='p-2 rounded-md border-[1px]'>
-                <p className=" text-gray-800 text-justify">
+                <div className=" text-gray-800 text-justify">
                   {parser(data.desc)}
-                </p>
+                </div>
               </div>
               {/*Actions */}
               <div className='mt-1 flex w-full  text-gray-500 items-center justify-between gap-1'>
