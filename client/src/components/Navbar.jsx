@@ -208,7 +208,7 @@ const Navbar = () => {
                                 <button onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                             </div>
                             <div>
-                                <p className=" text-red-500 font-semibold">{err && err}</p>
+                                <p className=" text-center text-red-500 font-semibold">{err && err}</p>
                             </div>
                         </div>
                     </div>
