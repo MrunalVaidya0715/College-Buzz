@@ -1,6 +1,6 @@
 import { BsFilterLeft } from 'react-icons/bs'
 import { BiSort } from 'react-icons/bi'
-const FilterSort = () => {
+const FilterSort = ({handleCat, handleSort}) => {
     return (
         <div className="z-[50] sticky -top-2 p-1 flex gap-2 sm:gap-4 mb-2 items-center justify-between w-full bg-white/50 backdrop-blur-sm">
             <div className="flex gap-1 w-full">
@@ -8,7 +8,7 @@ const FilterSort = () => {
                     <BsFilterLeft size={20} />
                     <p className="hidden sm:block text-sm">Filter</p>
                 </div>
-                <select className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="cat" defaultValue="All">
+                <select onChange={handleCat} className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="cat" defaultValue="All">
                     <option value="">All</option>
                     <option value="general">General</option>
                     <option value="technology">Technology</option>
@@ -23,10 +23,10 @@ const FilterSort = () => {
                     <BiSort size={16} />
                     <p className="hidden sm:block text-sm whitespace-nowrap">Sort by</p>
                 </div>
-                <select className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="sort" defaultValue="Newest">
+                <select onChange={handleSort} className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="sort" defaultValue="Newest">
 
-                    <option value="Newest">Newest</option>
-                    <option value="Oldest">Oldest</option>
+                    <option value="newest">Newest</option>
+                    <option value="oldest">Oldest</option>
 
                 </select>
             </div>
