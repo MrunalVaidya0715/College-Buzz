@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import newRequest from "../../utils/newRequest"
 import FilterSort from "./FilterSort"
 import { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 const Feeds = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['question._id'],
@@ -11,14 +12,27 @@ const Feeds = () => {
     })
 
   })
-  const [cat, setCat] = useState("")
-  const [sort, setSort] = useState("")
-  const handleCat = (e) =>{
-    setCat(e.target.value)
-  }
-  const handleSort = (e) =>{
-    setSort(e.target.value)
-  }
+  const navigate = useNavigate();
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+
+  const [cat, setCat] = useState(params.get("category") || ""); 
+  const [sort, setSort] = useState(params.get("sort") || ""); 
+
+  
+
+  const handleCat = (e) => {
+    const category = e.target.value;
+    setCat(category);
+
+    navigate(`?category=${category}&sort=${sort}`);
+  };
+
+  const handleSort = (e) => {
+    const sorting = e.target.value;
+    setSort(sorting);
+    navigate(`?category=${cat}&sort=${sorting}`);
+  };
 
   useEffect(() => {
     refetch();
