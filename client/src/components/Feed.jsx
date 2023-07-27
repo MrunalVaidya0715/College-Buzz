@@ -3,9 +3,10 @@ import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
 import parser from 'html-react-parser';
-
-const Feed = ({ title, desc, category, createdAt:date, userInfo:pstby, upvote:up, downvote:dwn, cmt }) => {
+import { formatDistanceToNow } from 'date-fns';
+const Feed = ({ title, desc, category, createdAt, userInfo:pstby, upvote:up, downvote:dwn, cmt }) => {
     const vote = up - dwn;
+    const timeAgo =  formatDistanceToNow(new Date(createdAt));
     return (
         <Link to="/posts/111">
             <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-md hover:shadow-lg ease-in-out duration-300 transition-all">
@@ -53,7 +54,7 @@ const Feed = ({ title, desc, category, createdAt:date, userInfo:pstby, upvote:up
                                 <div className=' flex'>
                                     <RxDotFilled className=' text-gray-500' size={16} />
                                 </div>
-                                <p className=" whitespace-nowrap text-sm">{date.slice(0,10)}</p>
+                                <p className=" whitespace-nowrap text-sm">{timeAgo}</p>
                             </div>
                         </div>
 
