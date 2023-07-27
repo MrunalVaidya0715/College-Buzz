@@ -25,8 +25,8 @@ const FilterSort = () => {
                 </div>
                 <select className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="sort" defaultValue="Newest">
 
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
+                    <option value="Newest">Newest</option>
+                    <option value="Oldest">Oldest</option>
 
                 </select>
             </div>
