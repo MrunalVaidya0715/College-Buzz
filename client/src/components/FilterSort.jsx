@@ -8,7 +8,7 @@ const FilterSort = ({handleCat, handleSort, cat, sort}) => {
                     <BsFilterLeft size={20} />
                     <p className="hidden sm:block text-sm">Filter</p>
                 </div>
-                <select onChange={handleCat} className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="cat" value={cat} defaultValue="All">
+                <select onChange={handleCat} className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="cat" value={cat} >
                     <option value="">All</option>
                     <option value="general">General</option>
                     <option value="technology">Technology</option>
@@ -23,7 +23,7 @@ const FilterSort = ({handleCat, handleSort, cat, sort}) => {
                     <BiSort size={16} />
                     <p className="hidden sm:block text-sm whitespace-nowrap">Sort by</p>
                 </div>
-                <select onChange={handleSort} className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="sort" value={sort} defaultValue="Newest">
+                <select onChange={handleSort} className='w-full cursor-pointer border-[1px] p-2 rounded-md' name="sort" value={sort} >
 
                     <option value="newest">Newest</option>
                     <option value="oldest">Oldest</option>
