@@ -33,8 +33,14 @@ const links = [
 const Navbar = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
+    const [search, setSearch] = useState('');
+    console.log(search)
     const [options, setOptions] = useState(false)
     const [err, setErr] = useState(null)
+
+    const handleSearch = (e) =>{
+        setSearch(e.target.value)
+    }
     const handleOptions = () => {
 
         setOptions(prev => !prev)
@@ -60,7 +66,7 @@ const Navbar = () => {
         category: "",
 
     });
-    console.log(question)
+    
     const handleChange = (e) => {
         setQuestion((prev) => {
             return { ...prev, [e.target.name]: e.target.value };
@@ -99,7 +105,7 @@ const Navbar = () => {
 
                     <div className="flex gap-2 text-gray-400 bg-gray-200 items-center px-2 py-1 rounded-lg">
                         <BiSearch className=' text-[22px]' />
-                        <input className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder={user?.username} />
+                        <input onChange={handleSearch} className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder={user?.username} />
                     </div>
                 </div>
                 <div className='flex items-center gap-2'>
@@ -132,7 +138,7 @@ const Navbar = () => {
                     options && (
                         <div className='lg:hidden mr-2 absolute bg-white/70 backdrop-blur-md rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
                             <div className='flex flex-col gap-2 w-full'>
-                                <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
+                                <input onChange={handleSearch} className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
                                 {
                                     user ? (<div className='md:hidden w-full flex justify-center'>
                                         <button onClick={() => setModal(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
