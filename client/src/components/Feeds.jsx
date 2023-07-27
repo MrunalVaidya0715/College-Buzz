@@ -29,10 +29,6 @@ const Feeds = () => {
 
     <>
     <FilterSort handleCat={handleCat} handleSort={handleSort}/>
-    <div className="flex w-full items-center justify-between">
-      <h1>Filter: {cat}</h1>
-      <h1>sort: {sort}</h1>
-    </div>
     <div className=" relative h-auto w-full flex flex-col gap-4 md:gap-8">
       {
         isLoading? (<h2 className=" text-center">Loading Questions...</h2>):
