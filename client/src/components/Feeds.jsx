@@ -42,7 +42,7 @@ const Feeds = () => {
   return (
 
     <>
-    <FilterSort handleCat={handleCat} handleSort={handleSort}/>
+    <FilterSort handleCat={handleCat} handleSort={handleSort} cat={cat} sort={sort}/>
     <div className=" relative h-auto w-full flex flex-col gap-4 md:gap-8">
       {
         isLoading? (<h2 className=" text-center">Loading Questions...</h2>):
