@@ -2,9 +2,9 @@ import { BsFilterLeft } from 'react-icons/bs'
 import { BiSort } from 'react-icons/bi'
 const FilterSort = () => {
     return (
-        <div className="p-1 flex gap-4 mb-2 items-center justify-between w-full bg-white">
+        <div className="z-[50] sticky -top-2 p-1 flex gap-2 sm:gap-4 mb-2 items-center justify-between w-full bg-white/50 backdrop-blur-sm">
             <div className="flex gap-1 w-full">
-                <div className="px-2 border-[1px] flex gap-1 items-center rounded-md">
+                <div className="bg-white px-2 border-[1px] flex gap-1 items-center rounded-md">
                     <BsFilterLeft size={20} />
                     <p className="hidden sm:block text-sm">Filter</p>
                 </div>
@@ -19,7 +19,7 @@ const FilterSort = () => {
                 </select>
             </div>
             <div className="flex gap-1 w-full">
-                <div className="px-2 border-[1px] flex gap-1 items-center rounded-md">
+                <div className="bg-white px-2 border-[1px] flex gap-1 items-center rounded-md">
                     <BiSort size={16} />
                     <p className="hidden sm:block text-sm whitespace-nowrap">Sort by</p>
                 </div>
