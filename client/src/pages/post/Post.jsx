@@ -55,9 +55,9 @@ const Post = () => {
               {/**User, time */}
               <div className="flex w-full items-center justify-between">
                 <div className="flex  gap-2 items-center">
-                  <img className=" w-8 h-8 object-cover object-center rounded-full" src="/assets/cbProfile.jpeg" alt="" />
+                  <img className=" w-8 h-8 object-cover object-center rounded-full" src={data.userInfo.profileImg ||"/assets/noProfile.png" } alt="" />
                   <div className=' overflow-x-auto flex gap-1 md:gap-0 flex-wrap items-center'>
-                    <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span><span className=" whitespace-nowrap font-semibold text-blue-500">Mrunal Vaidya</span></p>
+                    <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span><span className=" whitespace-nowrap font-semibold text-blue-500">{data.userInfo.username}</span></p>
                     <RxDotFilled className="hidden sm:block text-gray-500" size={16} />
                     <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(data.createdAt))}</p>
                   </div>

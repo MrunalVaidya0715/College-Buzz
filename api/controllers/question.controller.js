@@ -36,7 +36,7 @@ export const getQuestion = async (req, res, next) => {
       return next(createError(404, "Question not found"));
     }
 
-    const question = await Question.findById(questionId);
+    const question = await Question.findById(questionId).populate("userInfo", "-password");
     if (!question) {
       // If the question is not found in the database
       return next(createError(404, "Question not found"));
