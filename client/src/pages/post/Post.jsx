@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 import Reviews from "../../components/Reviews"
 import { RxDotFilled } from "react-icons/rx"
 import { useNavigate, useParams } from 'react-router-dom'
-import { useQuery ,useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../utils/newRequest";
 import parser from 'html-react-parser';
 import { formatDistanceToNow } from "date-fns"
@@ -56,7 +56,7 @@ const Post = () => {
   const handleOption = () => {
     setisOption(prev => !prev)
   }
-  
+
   return (
     <div className="flex flex-col w-full">
       {/**Post Details */}
@@ -70,7 +70,12 @@ const Post = () => {
                 <div className="flex  gap-2 items-center">
                   <img className=" w-8 h-8 object-cover object-center rounded-full" src={data.userInfo.profileImg || "/assets/noProfile.png"} alt="" />
                   <div className=' overflow-x-auto flex gap-1 md:gap-0 flex-wrap items-center'>
-                    <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span><span className=" whitespace-nowrap font-semibold text-blue-500">{data.userInfo.username}</span></p>
+                    <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span>
+                      <span className=" whitespace-nowrap font-semibold text-blue-500">
+                        {
+                          user._id === data.userInfo._id ? "You":data.userInfo.username
+                        }
+                      </span></p>
                     <RxDotFilled className="hidden sm:block text-gray-500" size={16} />
                     <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(data.createdAt))}</p>
                   </div>
@@ -91,7 +96,7 @@ const Post = () => {
                             <BiEditAlt size={20} />
                             <p>Edit</p>
                           </div>
-                          <div onClick={()=>{
+                          <div onClick={() => {
                             deletePost.mutate(data._id)
                             alert("Question Deleted")
                             navigate('/')

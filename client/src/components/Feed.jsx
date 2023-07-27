@@ -4,9 +4,10 @@ import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
 import parser from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
-const Feed = ({_id, title, desc, category, createdAt, userInfo:pstby, upvote:up, downvote:dwn, cmt }) => {
+const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
+    const user =JSON.parse(localStorage.getItem("currentUser"))
     const vote = up - dwn;
-    const timeAgo =  formatDistanceToNow(new Date(createdAt));
+    const timeAgo = formatDistanceToNow(new Date(createdAt));
     return (
         <Link to={`/posts/${_id}`}>
             <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-md hover:shadow-lg ease-in-out duration-300 transition-all">
@@ -50,7 +51,10 @@ const Feed = ({_id, title, desc, category, createdAt, userInfo:pstby, upvote:up,
                         <div className="flex gap-2 items-center">
                             <img className=" w-8 h-8 object-cover object-center rounded-full" src={pstby.profileImg || "/assets/noProfile.png"} alt={pstby.username} />
                             <div className=' overflow-x-auto flex flex-wrap items-center'>
-                                <p className=" text-gray-500 text-sm">posted by <span className=" whitespace-nowrap font-semibold text-blue-500">{pstby.username}</span></p>
+                                <p className=" text-gray-500 text-sm">posted by <span className=" whitespace-nowrap font-semibold text-blue-500">
+                                    {
+                                        user._id === pstby._id ? "You" : pstby.username
+                                    }</span></p>
                                 <div className=' flex'>
                                     <RxDotFilled className=' text-gray-500' size={16} />
                                 </div>
