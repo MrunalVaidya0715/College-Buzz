@@ -7,8 +7,8 @@ import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { useEffect, useState } from "react"
 import Reviews from "../../components/Reviews"
 import { RxDotFilled } from "react-icons/rx"
-import { useParams } from 'react-router-dom'
-import { useQuery } from "@tanstack/react-query";
+import { useNavigate, useParams } from 'react-router-dom'
+import { useQuery ,useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../utils/newRequest";
 import parser from 'html-react-parser';
 import { formatDistanceToNow } from "date-fns"
@@ -16,6 +16,8 @@ const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
 
   const { id } = useParams()
+  const navigate = useNavigate()
+  const queryClient = useQueryClient();
   const { isLoading, error, data } = useQuery({
     queryKey: ["question"],
     queryFn: () =>
@@ -23,7 +25,14 @@ const Post = () => {
         return res.data;
       }),
   });
-
+  const deletePost = useMutation((id) => {
+    return newRequest.delete(`questions/${id}`);
+  }, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("question");
+      navigate("/");
+    },
+  });
 
   const [vote, setVote] = useState(0);
 
@@ -47,6 +56,7 @@ const Post = () => {
   const handleOption = () => {
     setisOption(prev => !prev)
   }
+  
   return (
     <div className="flex flex-col w-full">
       {/**Post Details */}
@@ -81,7 +91,11 @@ const Post = () => {
                             <BiEditAlt size={20} />
                             <p>Edit</p>
                           </div>
-                          <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                          <div onClick={()=>{
+                            deletePost.mutate(data._id)
+                            alert("Question Deleted")
+                            navigate('/')
+                          }} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                             <MdOutlineDeleteOutline className=" text-red-600" size={20} />
                             <p>Delete</p>
                           </div>
