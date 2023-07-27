@@ -8,7 +8,7 @@ const Feed = ({_id, title, desc, category, createdAt, userInfo:pstby, upvote:up,
     const vote = up - dwn;
     const timeAgo =  formatDistanceToNow(new Date(createdAt));
     return (
-        <Link to={`/posts/111${_id}`}>
+        <Link to={`/posts/${_id}`}>
             <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-md hover:shadow-lg ease-in-out duration-300 transition-all">
                 {/**Action */}
                 <div className="flex flex-col items-center justify-start px-4 py-2 ">
