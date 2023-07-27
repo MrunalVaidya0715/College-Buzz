@@ -58,7 +58,7 @@ const Sidebar = () => {
             {
                 user && (
                     <div className='w-full flex flex-col gap-2'>
-                        <Link to="/profile/111">
+                        <Link to={`/profile/${user._id}`}>
                             <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
                                 <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
                                 <p className='group-hover:text-gray-800'>My Profile</p>
