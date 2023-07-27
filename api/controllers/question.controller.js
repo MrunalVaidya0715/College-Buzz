@@ -19,14 +19,31 @@ export const createQuestion = async (req, res, next) => {
 
 export const getQuestions = async (req, res, next) => {
   try {
+    const { category, search, sort } = req.query;
+    let query = {};
 
-    const questions = await Question.find().populate("userInfo", "-password");
+    if (category) {
+      query.category = category;
+    }
+
+    if (search) {
+      query.title = { $regex: new RegExp(search, "i") };
+    }
+
+    let sortOption = { createdAt: -1 };
+
+    if (sort === "oldest") {
+      sortOption = { createdAt: 1 }; 
+    }
+
+    const questions = await Question.find(query).sort(sortOption).populate("userInfo", "-password");
 
     res.status(200).json(questions);
   } catch (error) {
     next(error);
   }
 };
+
 
 export const getQuestion = async (req, res, next) => {
   try {
