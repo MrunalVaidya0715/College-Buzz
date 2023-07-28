@@ -29,10 +29,20 @@ const questionSchema = new Schema(
       type: Number,
       default: 0, 
     },
+    upvotedBy: [
+      { type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User' 
+      }
+    ],
     downvote: {
       type: Number,
       default: 0,
     },
+    downvotedBy: [
+      { type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User' 
+      }
+    ],
     
   },
   {
