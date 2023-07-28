@@ -71,7 +71,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
                             <RxDotFilled size={16} />
                         </div>
                         <div className='flex gap-1 items-center'>
-                            <p className='flex gap-1 items-center'><span>{dwn}</span><span className='hidden md:block'>upvotes</span><BiDownArrowAlt className='md:hidden' size={20} /></p>
+                            <p className='flex gap-1 items-center'><span>{dwn}</span><span className='hidden md:block'>downvotes</span><BiDownArrowAlt className='md:hidden' size={20} /></p>
                         </div>
                         <div className=' flex'>
                             <RxDotFilled size={16} />
