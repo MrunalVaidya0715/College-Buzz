@@ -6,10 +6,6 @@ import parser from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
 const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
     const user =JSON.parse(localStorage.getItem("currentUser"))
-    if (!pstby) {
-        return null;
-    }
-    console.log("data:", _id, pstby)
     const vote = up - dwn;
     const timeAgo = formatDistanceToNow(new Date(createdAt));
     return (
