@@ -6,6 +6,10 @@ import parser from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
 const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
     const user =JSON.parse(localStorage.getItem("currentUser"))
+    if (!pstby) {
+        return null;
+    }
+    console.log("data:", _id, pstby)
     const vote = up - dwn;
     const timeAgo = formatDistanceToNow(new Date(createdAt));
     return (
@@ -53,7 +57,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
                             <div className=' overflow-x-auto flex flex-wrap items-center'>
                                 <p className=" text-gray-500 text-sm">posted by <span className=" whitespace-nowrap font-semibold text-blue-500">
                                     {
-                                        user._id === pstby._id ? "You" : pstby.username
+                                        user?._id === pstby._id ? "You" : pstby.username
                                     }</span></p>
                                 <div className=' flex'>
                                     <RxDotFilled className=' text-gray-500' size={16} />

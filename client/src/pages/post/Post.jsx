@@ -75,7 +75,7 @@ const Post = () => {
                         <p className="group-hover:underline underline-offset-2  flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">posted by </span>
                           <span className=" whitespace-nowrap font-semibold text-blue-500">
                             {
-                              user._id === data.userInfo._id ? "You" : data.userInfo.username
+                              user?._id === data.userInfo._id ? "You" : data.userInfo.username
                             }
                           </span></p>
 
@@ -96,7 +96,7 @@ const Post = () => {
                       <p>Report</p>
                     </div>
                     {
-                      user._id === data.userInfo._id && (
+                      user?._id === data.userInfo._id && (
                         <>
                           <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                             <BiEditAlt size={20} />
