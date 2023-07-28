@@ -3,6 +3,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import newRequest from '../../../utils/newRequest'
+import Feed from '../../components/Feed'
 const Profile = () => {
     const [section, setSection] = useState("question")
     const handleSection = (option) => {
@@ -18,13 +19,21 @@ const Profile = () => {
                 return res.data;
             }),
     });
+    const { isLoading: isQuesLoading, error: quesError, data: quesData } = useQuery({
+        queryKey: ["userQuestion"],
+        queryFn: () =>
+            newRequest.get(`/questions/${userId}`).then((res) => {
+                return res.data;
+            }),
+    });
+
     return (
         <div className="flex flex-col w-full h-full bg-white">
             {
                 isUserLoading ? "Loading Info..." :
                     userError ? "Something went Wrong" : (
                         <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
-                            <img className="  object-contain w-[50%] h-[50%] rounded-lg" src={userData.profileImg||"/assets/noProfile.png"} alt="" />
+                            <img className="  object-contain w-[50%] h-[50%] rounded-lg" src={userData.profileImg || "/assets/noProfile.png"} alt="" />
                             <div className="flex w-full flex-col items-center">
                                 <h1 className=" font-semibold text-xl">{userData.username}</h1>
                                 <p className=" text-sm text-gray-700">Member since <span className=' text-black'>{formatDistanceToNow(new Date(userData.createdAt))}</span></p>
@@ -47,6 +56,19 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+            {
+                isQuesLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
+                    quesError ? (<h2 className=" text-center">Something went wrong</h2>) :
+                        quesData.length === 0 ? (
+                            <div className="mt-12 flex w-full justify-center flex-col items-center">
+                                <h1 className=" text-3xl font-semibold">No Questions Yet</h1>
+                                {/* <p className=" text-blue-500">Ask Question</p> */}
+                            </div>
+                        ) :
+                            quesData.map((feed) => (
+                                <Feed key={feed._id} {...feed} />
+                            ))
+            }
         </div>
     )
 }
