@@ -106,7 +106,7 @@ const Section = ({ isLoading, error, data }) => {
                         isLoading ? "Loading Top Ques..." :
                             error ? "Something went wrong" :
                                 data.map((que, i) => (
-                                    <div key={que.id} className="w-full flex gap-1 items-baseline justify-between">
+                                    <div key={i} className="w-full flex gap-1 items-baseline justify-between">
                                         <div className='flex overflow-x-auto scrollbar-none items-center gap-1'>
                                             <p className=' font-semibold'>{i + 1}.</p>
                                             <Link to={`posts/${que._id}`}>
