@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { BiUpArrowAlt } from 'react-icons/bi'
+import { BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
+import {BsDash} from 'react-icons/bs'
 import { IoAddOutline, IoClose } from 'react-icons/io5'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -115,8 +116,26 @@ const Section = ({ isLoading, error, data }) => {
                                             </Link>
                                         </div>
                                         <div className='ml-1 flex items-center'>
-                                            <p className=' text-sm font-bold text-blue-600'>{que.upvote - que.downvote}</p>
-                                            <BiUpArrowAlt />
+                                            {
+                                                que.upvote - que.downvote > 0 ? (
+                                                    <>
+                                                        <p className=' text-sm font-bold text-blue-600'>{que.upvote - que.downvote}</p>
+                                                        <BiUpArrowAlt />
+                                                    </>
+                                                ) :
+                                                    que.upvote - que.downvote < 0 ? (
+                                                        <>
+                                                            <p className=' text-sm font-bold text-red-500'>{que.upvote - que.downvote}</p>
+                                                            <BiDownArrowAlt />
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <p className=' text-sm font-bold text-gray-500'>{que.upvote - que.downvote}</p>
+                                                            <BsDash />
+                                                        </>
+                                                    )
+
+                                            }
                                         </div>
                                     </div>
                                 ))
