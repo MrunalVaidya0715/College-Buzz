@@ -108,9 +108,11 @@ const Section = ({ isLoading, error, data }) => {
                                     <div key={que.id} className="w-full flex gap-1 items-baseline justify-between">
                                         <div className='flex overflow-x-auto scrollbar-none items-center gap-1'>
                                             <p className=' font-semibold'>{i + 1}.</p>
-                                            <div className='flex overflow-x-auto scrollbar-none flex-nowrap items-centers'>
-                                                <p className=' whitespace-nowrap text-sm '>{que.title}</p>
-                                            </div>
+                                            <Link to={`posts/${que._id}`}>
+                                                <div className='group flex overflow-x-auto scrollbar-none flex-nowrap items-centers'>
+                                                    <p className='group-hover:text-blue-500 group-hover:underline-offset-2 group-hover:underline whitespace-nowrap text-sm '>{que.title}</p>
+                                                </div>
+                                            </Link>
                                         </div>
                                         <div className='ml-1 flex items-center'>
                                             <p className=' text-sm font-bold text-blue-600'>{que.upvote}</p>
