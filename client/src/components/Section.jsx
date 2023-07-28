@@ -5,39 +5,8 @@ import { IoAddOutline, IoClose } from 'react-icons/io5'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import newRequest from '../../utils/newRequest';
-const topQ = [
-    {
-        id: 1,
-        rank: 1,
-        title: "Cracking the College Admissions Code: Tips & Tricks",
-        upvotes: 37,
-    },
-    {
-        id: 2,
-        rank: 2,
-        title: "Navigating Freshman Year: Tips for a Successful Start!",
-        upvotes: 35,
-    },
-    {
-        id: 3,
-        rank: 3,
-        title: "Balancing Act: Juggling Academics, Work & Social Life",
-        upvotes: 34,
-    },
-    {
-        id: 4,
-        rank: 4,
-        title: "Beyond the Pages: Book Club's Virtual Retreat",
-        upvotes: 28,
-    },
-    {
-        id: 5,
-        rank: 5,
-        title: "Dorm Hacks 101: Transform Your Room into a Cozy Haven",
-        upvotes: 22,
-    },
-]
-const Section = () => {
+
+const Section = ({ isLoading, error, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
     const [modal, setModal] = useState(false)
@@ -133,18 +102,22 @@ const Section = () => {
                 <h1 className=" font-bold">Top Questions</h1>
                 <div className="mt-4 w-full overflow-x-auto flex flex-col gap-2">
                     {
-                        topQ.map((que) => (
-                            <div key={que.id} className="w-full flex gap-1 items-baseline justify-between">
-                                <p className=' font-semibold'>{que.rank}.</p>
-                                <div className='flex overflow-x-auto scrollbar-none flex-nowrap items-center'>
-                                    <p className=' whitespace-nowrap text-sm '>{que.title}</p>
-                                </div>
-                                <div className='ml-1 flex items-center'>
-                                    <p className=' text-sm font-bold text-blue-600'>{que.upvotes}</p>
-                                    <BiUpArrowAlt />
-                                </div>
-                            </div>
-                        ))
+                        isLoading ? "Loading Top Ques..." :
+                            error ? "Something went wrong" :
+                                data.map((que, i) => (
+                                    <div key={que.id} className="w-full flex gap-1 items-baseline justify-between">
+                                        <div className='flex overflow-x-auto scrollbar-none items-center gap-1'>
+                                            <p className=' font-semibold'>{i + 1}.</p>
+                                            <div className='flex overflow-x-auto scrollbar-none flex-nowrap items-centers'>
+                                                <p className=' whitespace-nowrap text-sm '>{que.title}</p>
+                                            </div>
+                                        </div>
+                                        <div className='ml-1 flex items-center'>
+                                            <p className=' text-sm font-bold text-blue-600'>{que.upvote}</p>
+                                            <BiUpArrowAlt />
+                                        </div>
+                                    </div>
+                                ))
                     }
 
 
