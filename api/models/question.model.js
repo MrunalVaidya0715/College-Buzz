@@ -43,6 +43,10 @@ const questionSchema = new Schema(
         ref: 'User' 
       }
     ],
+    answers: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Answer',
+    }],
     
   },
   {

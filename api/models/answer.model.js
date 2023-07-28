@@ -13,6 +13,11 @@ const answerSchema = new Schema(
       ref: 'User',
       required: true,
     },
+    questionId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Question',
+        required: true,
+      },
     desc: {
       type: String,
       required: true,
