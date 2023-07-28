@@ -4,7 +4,7 @@ import { BiSearch } from 'react-icons/bi'
 import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
 import { RiQuestionAnswerLine } from 'react-icons/ri'
 import { CgProfile } from 'react-icons/cg'
-import { Link, useNavigate } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { IoAddOutline, IoClose } from 'react-icons/io5'
@@ -14,11 +14,13 @@ const links = [
     {
         id: 1,
         name: "Home",
+        url: "/",
         icon: <AiOutlineHome size={20} />
     },
     {
         id: 2,
         name: "Explore Questions",
+        url: "/explore",
         icon: <MdOutlineExplore size={20} />
     },
 
@@ -27,7 +29,7 @@ const links = [
 const Navbar = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
-
+    const location = useLocation()
     const [options, setOptions] = useState(false)
     const [err, setErr] = useState(null)
     const handleOptions = () => {
@@ -145,23 +147,25 @@ const Navbar = () => {
 
                                 {
                                     links.map((link) => (
-                                        <div onClick={() => setOptions(false)} key={link.id} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
-                                            <span className='group-hover:text-gray-800'>{link.icon}</span>
-                                            <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
-                                        </div>
+                                        <Link key={link.id} to={link.url}>
+                                            <div onClick={() => setOptions(false)} className={` ${location.pathname === link.url ? " text-black":"text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
+                                                <span className='group-hover:text-gray-800'>{link.icon}</span>
+                                                <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
+                                            </div>
+                                        </Link>
                                     ))
                                 }
                                 {
                                     user && (
                                         <>
                                             <Link to={`/my-questions/${user._id}`}>
-                                                <div onClick={() => setOptions(false)} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                                <div onClick={() => setOptions(false)} className={` ${location.pathname === `/my-questions/${user?._id}` ? " text-black":"text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
                                                     <span className='group-hover:text-gray-800'><RiQuestionAnswerLine size={20} /></span>
                                                     <p className=' whitespace-nowrap group-hover:text-gray-800'>My Questions</p>
                                                 </div>
                                             </Link>
                                             <Link to={`/profile/${user._id}`}>
-                                                <div onClick={() => setOptions(false)} className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                                <div onClick={() => setOptions(false)} className={` ${location.pathname === `/profile/${user?._id}` ? " text-black":"text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
                                                     <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
                                                     <p className=' whitespace-nowrap group-hover:text-gray-800'>My Profile</p>
                                                 </div>
