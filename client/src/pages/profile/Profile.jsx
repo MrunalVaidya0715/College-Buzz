@@ -46,7 +46,10 @@ const Profile = () => {
                 <div onClick={() => handleSection("question")} className={` ${section === "question" ? "bg-blue-500 text-white" : "bg-white"} cursor-pointer hover:bg-slate-200 hover:text-black active:bg-slate-300 border-2 border-r-[1px] rounded-l-full border-gray-700 flex gap-1 w-full h-12 justify-center items-center transition-all duration-150 ease-in-out`}>
                     <div className='flex gap-1 items-baseline'>
                         <p className=" text-sm">Questions</p>
-                        <p className=" text-lg font-semibold">25</p>
+                        {
+                            isQuesLoading? "-":
+                            quesError? "?":<p className=" text-lg font-semibold">{quesData.length}</p>
+                        }
                     </div>
                 </div>
                 <div onClick={() => handleSection("answer")} className={` ${section === "answer" ? "bg-blue-500 text-white" : "bg-white"} cursor-pointer hover:bg-slate-200 hover:text-black active:bg-slate-300 border-2 border-l-[1px] rounded-r-full border-gray-700 flex gap-1 w-full h-12 justify-center items-center transition-all duration-150 ease-in-out`}>
