@@ -89,7 +89,7 @@ const Navbar = () => {
             <div className=" relative px-2 w-full h-full max-w-[1200px] flex gap-4 items-center justify-between">
                 <div>
                     <Link to='/'>
-                        <h1 className=' font-bold'>College<span className=' text-blue-600'>Buzz</span></h1>
+                        <h1 className='flex text-lg font-bold'>C<span className='hidden sm:block'>ollege</span><span className=' text-blue-600 flex'>B<span className='hidden sm:block'>uzz</span></span></h1>
                     </Link>
                 </div>
                 <div className='hidden md:flex '>
