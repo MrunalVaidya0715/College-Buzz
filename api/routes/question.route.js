@@ -9,6 +9,6 @@ router.get("/single/:id", getQuestion)
 router.get("/", getQuestions)
 router.get("/:userId", getQuestionsByUserId)
 router.delete("/:id", verifyToken, deleteQuestion)
-router.patch("/single/:id", verifyToken, handleUpvote)
-router.patch("/single/:id", verifyToken, handleDownvote)
+router.patch("/upvote/:id", verifyToken, handleUpvote)
+router.patch("/downvote/:id", verifyToken, handleDownvote)
 export default router;
