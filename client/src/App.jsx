@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-query'
 import Profile from './pages/profile/Profile';
 import MyQuestions from './pages/myQuestions/MyQuestions';
+import Explore from './pages/explore/Explore';
 
 function App() {
 
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route exact path='/' element={< Home />}>
               <Route path='' element={<Posts />} />
+              <Route path='/explore' element={<Explore />} />
               <Route path='/posts/:id' element={<Post />} />
               <Route path='/profile/:userId' element={<Profile />} />
               <Route path='/my-questions/:userId' element={<MyQuestions/>} />

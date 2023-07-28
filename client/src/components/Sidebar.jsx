@@ -15,7 +15,7 @@ const links = [
     {
         id: 2,
         name: "Explore Questions",
-        url: "/",
+        url: "/explore",
         icon: <MdOutlineExplore size={20} />
     },
 
@@ -45,7 +45,7 @@ const Sidebar = () => {
                 {
                     links.map((link) => (
                         <Link key={link.id} to={link.url}>
-                            <div className={` ${location.pathname === "/" ? "bg-blue-200 text-blue-600 border-l-4 border-blue-700" : "text-gray-500"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
+                            <div className={` ${location.pathname === link.url ? "bg-blue-200 text-blue-600 border-l-4 border-blue-700" : "text-gray-500"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
                                 <span className='group-hover:text-gray-800'>{link.icon}</span>
                                 <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
                             </div>
