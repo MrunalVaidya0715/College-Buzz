@@ -12,6 +12,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../../utils/newRequest";
 import parser from 'html-react-parser';
 import { formatDistanceToNow } from "date-fns"
+import AddAnswer from "../../components/AddAnswer"
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
 
@@ -98,6 +99,13 @@ const Post = () => {
   const [isOption, setisOption] = useState(false);
   const handleOption = () => {
     setisOption(prev => !prev)
+  }
+  const [isAnswer, setIsAnswer] = useState(false)
+  const handleAnswer = () =>{
+    setIsAnswer(prev => !prev)
+  }
+  const handleCloseAnswer = () =>{
+    setIsAnswer(false)
   }
 
   return (
@@ -188,7 +196,7 @@ const Post = () => {
                   <FaArrowDown onClick={handleDown} className={`cursor-pointer ${data.downvotedBy.includes(user?._id) ? "text-red-500" : " text-gray-400"}`} size={20} />
                 </div>
 
-                <div className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
+                <div onClick={handleAnswer} className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
                   <BiListPlus className='' size={22} />
                  <p className=" font-semibold">Answer</p>
                 </div>
@@ -197,7 +205,9 @@ const Post = () => {
             </div>
           )
       }
-      
+      {
+        isAnswer && <AddAnswer handleCloseAnswer={handleCloseAnswer} data={data} />
+      }
 
       {/**Comments/replies */}
       <Reviews />
