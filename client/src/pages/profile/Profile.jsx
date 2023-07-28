@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import newRequest from '../../../utils/newRequest'
 import Feed from '../../components/Feed'
+import {MdOutlineAddAPhoto} from 'react-icons/md'
 const Profile = () => {
     const [section, setSection] = useState("question")
     const handleSection = (option) => {
@@ -32,8 +33,11 @@ const Profile = () => {
             {
                 isUserLoading ? "Loading Info..." :
                     userError ? "Something went Wrong" : (
-                        <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
-                            <img className="  object-contain w-[50%] h-[50%] rounded-lg" src={userData.profileImg || "/assets/noProfile.png"} alt="" />
+                        <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] max-h-[300px] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
+                            <div className=' relative w-fit h-[50%]'>
+                                <div className=' cursor-pointer absolute border-[1px] border-gray-200 -bottom-2 -right-4 p-2 bg-white hover:bg-slate-200 active:bg-slate-300 rounded-full transition-all duration-150 ease-in-out'><MdOutlineAddAPhoto size={16}/></div>
+                                <img className="  object-contain w-full h-full rounded-lg" src={userData.profileImg || "/assets/noProfile.png"} alt="" />
+                            </div>
                             <div className="flex w-full flex-col items-center">
                                 <h1 className=" font-semibold text-xl">{userData.username}</h1>
                                 <p className=" text-sm text-gray-700">Member since <span className=' text-black'>{formatDistanceToNow(new Date(userData.createdAt))}</span></p>
@@ -47,8 +51,8 @@ const Profile = () => {
                     <div className='flex gap-1 items-baseline'>
                         <p className=" text-sm">Questions</p>
                         {
-                            isQuesLoading? "-":
-                            quesError? "?":<p className=" text-lg font-semibold">{quesData.length}</p>
+                            isQuesLoading ? "-" :
+                                quesError ? "?" : <p className=" text-lg font-semibold">{quesData.length}</p>
                         }
                     </div>
                 </div>
