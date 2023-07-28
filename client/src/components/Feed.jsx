@@ -10,7 +10,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
     const timeAgo = formatDistanceToNow(new Date(createdAt));
     return (
         <Link to={`/posts/${_id}`}>
-            <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-md hover:shadow-lg ease-in-out duration-300 transition-all">
+            <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-sm hover:shadow-lg ease-in-out duration-300 transition-all">
                 {/**Action */}
                 <div className="flex flex-col items-center justify-start px-4 py-2 ">
                     <BiUpArrowAlt className={`${vote > 0 ? " text-blue-600" : " text-gray-400"}`} size={20} />

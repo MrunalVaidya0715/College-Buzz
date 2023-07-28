@@ -99,7 +99,7 @@ const Section = ({ isLoading, error, data }) => {
                 )
             }
             {/**Top Questions */}
-            <div className="border-[1px] bg-white shadow-md px-2 py-4 w-full flex flex-col gap-2">
+            <div className="border-[1px] bg-white shadow-sm px-2 py-4 w-full flex flex-col gap-2">
                 <h1 className=" font-bold">Top Questions</h1>
                 <div className="mt-4 w-full overflow-x-auto flex flex-col gap-2">
                     {
