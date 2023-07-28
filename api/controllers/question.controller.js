@@ -43,7 +43,15 @@ export const getQuestions = async (req, res, next) => {
     next(error);
   }
 };
-
+ export const getQuestionsByUserId = async (req, res, next)=>{
+  try {
+    const userId = req.params.userId
+    const questions = await Question.find({userId})
+    res.status(200).send(questions)
+  } catch (error) {
+    next(error)
+  }
+ }
 
 export const getQuestion = async (req, res, next) => {
   try {
