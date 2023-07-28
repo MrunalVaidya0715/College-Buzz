@@ -46,7 +46,7 @@ const Post = () => {
   );
   const handleUp = async () => {
     if (!user) {
-      return;
+      navigate('/login')
     }
 
     try {
@@ -71,7 +71,7 @@ const Post = () => {
 
   const handleDown = async () => {
     if (!user) {
-      return;
+      navigate('/login')
     }
 
     try {
