@@ -1,4 +1,4 @@
-import { BiCommentDetail } from "react-icons/bi"
+import { BiListPlus } from "react-icons/bi"
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiFlagLine } from 'react-icons/ri'
@@ -188,16 +188,16 @@ const Post = () => {
                   <FaArrowDown onClick={handleDown} className={`cursor-pointer ${data.downvotedBy.includes(user?._id) ? "text-red-500" : " text-gray-400"}`} size={20} />
                 </div>
 
-                <div className=' flex items-center gap-1'>
-                  <BiCommentDetail className='' size={25} />
-                  <span>10</span>
+                <div className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
+                  <BiListPlus className='' size={22} />
+                 <p className=" font-semibold">Answer</p>
                 </div>
               </div>
 
             </div>
           )
       }
-
+      
 
       {/**Comments/replies */}
       <Reviews />
