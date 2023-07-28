@@ -16,12 +16,7 @@ const links = [
         name: "Explore Questions",
         icon: <MdOutlineExplore size={20} />
     },
-    {
-        id: 3,
-        name: "My Questions",
-        icon: <RiQuestionAnswerLine size={20} />
 
-    },
 
 ]
 const Sidebar = () => {
@@ -53,6 +48,16 @@ const Sidebar = () => {
                             <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
                         </div>
                     ))
+                }
+                {
+                    user && (
+                        <Link to="/my-questions">
+                            <div className=" group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2 text-gray-500 items-center">
+                                <span className='group-hover:text-gray-800'><RiQuestionAnswerLine size={20} /></span>
+                                <p className=' whitespace-nowrap group-hover:text-gray-800'>My Questions</p>
+                            </div>
+                        </Link>
+                    )
                 }
             </div>
             {
