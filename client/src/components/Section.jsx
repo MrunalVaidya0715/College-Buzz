@@ -50,7 +50,6 @@ const Section = () => {
         category: "",
 
     });
-    console.log(question)
     const handleChange = (e) => {
         setQuestion((prev) => {
             return { ...prev, [e.target.name]: e.target.value };
