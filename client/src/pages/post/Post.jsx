@@ -75,7 +75,7 @@ const Post = () => {
     }
   }, [data]);
 
-  
+
 
   const [isOption, setisOption] = useState(false);
   const handleOption = () => {
@@ -160,11 +160,14 @@ const Post = () => {
               {/*Actions */}
               <div className='mt-1 flex w-full  text-gray-500 items-center justify-between gap-1'>
                 <div className=" flex items-center gap-3">
-                  <FaArrowUp onClick={handleUp} className=" cursor-pointer" size={20} />
-                  <div className=''>
-                    <p className=" font-semibold text-lg">{vote}</p>
-                  </div>
-                  <FaArrowDown onClick={handleDown} className=" cursor-pointer" size={20} />
+                  <FaArrowUp onClick={handleUp} className={`cursor-pointer ${data.upvotedBy.includes(user?._id) ? "text-blue-500" : " text-gray-400"}`} size={20} />
+                  <span className={`${vote > 0 ? " text-blue-600" : vote < 0 ? " text-red-500" : " text-gray-400"} font-semibold text-lg`}>
+                    {
+                      vote > 0 ? (vote) :
+                        vote < 0 ? (vote * -1) : 0
+                    }
+                  </span>
+                  <FaArrowDown onClick={handleDown} className={`cursor-pointer ${data.downvotedBy.includes(user?._id) ? "text-red-500" : " text-gray-400"}`} size={20}/>
                 </div>
 
                 <div className=' flex items-center gap-1'>
