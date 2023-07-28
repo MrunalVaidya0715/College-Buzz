@@ -33,6 +33,37 @@ const Post = () => {
       navigate("/");
     },
   });
+  const handleUp = async () => {
+    if (!user) {
+      // If the user is not logged in, handle the scenario here (e.g., show a login prompt)
+      return;
+    }
+
+    try {
+      // Call the backend API to upvote or undo upvote
+      const response = await newRequest.patch(`/questions/upvote/${id}`);
+      const newVote = response.data.upvote - response.data.downvote;
+      setVote(newVote);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleDown = async () => {
+    if (!user) {
+      // If the user is not logged in, handle the scenario here (e.g., show a login prompt)
+      return;
+    }
+
+    try {
+      // Call the backend API to downvote or undo downvote
+      const response = await newRequest.patch(`/questions/downvote/${id}`);
+      const newVote = response.data.upvote - response.data.downvote;
+      setVote(newVote);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const [vote, setVote] = useState(0);
 
@@ -44,13 +75,7 @@ const Post = () => {
     }
   }, [data]);
 
-  const handleUp = () => {
-    setVote((prevVote) => prevVote + 1);
-  };
-
-  const handleDown = () => {
-    setVote((prevVote) => prevVote - 1);
-  };
+  
 
   const [isOption, setisOption] = useState(false);
   const handleOption = () => {
