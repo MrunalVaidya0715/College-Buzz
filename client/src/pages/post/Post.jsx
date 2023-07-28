@@ -33,31 +33,49 @@ const Post = () => {
       navigate("/");
     },
   });
+  const upvoteMutation = useMutation((id) => newRequest.patch(`/questions/upvote/${id}`),
+    {
+      onMutate: () => {},
+      onError: (error) => {
+        console.error("Upvote error:", error);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("question");
+      },
+    }
+  );
   const handleUp = async () => {
     if (!user) {
-      // If the user is not logged in, handle the scenario here (e.g., show a login prompt)
       return;
     }
 
     try {
-      // Call the backend API to upvote or undo upvote
-      const response = await newRequest.patch(`/questions/upvote/${id}`);
+      const response = await upvoteMutation.mutateAsync(id);
       const newVote = response.data.upvote - response.data.downvote;
       setVote(newVote);
     } catch (error) {
       console.error(error);
     }
   };
+  const downvoteMutation = useMutation((id) => newRequest.patch(`/questions/downvote/${id}`),
+    {
+      onMutate: () => {},
+      onError: (error) => {
+        console.error("Downvote error:", error);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("question");
+      },
+    }
+  );
 
   const handleDown = async () => {
     if (!user) {
-      // If the user is not logged in, handle the scenario here (e.g., show a login prompt)
       return;
     }
 
     try {
-      // Call the backend API to downvote or undo downvote
-      const response = await newRequest.patch(`/questions/downvote/${id}`);
+      const response = await downvoteMutation.mutateAsync(id);
       const newVote = response.data.upvote - response.data.downvote;
       setVote(newVote);
     } catch (error) {
@@ -167,7 +185,7 @@ const Post = () => {
                         vote < 0 ? (vote * -1) : 0
                     }
                   </span>
-                  <FaArrowDown onClick={handleDown} className={`cursor-pointer ${data.downvotedBy.includes(user?._id) ? "text-red-500" : " text-gray-400"}`} size={20}/>
+                  <FaArrowDown onClick={handleDown} className={`cursor-pointer ${data.downvotedBy.includes(user?._id) ? "text-red-500" : " text-gray-400"}`} size={20} />
                 </div>
 
                 <div className=' flex items-center gap-1'>
