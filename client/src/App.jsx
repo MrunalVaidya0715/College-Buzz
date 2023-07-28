@@ -25,7 +25,7 @@ function App() {
               <Route path='' element={<Posts />} />
               <Route path='/posts/:id' element={<Post />} />
               <Route path='/profile/:userId' element={<Profile />} />
-              <Route path='/my-questions' element={<MyQuestions/>} />
+              <Route path='/my-questions/:userId' element={<MyQuestions/>} />
             </Route>
 
             <Route exact path='/login' element={< Login />}></Route>
