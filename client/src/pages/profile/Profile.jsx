@@ -29,7 +29,7 @@ const Profile = () => {
     });
 
     return (
-        <div className="flex flex-col w-full h-full  bg-white">
+        <div className="flex flex-col w-full h-full ">
             {
                 isUserLoading ? "Loading Info..." :
                     userError ? "Something went Wrong" : (
@@ -65,7 +65,7 @@ const Profile = () => {
             </div>
             {
                 section === "question" ? (
-                    <div className="p-2 relative bg-white h-auto w-full flex flex-col gap-4 md:gap-8">
+                    <div className="relative h-auto w-full flex flex-col gap-4 md:gap-8">
                         {
                             isQuesLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
                                 quesError ? (<h2 className=" text-center">Something went wrong</h2>) :

@@ -14,9 +14,9 @@ const MyQuestions = () => {
       }),
   });
   return (
-    <div className="flex w-full flex-col min-h-full h-auto bg-white">
+    <div className="flex w-full flex-col min-h-full h-auto">
       <h1 className=" text-3xl font-semibold text-center my-2">Your Questions</h1>
-      <div className="p-2 relative bg-white h-auto w-full flex flex-col gap-4 md:gap-8">
+      <div className="mt-4 relative h-auto w-full flex flex-col gap-4 md:gap-8">
         {
           isLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
             error ? (<h2 className=" text-center">Something went wrong</h2>) :
