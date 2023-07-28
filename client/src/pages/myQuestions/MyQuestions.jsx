@@ -14,7 +14,7 @@ const MyQuestions = () => {
       }),
   });
   return (
-    <div className="flex w-full flex-col h-auto bg-white">
+    <div className="flex w-full flex-col min-h-full h-auto bg-white">
       <h1 className=" text-3xl font-semibold text-center my-2">Your Questions</h1>
       <div className="p-2 relative h-auto w-full flex flex-col gap-4 md:gap-8">
         {
