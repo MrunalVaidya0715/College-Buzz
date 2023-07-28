@@ -115,7 +115,7 @@ const Section = ({ isLoading, error, data }) => {
                                             </Link>
                                         </div>
                                         <div className='ml-1 flex items-center'>
-                                            <p className=' text-sm font-bold text-blue-600'>{que.upvote}</p>
+                                            <p className=' text-sm font-bold text-blue-600'>{que.upvote - que.downvote}</p>
                                             <BiUpArrowAlt />
                                         </div>
                                     </div>
