@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
 import parser from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
-const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt, answers }) => {
+const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
     const user =JSON.parse(localStorage.getItem("currentUser"))
     const vote = up - dwn;
     const timeAgo = formatDistanceToNow(new Date(createdAt));
@@ -63,7 +63,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
                         </div>
 
                     </div>
-                    <div className='mt-1 flex flex-wrap w-full  text-gray-500 items-center gap-1'>
+                    {/* <div className='mt-1 flex flex-wrap w-full  text-gray-500 items-center gap-1'>
                         <div className='flex gap-1 items-center'>
                             <p className='flex gap-1 items-center'><span>{up}</span><span className='hidden md:block'>upvotes</span><BiUpArrowAlt className='md:hidden' size={20} /></p>
                         </div>
@@ -78,9 +78,9 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
                         </div>
                         <div className=' flex items-center gap-1'>
                             <BiCommentDetail className='' size={20} />
-                            <span>{answers.length}</span>
+                            <span>{cmt}</span>
                         </div>
-                    </div>
+                    </div> */}
 
                 </div>
             </div>
