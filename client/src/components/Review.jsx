@@ -6,14 +6,10 @@ import { RiFlagLine } from "react-icons/ri";
 import { RxDotFilled } from 'react-icons/rx'
 import { formatDistanceToNow } from "date-fns";
 import parse from 'html-react-parser'
-const Review = ({_id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn,}) => {
-    const [vote, setVote] = useState(20)
-    const handleUp = () => {
-        setVote(vote + 1)
-    }
-    const handleDown = () => {
-        setVote(vote - 1)
-    }
+const Review = ({ _id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn, }) => {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+    const vote = up - dwn;
+
     const [isOption, setisOption] = useState(false);
     const handleOption = () => {
         setisOption(prev => !prev)
@@ -25,7 +21,12 @@ const Review = ({_id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dw
                 <div className="flex w-full gap-2 items-center">
                     <img className=" w-8 h-8 object-cover object-center rounded-full" src={pstby.profileImg || "/assets/noProfile.png"} alt={pstby.username} />
                     <div className=' overflow-x-auto flex flex-wrap items-center gap-1'>
-                        <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span><span className=" whitespace-nowrap font-semibold text-blue-500">{pstby.username}</span></p>
+                        <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span>
+                            <span className=" whitespace-nowrap font-semibold text-blue-500">
+                                {
+                                    user?._id === pstby._id ? "You" : pstby.username
+                                }
+                            </span></p>
                         <RxDotFilled className=" text-gray-500" size={16} />
                         <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(createdAt))}</p>
                     </div>
@@ -46,11 +47,11 @@ const Review = ({_id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dw
             </div>
             <div className='mt-1 flex w-full  text-gray-500 items-center justify-end gap-1'>
                 <div className=" flex items-center gap-3">
-                    <FaArrowUp onClick={handleUp} className=" cursor-pointer" size={20} />
+                    <FaArrowUp className=" cursor-pointer" size={20} />
                     <div className=''>
                         <p className=" font-semibold text-lg">{vote}</p>
                     </div>
-                    <FaArrowDown onClick={handleDown} className=" cursor-pointer" size={20} />
+                    <FaArrowDown className=" cursor-pointer" size={20} />
                 </div>
 
             </div>
