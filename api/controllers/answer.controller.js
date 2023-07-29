@@ -5,7 +5,7 @@ import createError from "../utils/createError.js";
 export const createAnswer = async (req, res, next) => {
   try {
     const userId = req.userId;
-    const {questionId} = req.body;
+    const { questionId } = req.body;
     const question = await Question.findOne({ _id: questionId });
     if (!question) {
       return next(createError(404, "Question Doesn't Exist"));
@@ -19,6 +19,16 @@ export const createAnswer = async (req, res, next) => {
     question.answers.push(savedAnswer._id);
     await question.save();
     res.status(201).send(savedAnswer);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAnswersByQuesId = async (req, res, next) => {
+  try {
+    const questionId = req.params.quesId;
+    const answers = await Answer.find({ questionId }).populate("userInfo");
+    res.status(200).send(answers);
   } catch (error) {
     next(error);
   }
