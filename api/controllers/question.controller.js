@@ -182,7 +182,19 @@ export const handleDownvote = async (req, res, next) => {
 
 export const getTopQuestions = async(req, res, next) =>{
   try {
-    const topQuestions = await Question.find().sort({upvote: -1}).limit(5)
+    const topQuestions = await Question.aggregate([
+      {
+        $addFields: {
+          netVote: { $subtract: ["$upvote", "$downvote"] }, 
+        },
+      },
+      {
+        $sort: { netVote: -1 }, 
+      },
+      {
+        $limit: 5,
+      },
+    ]);
     res.status(200).send(topQuestions)
   } catch (error) {
     next(error)
