@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom'
 import newRequest from '../../../utils/newRequest'
 import Feed from '../../components/Feed'
 import { MdOutlineAddAPhoto } from 'react-icons/md'
+import Answered from '../../components/Answered'
 const Profile = () => {
     const [section, setSection] = useState("question")
     const handleSection = (option) => {
@@ -102,7 +103,7 @@ const Profile = () => {
                                         </div>
                                     ) :
                                         ansData.map((ans) => (
-                                            <h1 key={ans._id} {...ans} >Ho</h1>
+                                            <Answered key={ans._id} {...ans} />
                                         ))
                         }
                     </div>
