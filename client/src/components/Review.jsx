@@ -100,12 +100,9 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
 
                     <BsThreeDotsVertical onClick={handleOption} className=" cursor-pointer text-gray-700 hover:text-black duration-150 transition-colors ease-in-out" size={22} />
                     <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} absolute top-0 right-5 px-1 py-2 flex-col items-start bg-white  border-[1px] rounded-md  `}>
-                        <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
-                            <RiFlagLine size={18} />
-                            <p>Report</p>
-                        </div>
+
                         {
-                            user?._id === pstby._id && (
+                            user?._id === pstby._id ? (
                                 <>
                                     <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                                         <BiEditAlt size={20} />
@@ -119,6 +116,11 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
                                         <p>Delete</p>
                                     </div>
                                 </>
+                            ) : (
+                                <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                                    <RiFlagLine size={18} />
+                                    <p>Report</p>
+                                </div>
                             )
                         }
 

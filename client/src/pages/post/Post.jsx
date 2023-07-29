@@ -36,7 +36,7 @@ const Post = () => {
   });
   const upvoteMutation = useMutation((id) => newRequest.patch(`/questions/upvote/${id}`),
     {
-      onMutate: () => {},
+      onMutate: () => { },
       onError: (error) => {
         console.error("Upvote error:", error);
       },
@@ -60,7 +60,7 @@ const Post = () => {
   };
   const downvoteMutation = useMutation((id) => newRequest.patch(`/questions/downvote/${id}`),
     {
-      onMutate: () => {},
+      onMutate: () => { },
       onError: (error) => {
         console.error("Downvote error:", error);
       },
@@ -101,10 +101,10 @@ const Post = () => {
     setisOption(prev => !prev)
   }
   const [isAnswer, setIsAnswer] = useState(false)
-  const handleAnswer = () =>{
+  const handleAnswer = () => {
     setIsAnswer(prev => !prev)
   }
-  const handleCloseAnswer = () =>{
+  const handleCloseAnswer = () => {
     setIsAnswer(false)
   }
 
@@ -142,12 +142,9 @@ const Post = () => {
 
                   <BsThreeDotsVertical onClick={handleOption} className=" cursor-pointer text-gray-700 hover:text-black duration-150 transition-colors ease-in-out" size={22} />
                   <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} absolute top-0 right-5 px-1 py-2 flex-col items-start bg-white  border-[1px] rounded-md  `}>
-                    <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
-                      <RiFlagLine size={18} />
-                      <p>Report</p>
-                    </div>
+
                     {
-                      user?._id === data.userInfo._id && (
+                      user?._id === data.userInfo._id ? (
                         <>
                           <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                             <BiEditAlt size={20} />
@@ -162,6 +159,11 @@ const Post = () => {
                             <p>Delete</p>
                           </div>
                         </>
+                      ) : (
+                        <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                          <RiFlagLine size={18} />
+                          <p>Report</p>
+                        </div>
                       )
                     }
 
@@ -198,7 +200,7 @@ const Post = () => {
 
                 <div onClick={handleAnswer} className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
                   <BiListPlus className='' size={22} />
-                 <p className=" font-semibold">Answer</p>
+                  <p className=" font-semibold">Answer</p>
                 </div>
               </div>
 
