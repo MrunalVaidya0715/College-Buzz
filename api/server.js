@@ -23,6 +23,8 @@ const connect = async() =>{
     }
 }
 app.use(cors({ origin: ["http://localhost:5173","https://collegebuzz.vercel.app"], credentials: true }));
+app.set("trust proxy", 1);
+
 app.use(express.json())
 app.use(cookieParser())
 
