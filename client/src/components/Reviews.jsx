@@ -7,7 +7,7 @@ const Reviews = () => {
   const { id } = useParams();
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['answers'],
-    queryFn: () => newRequest.get(`answers/${id}`).then((res) => {
+    queryFn: () => newRequest.get(`answers/question/${id}`).then((res) => {
       return res.data
     })
 
