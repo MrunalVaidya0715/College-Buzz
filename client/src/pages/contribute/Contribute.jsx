@@ -49,7 +49,7 @@ const Contribute = () => {
             error ? (<h2 className=" text-center">Something went wrong</h2>) :
               filterPosts.length === 0 ? (
                 <div className="mt-12 flex w-full justify-center flex-col items-center">
-                  <h1 className=" text-3xl font-semibold">No Questions Yet</h1>
+                  <h1 className=" text-3xl font-semibold">Nothing to Contribute...</h1>
                   {/* <p className=" text-blue-500">Ask Question</p> */}
                 </div>
               ) :
