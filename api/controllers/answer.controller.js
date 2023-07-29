@@ -27,7 +27,7 @@ export const createAnswer = async (req, res, next) => {
 export const getAnswersByQuesId = async (req, res, next) => {
   try {
     const questionId = req.params.quesId;
-    const answers = await Answer.find({ questionId }).populate("userInfo");
+    const answers = await Answer.find({ questionId }).populate("userInfo","-password");
     res.status(200).send(answers);
   } catch (error) {
     next(error);
