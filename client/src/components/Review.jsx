@@ -4,7 +4,9 @@ import { BsThreeDotsVertical } from "react-icons/bs"
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { RiFlagLine } from "react-icons/ri";
 import { RxDotFilled } from 'react-icons/rx'
-const Review = () => {
+import { formatDistanceToNow } from "date-fns";
+import parse from 'html-react-parser'
+const Review = ({_id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn,}) => {
     const [vote, setVote] = useState(20)
     const handleUp = () => {
         setVote(vote + 1)
@@ -21,11 +23,11 @@ const Review = () => {
             {isOption && <div onClick={() => setisOption(false)} className=" absolute top-0 right-0 w-full h-full" />}
             <div className="flex items-center justify-between">
                 <div className="flex w-full gap-2 items-center">
-                    <img className=" w-8 h-8 object-cover object-center rounded-full" src="/assets/cbProfile.jpeg" alt="" />
+                    <img className=" w-8 h-8 object-cover object-center rounded-full" src={pstby.profileImg || "/assets/noProfile.png"} alt={pstby.username} />
                     <div className=' overflow-x-auto flex flex-wrap items-center gap-1'>
-                        <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span><span className=" whitespace-nowrap font-semibold text-blue-500">John Doe</span></p>
+                        <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span><span className=" whitespace-nowrap font-semibold text-blue-500">{pstby.username}</span></p>
                         <RxDotFilled className=" text-gray-500" size={16} />
-                        <p className=" whitespace-nowrap text-sm">4hr</p>
+                        <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(createdAt))}</p>
                     </div>
                 </div>
                 <div className=" relative flex gap-2 items-center">
@@ -39,8 +41,7 @@ const Review = () => {
             </div>
             <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-none'>
                 <p className=" text-gray-800 text-justify">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi, delectus dolores nemo quaerat eius beatae provident rem iste numquam totam libero consequuntur distinctio, natus soluta, ut minus officiis? Dolores non mollitia corrupti nobis neque. Quia incidunt magni porro repudiandae cupiditate excepturi consequatur unde ipsa ut corporis, eveniet quas non expedita!
-
+                    {parse(desc)}
                 </p>
             </div>
             <div className='mt-1 flex w-full  text-gray-500 items-center justify-end gap-1'>
