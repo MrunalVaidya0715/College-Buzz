@@ -9,6 +9,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { IoAddOutline, IoClose } from 'react-icons/io5'
 import newRequest from '../../utils/newRequest'
+import { LiaHandsHelpingSolid } from 'react-icons/lia'
 
 const links = [
     {
@@ -22,6 +23,12 @@ const links = [
         name: "Explore Questions",
         url: "/explore",
         icon: <MdOutlineExplore size={20} />
+    },
+    {
+        id: 3,
+        name: "Contribute",
+        url: "/contribute",
+        icon: <LiaHandsHelpingSolid size={20} />
     },
 
 ]

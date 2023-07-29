@@ -6,13 +6,13 @@ import newRequest from "../../../utils/newRequest"
 
 const Home = () => {
     const { isLoading, error, data } = useQuery({
-        queryKey: ['questions'],
+        queryKey: ['topquestions'],
         queryFn: () => newRequest.get(`questions/top-questions`).then((res) => {
           return res.data
         })
     
       })
-      console.log(data)
+     
     return (
         <div className="pt-16 w-full h-screen bg-slate-100 flex justify-center">
             <div className="w-full max-w-[1200px] flex lg:gap-4 justify-between">

@@ -2,7 +2,7 @@ import { AiOutlineHome } from 'react-icons/ai'
 import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
 import { RiQuestionAnswerLine } from 'react-icons/ri'
 import { CgProfile } from 'react-icons/cg'
-import { DiGhostSmall } from 'react-icons/di'
+import { LiaHandsHelpingSolid } from 'react-icons/lia'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import newRequest from '../../utils/newRequest'
 const links = [
@@ -17,6 +17,12 @@ const links = [
         name: "Explore Questions",
         url: "/explore",
         icon: <MdOutlineExplore size={20} />
+    },
+    {
+        id: 3,
+        name: "Contribute",
+        url: "/contribute",
+        icon: <LiaHandsHelpingSolid size={20} />
     },
 
 

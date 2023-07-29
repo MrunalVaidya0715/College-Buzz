@@ -12,6 +12,7 @@ import {
 import Profile from './pages/profile/Profile';
 import MyQuestions from './pages/myQuestions/MyQuestions';
 import Explore from './pages/explore/Explore';
+import Contribute from './pages/contribute/Contribute';
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route exact path='/' element={< Home />}>
               <Route path='' element={<Posts />} />
               <Route path='/explore' element={<Explore />} />
+              <Route path='/contribute' element={<Contribute />} />
               <Route path='/posts/:id' element={<Post />} />
               <Route path='/profile/:userId' element={<Profile />} />
               <Route path='/my-questions/:userId' element={<MyQuestions/>} />
