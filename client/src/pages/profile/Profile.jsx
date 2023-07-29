@@ -30,7 +30,7 @@ const Profile = () => {
     const { isLoading: isAnsLoading, error: ansError, data: ansData } = useQuery({
         queryKey: ["userAnswer"],
         queryFn: () =>
-            newRequest.get(`/answers/${userId}`).then((res) => {
+            newRequest.get(`answers/user/${userId}`).then((res) => {
                 return res.data;
             }),
     });
@@ -66,7 +66,10 @@ const Profile = () => {
                 <div onClick={() => handleSection("answer")} className={` ${section === "answer" ? "bg-blue-500 text-white" : "bg-white"} cursor-pointer hover:bg-slate-200 hover:text-black active:bg-slate-300 border-2 border-l-[1px] rounded-r-full border-gray-700 flex gap-1 w-full h-12 justify-center items-center transition-all duration-150 ease-in-out`}>
                     <div className='flex gap-1 items-baseline'>
                         <p className=" text-sm">Answers</p>
-                        <p className=" text-lg font-semibold">0</p>
+                        {
+                            isAnsLoading ? "-" :
+                                ansError ? "?" : <p className=" text-lg font-semibold">{ansData.length}</p>
+                        }
                     </div>
                 </div>
             </div>
@@ -98,8 +101,8 @@ const Profile = () => {
                                             {/* <p className=" text-blue-500">Ask Question</p> */}
                                         </div>
                                     ) :
-                                        ansData.map((feed) => (
-                                            <Feed key={feed._id} {...feed} />
+                                        ansData.map((ans) => (
+                                            <h1 key={ans._id} {...ans} >Ho</h1>
                                         ))
                         }
                     </div>
