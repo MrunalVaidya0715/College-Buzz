@@ -1,14 +1,78 @@
-import { useState } from "react";
-import { BiCommentDetail } from "react-icons/bi";
+import { useEffect, useState } from "react";
 import { BsThreeDotsVertical } from "react-icons/bs"
 import { FaArrowDown, FaArrowUp } from "react-icons/fa";
 import { RiFlagLine } from "react-icons/ri";
 import { RxDotFilled } from 'react-icons/rx'
 import { formatDistanceToNow } from "date-fns";
 import parse from 'html-react-parser'
-const Review = ({ _id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn, }) => {
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import newRequest from "../../utils/newRequest";
+import { useNavigate} from "react-router-dom";
+const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn,downvotedBy, upvotedBy }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
-    const vote = up - dwn;
+    const navigate = useNavigate()
+    const queryClient = useQueryClient();
+
+
+    const upvoteMutation = useMutation((id) => newRequest.patch(`/answers/upvote/${id}`),
+        {
+            onMutate: () => { },
+            onError: (error) => {
+                console.error("Upvote error:", error);
+            },
+            onSettled: () => {
+                queryClient.invalidateQueries("answers");
+            },
+        }
+    );
+    const handleUp = async () => {
+        if (!user) {
+            navigate('/login')
+        }
+
+        try {
+            const response = await upvoteMutation.mutateAsync(id);
+            const newVote = response.data.upvote - response.data.downvote;
+            setVote(newVote);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    const downvoteMutation = useMutation((id) => newRequest.patch(`/answers/downvote/${id}`),
+        {
+            onMutate: () => { },
+            onError: (error) => {
+                console.error("Downvote error:", error);
+            },
+            onSettled: () => {
+                queryClient.invalidateQueries("answers");
+            },
+        }
+    );
+
+    const handleDown = async () => {
+        if (!user) {
+            navigate('/login')
+        }
+
+        try {
+            const response = await downvoteMutation.mutateAsync(id);
+            const newVote = response.data.upvote - response.data.downvote;
+            setVote(newVote);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const [vote, setVote] = useState(0);
+
+    // Updating the vote state once the data is available or changes
+    useEffect(() => {
+        if (up && dwn) {
+            const newVote = up - dwn;
+            setVote(newVote);
+        }
+    }, [up, dwn]);
 
     const [isOption, setisOption] = useState(false);
     const handleOption = () => {
@@ -41,17 +105,20 @@ const Review = ({ _id, desc, createdAt, userInfo: pstby, upvote: up, downvote: d
                 </div>
             </div>
             <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-none'>
-                <p className=" text-gray-800 text-justify">
+                <div className=" text-gray-800 text-justify">
                     {parse(desc)}
-                </p>
+                </div>
             </div>
             <div className='mt-1 flex w-full  text-gray-500 items-center justify-end gap-1'>
                 <div className=" flex items-center gap-3">
-                    <FaArrowUp className=" cursor-pointer" size={20} />
-                    <div className=''>
-                        <p className=" font-semibold text-lg">{vote}</p>
-                    </div>
-                    <FaArrowDown className=" cursor-pointer" size={20} />
+                    <FaArrowUp onClick={handleUp} className={`cursor-pointer ${upvotedBy.includes(user?._id) ? "text-blue-500" : " text-gray-400"}`} size={20} />
+                    <span className={`${vote > 0 ? " text-blue-600" : vote < 0 ? " text-red-500" : " text-gray-400"} font-semibold text-lg`}>
+                        {
+                            vote > 0 ? (vote) :
+                                vote < 0 ? (vote * -1) : 0
+                        }
+                    </span>
+                    <FaArrowDown onClick={handleDown} className={`cursor-pointer ${downvotedBy.includes(user?._id) ? "text-red-500" : " text-gray-400"}`} size={20} />
                 </div>
 
             </div>

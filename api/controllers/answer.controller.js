@@ -33,3 +33,78 @@ export const getAnswersByQuesId = async (req, res, next) => {
     next(error);
   }
 };
+
+export const handleUpvote = async (req, res, next) => {
+  const questionId = req.params.id;
+  const userId = req.userId;
+  try {
+    const answer = await Answer.findById(questionId);
+
+    // Check if the user's ID is already in the downvotedBy array
+    if (answer.downvotedBy.includes(userId)) {
+      // If the user already downvoted, remove the user's ID from the array
+      answer.downvotedBy = answer.downvotedBy.filter(
+        (id) => id.toString() !== userId
+      );
+      answer.downvote -= 1;
+    }
+
+    // Check if the user's ID is already in the upvotedBy array
+    if (answer.upvotedBy.includes(userId)) {
+      // If the user already upvoted, remove the user's ID from the array
+      answer.upvotedBy = answer.upvotedBy.filter(
+        (id) => id.toString() !== userId
+      );
+      answer.upvote -= 1;
+    } else {
+      // If the user hasn't upvoted yet, add the user's ID to the array
+      answer.upvotedBy.push(userId);
+      answer.upvote += 1;
+    }
+
+    // Save the updated question
+    await answer.save();
+
+    res.status(200).send(answer);
+  } catch (error) {
+    next(error);
+  }
+};
+
+
+export const handleDownvote = async (req, res, next) => {
+  const questionId = req.params.id;
+  const userId = req.userId;
+  try {
+    const answer = await Answer.findById(questionId);
+
+    // Check if the user's ID is already in the upvotedBy array
+    if (answer.upvotedBy.includes(userId)) {
+      // If the user already upvoted, remove the user's ID from the array
+      answer.upvotedBy = answer.upvotedBy.filter(
+        (id) => id.toString() !== userId
+      );
+      answer.upvote -= 1;
+    }
+
+    // Check if the user's ID is already in the downvotedBy array
+    if (answer.downvotedBy.includes(userId)) {
+      // If the user already downvoted, remove the user's ID from the array
+      answer.downvotedBy = answer.downvotedBy.filter(
+        (id) => id.toString() !== userId
+      );
+      answer.downvote -= 1;
+    } else {
+      // If the user hasn't downvoted yet, add the user's ID to the array
+      answer.downvotedBy.push(userId);
+      answer.downvote += 1;
+    }
+
+    // Save the updated question
+    await answer.save();
+
+    res.status(200).send(answer);
+  } catch (error) {
+    next(error);
+  }
+};
