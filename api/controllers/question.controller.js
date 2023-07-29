@@ -1,4 +1,5 @@
 import Question from "../models/question.model.js";
+import Answer from "../models/answer.model.js";
 import createError from "../utils/createError.js";
 import mongoose from "mongoose";
 export const createQuestion = async (req, res, next) => {
@@ -83,22 +84,22 @@ export const deleteQuestion = async (req, res, next) => {
   try {
     const questionId = req.params.id;
     if (!mongoose.Types.ObjectId.isValid(questionId)) {
-      // If the questionId is not a valid ObjectId
       return next(createError(404, "Question Doesn't Exist"));
     }
 
     const question = await Question.findById(questionId);
     if (!question) {
-      // If the question is not found in the database
       return next(createError(404, "Question Doesn't Exist"));
     }
 
-    if (question.userId !== req.userId) {
-      return next(createError(403, "Only Owner can Delete their own Post!"));
+    if (question.userId !== req.userId.toString()) {
+      return next(createError(403, "Only owner can delete their own post"));
     }
 
+    await Answer.deleteMany({ questionId });
+
     await Question.findByIdAndDelete(questionId);
-    res.status(200).send("Question has been deleted!");
+    res.status(200).send("Question and associated answers have been deleted!");
   } catch (err) {
     next(err);
   }
