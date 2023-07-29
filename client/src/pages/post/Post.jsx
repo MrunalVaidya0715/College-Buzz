@@ -206,7 +206,7 @@ const Post = () => {
           )
       }
       {
-        isAnswer && <AddAnswer handleCloseAnswer={handleCloseAnswer} data={data} />
+        isAnswer && <AddAnswer handleCloseAnswer={handleCloseAnswer} data={data} setIsAnswer={setIsAnswer} />
       }
 
       {/**Comments/replies */}
