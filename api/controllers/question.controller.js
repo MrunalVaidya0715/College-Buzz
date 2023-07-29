@@ -48,7 +48,7 @@ export const getQuestions = async (req, res, next) => {
 export const getQuestionsByUserId = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const questions = await Question.find({ userId });
+    const questions = await Question.find({ userId }).populate("userInfo", "-password");
     res.status(200).send(questions);
   } catch (error) {
     next(error);
