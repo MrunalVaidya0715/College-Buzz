@@ -2,7 +2,7 @@ import { BiCommentDetail, BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
-import parser from 'html-react-parser';
+import parse from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
 const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
     const user =JSON.parse(localStorage.getItem("currentUser"))
@@ -37,7 +37,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
 
 
                         <LinesEllipsis
-                            text={parser(desc)}
+                            text={parse(desc)}
                             maxLine='2'
                             ellipsis=' ...'
                             trimRight
