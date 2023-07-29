@@ -108,3 +108,29 @@ export const handleDownvote = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const deleteAnswer = async(req, res, next) =>{
+  try {
+    const answerId = req.params.ansId;
+    
+    const answer = await Answer.findById(answerId);
+    if (!answer) {
+      return next(createError(404, "Answer not found"));
+    }
+
+    if (answer.userId.toString() !== req.userId) {
+      return next(createError(403, "Only Owner can delete Answer"));
+    }
+
+    // Removing the answer reference from the question's answers array
+    await Question.findByIdAndUpdate(answer.questionId, {
+      $pull: { answers: answerId },
+    });
+    await Answer.findByIdAndRemove(answerId);
+
+    res.status(200).json({ message: "Answer deleted successfully" });
+  } catch (error) {
+    next(error);
+  }
+}

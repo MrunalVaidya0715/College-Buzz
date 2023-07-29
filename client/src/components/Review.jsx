@@ -7,8 +7,10 @@ import { formatDistanceToNow } from "date-fns";
 import parse from 'html-react-parser'
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
-import { useNavigate} from "react-router-dom";
-const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn,downvotedBy, upvotedBy }) => {
+import { useNavigate } from "react-router-dom";
+import { BiEditAlt } from "react-icons/bi";
+import { MdOutlineDeleteOutline } from "react-icons/md";
+const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn, downvotedBy, upvotedBy }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
     const queryClient = useQueryClient();
@@ -31,9 +33,8 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
         }
 
         try {
-            const response = await upvoteMutation.mutateAsync(id);
-            const newVote = response.data.upvote - response.data.downvote;
-            setVote(newVote);
+            await upvoteMutation.mutateAsync(id);
+
         } catch (error) {
             console.error(error);
         }
@@ -56,13 +57,21 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
         }
 
         try {
-            const response = await downvoteMutation.mutateAsync(id);
-            const newVote = response.data.upvote - response.data.downvote;
-            setVote(newVote);
+            await downvoteMutation.mutateAsync(id);
+
+
         } catch (error) {
             console.error(error);
         }
     };
+
+    const deletePost = useMutation((id) => {
+        return newRequest.delete(`answers/${id}`);
+    }, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("answers");
+        },
+    });
 
     const vote = up - dwn;
 
@@ -87,12 +96,33 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
                         <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(createdAt))}</p>
                     </div>
                 </div>
-                <div className=" relative flex gap-2 items-center">
+                <div className=" relative flex items-center">
 
                     <BsThreeDotsVertical onClick={handleOption} className=" cursor-pointer text-gray-700 hover:text-black duration-150 transition-colors ease-in-out" size={22} />
-                    <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} cursor-pointer absolute right-6 px-4 py-2 items-center gap-2 bg-white hover:bg-gray-100 active:bg-gray-50 border-[1px] rounded-md transition-all ease-in-out duration-200 `}>
-                        <RiFlagLine size={16} />
-                        <p>Report</p>
+                    <div onClick={() => setisOption(false)} className={` ${isOption ? "flex " : "hidden"} absolute top-0 right-5 px-1 py-2 flex-col items-start bg-white  border-[1px] rounded-md  `}>
+                        <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                            <RiFlagLine size={18} />
+                            <p>Report</p>
+                        </div>
+                        {
+                            user?._id === pstby._id && (
+                                <>
+                                    <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                                        <BiEditAlt size={20} />
+                                        <p>Edit</p>
+                                    </div>
+                                    <div onClick={() => {
+                                        deletePost.mutate(id)
+                                        alert("Answer Deleted")
+                                    }} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                                        <MdOutlineDeleteOutline className=" text-red-600" size={20} />
+                                        <p>Delete</p>
+                                    </div>
+                                </>
+                            )
+                        }
+
+
                     </div>
                 </div>
             </div>
