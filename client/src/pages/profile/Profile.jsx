@@ -27,6 +27,13 @@ const Profile = () => {
                 return res.data;
             }),
     });
+    const { isLoading: isAnsLoading, error: ansError, data: ansData } = useQuery({
+        queryKey: ["userAnswer"],
+        queryFn: () =>
+            newRequest.get(`/answers/${userId}`).then((res) => {
+                return res.data;
+            }),
+    });
 
     return (
         <div className="flex flex-col w-full h-full ">
@@ -81,14 +88,19 @@ const Profile = () => {
                         }
                     </div>
                 ) : (
-                    <div className="p-2 relative  h-auto w-full flex flex-col gap-4 md:gap-8">
+                    <div className="relative h-auto w-full flex flex-col gap-4 md:gap-8">
                         {
-                            isQuesLoading ? (<h2 className=" text-center">Loading Answers...</h2>) :
-                                quesError ? (<h2 className=" text-center">Something went wrong</h2>) :
-                                    <div className="mt-12 flex w-full justify-center flex-col items-center">
-                                        <h1 className=" text-3xl font-semibold">No Answers Yet</h1>
-                                    </div>
-
+                            isAnsLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
+                                ansError ? (<h2 className=" text-center">Something went wrong</h2>) :
+                                    ansData.length === 0 ? (
+                                        <div className="mt-12 flex w-full justify-center flex-col items-center">
+                                            <h1 className=" text-3xl font-semibold">No Answers Yet</h1>
+                                            {/* <p className=" text-blue-500">Ask Question</p> */}
+                                        </div>
+                                    ) :
+                                        ansData.map((feed) => (
+                                            <Feed key={feed._id} {...feed} />
+                                        ))
                         }
                     </div>
                 )

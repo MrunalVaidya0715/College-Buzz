@@ -34,6 +34,16 @@ export const getAnswersByQuesId = async (req, res, next) => {
   }
 };
 
+export const getAnswersByUserId = async (req, res, next) => {
+  try {
+    const userId = req.params.userId;
+    const answers = await Answer.find({ userId });
+    res.status(200).send(answers);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const handleUpvote = async (req, res, next) => {
   const questionId = req.params.id;
   const userId = req.userId;
