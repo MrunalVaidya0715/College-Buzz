@@ -8,6 +8,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
     const user =JSON.parse(localStorage.getItem("currentUser"))
     const vote = up - dwn;
     const timeAgo = formatDistanceToNow(new Date(createdAt));
+    const htmlToString = desc.replace(/<[^>]+>/g, '');
     return (
         <Link to={`/posts/${_id}`}>
             <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-sm hover:shadow-lg ease-in-out duration-300 transition-all">
@@ -37,8 +38,8 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
 
 
                         <LinesEllipsis
-                            text={parse(desc)}
-                            maxLine='2'
+                            text={htmlToString}
+                            maxLine='3'
                             ellipsis=' ...'
                             trimRight
                             basedOn='letters'
