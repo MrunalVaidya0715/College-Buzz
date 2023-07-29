@@ -64,15 +64,7 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
         }
     };
 
-    const [vote, setVote] = useState(0);
-
-    // Updating the vote state once the data is available or changes
-    useEffect(() => {
-        if (up && dwn) {
-            const newVote = up - dwn;
-            setVote(newVote);
-        }
-    }, [up, dwn]);
+    const vote = up - dwn;
 
     const [isOption, setisOption] = useState(false);
     const handleOption = () => {
