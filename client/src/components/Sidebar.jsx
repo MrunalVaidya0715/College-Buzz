@@ -25,7 +25,6 @@ const Sidebar = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
     const location = useLocation()
-    console.log(location.pathname)
     const handleLogout = async () => {
         try {
             await newRequest.post('auth/logout')

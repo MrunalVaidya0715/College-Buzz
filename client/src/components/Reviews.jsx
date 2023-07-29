@@ -12,7 +12,7 @@ const Reviews = () => {
     })
 
   })
-  console.log(data)
+
   return (
     <div className=" mt-8 w-full flex flex-col gap-2">
       {/* Render Reviews */}
