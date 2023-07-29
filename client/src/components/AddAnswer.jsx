@@ -28,7 +28,6 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer ,data }) => {
             setUploading(false)
             alert("Answer Uploaded")
             setIsAnswer(false)
-            navigate('/')
 
         } catch (error) {
             setErr(error.response.data)
