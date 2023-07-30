@@ -35,6 +35,8 @@ const Section = ({ isLoading, error, data }) => {
             })
             setUploading(false)
             alert("Question Uploaded")
+            setDescription("")
+            setQuestion("")
             setModal(false)
             navigate('/')
 
