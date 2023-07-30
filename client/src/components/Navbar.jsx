@@ -10,6 +10,7 @@ import 'react-quill/dist/quill.snow.css';
 import { IoAddOutline, IoClose } from 'react-icons/io5'
 import newRequest from '../../utils/newRequest'
 import { LiaHandsHelpingSolid } from 'react-icons/lia'
+import { ImSpinner6 } from 'react-icons/im'
 
 const links = [
     {
@@ -216,7 +217,8 @@ const Navbar = () => {
                                 <ReactQuill theme="snow" value={question.desc} onChange={(value) => setQuestion((prev) => ({ ...prev, desc: value }))} />
                             </div>
                             <div className='mt-16 w-full flex justify-center'>
-                                <button onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
+                                    {uploading ? <ImSpinner6 size={20} className="animate-spin" /> : <IoAddOutline size={20} />}Ask Question</button>
                             </div>
                             <div>
                                 <p className=" text-center text-red-500 font-semibold">{err && err}</p>
