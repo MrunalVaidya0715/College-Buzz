@@ -13,6 +13,7 @@ import MyQuestions from './pages/myQuestions/MyQuestions';
 import Explore from './pages/explore/Explore';
 import Contribute from './pages/contribute/Contribute';
 import { GoogleOAuthProvider } from '@react-oauth/google'
+import NotFound from './pages/notFound/NotFound';
 function App() {
 
   const queryClient = new QueryClient()
@@ -35,6 +36,7 @@ function App() {
               </Route>
 
               <Route exact path='/login' element={< Login />}></Route>
+              <Route path="*" element={<NotFound />} />
             </Routes>
           </GoogleOAuthProvider>
         </QueryClientProvider>
