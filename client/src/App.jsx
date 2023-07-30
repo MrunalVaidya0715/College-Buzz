@@ -14,6 +14,7 @@ import Explore from './pages/explore/Explore';
 import Contribute from './pages/contribute/Contribute';
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import NotFound from './pages/notFound/NotFound';
+import AskButton from './components/AskButton';
 function App() {
 
   const queryClient = new QueryClient()
@@ -25,6 +26,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <GoogleOAuthProvider clientId={clientId}>
             <Navbar />
+            <AskButton/>
             <Routes>
               <Route exact path='/' element={< Home />}>
                 <Route path='' element={<Posts />} />
