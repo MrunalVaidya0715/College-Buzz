@@ -13,7 +13,7 @@ const Login = () => {
       const decodedResponse = jwt_decode(response.credential);
       const { email, given_name, family_name, picture } = decodedResponse;
       const res = await newRequest.post("auth/google-login", {
-        username: given_name + ' ' + family_name,
+        username: given_name + ' ' + (family_name || ""),
         email: email,
         profileImg: picture
 
