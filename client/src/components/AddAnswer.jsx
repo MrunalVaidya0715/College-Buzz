@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { format, formatDistanceToNow } from 'date-fns'
 import newRequest from '../../utils/newRequest';
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { ImSpinner6 } from "react-icons/im"
 
 const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
 
@@ -64,7 +65,10 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
                 </div>
                 <div className='mt-16 w-full flex justify-center'>
                     <button disabled={addAnswer.isLoading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
-                        {addAnswer.isLoading ? "Answering..." : "Answer"}
+                        {addAnswer.isLoading ? (
+                            <>
+                                <ImSpinner6 size={20} className="animate-spin" />Answering...
+                            </>) : "Answer"}
                     </button>
                 </div>
                 <div>
