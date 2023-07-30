@@ -41,6 +41,7 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
         try {
             await addAnswer.mutateAsync(data)
         } catch (error) {
+            setErr(error.response.data)
             console.error(error);
         }
     }
