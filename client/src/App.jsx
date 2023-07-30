@@ -15,8 +15,10 @@ import Contribute from './pages/contribute/Contribute';
 import { GoogleOAuthProvider } from '@react-oauth/google'
 import NotFound from './pages/notFound/NotFound';
 import AskButton from './components/AskButton';
+import { useState } from 'react';
 function App() {
-
+  const [ask, setAsk] = useState(0);
+  const handleAsk = () => setAsk(prev =>!prev)
   const queryClient = new QueryClient()
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -26,7 +28,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <GoogleOAuthProvider clientId={clientId}>
             <Navbar />
-            <AskButton/>
+            <AskButton ask={ask} handleAsk={handleAsk} />
             <Routes>
               <Route exact path='/' element={< Home />}>
                 <Route path='' element={<Posts />} />
