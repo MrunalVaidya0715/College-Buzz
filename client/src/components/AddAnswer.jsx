@@ -28,8 +28,9 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
     }, {
         onSuccess: () => {
             queryClient.invalidateQueries("answers");
+            alert("Answer Uploaded")
             setIsAnswer(false)
-        }, 
+        },
         onError: (error) => {
             console.error("Upload error:", error);
         },
@@ -61,7 +62,9 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
                     <ReactQuill placeholder="Type Answer" theme="snow" value={answer.desc} onChange={(value) => setAnswer((prev) => ({ ...prev, desc: value }))} />
                 </div>
                 <div className='mt-16 w-full flex justify-center'>
-                    <button onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>Answer</button>
+                    <button disabled={addAnswer.isLoading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
+                        {addAnswer.isLoading ? "Answering..." : "Answer"}
+                    </button>
                 </div>
                 <div>
                     <p className=" text-center text-red-500 font-semibold">{err && err}</p>
