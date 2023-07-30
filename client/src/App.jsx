@@ -2,7 +2,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import Home from "./pages/Home/Home"
 import Login from './pages/login/Login';
-import Register from './pages/register/Register';
 import Post from './pages/post/Post';
 import Posts from './pages/posts/Posts';
 import {
@@ -36,7 +35,6 @@ function App() {
               </Route>
 
               <Route exact path='/login' element={< Login />}></Route>
-              <Route exact path='/register' element={< Register />}></Route>
             </Routes>
           </GoogleOAuthProvider>
         </QueryClientProvider>

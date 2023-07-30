@@ -110,9 +110,6 @@ const Navbar = () => {
                     {
                         user ? (<img className=" rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src={user.profileImg || "/assets/noProfile.png"} alt="PI" />) : (
                             <>
-                                <Link to='/register'>
-                                    <button className='hidden lg:block p-2 bg-blue-600 text-white rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign Up</button>
-                                </Link>
                                 <Link to='/login'>
                                     <button className='hidden lg:block p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
                                 </Link>
@@ -142,9 +139,7 @@ const Navbar = () => {
                                         <button onClick={() => setModal(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
                                     </div>) : (
                                         <>
-                                            <Link onClick={() => setOptions(false)} to='/register'>
-                                                <button className='w-full p-2 bg-blue-600 text-white rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign Up</button>
-                                            </Link>
+                    
                                             <Link onClick={() => setOptions(false)} to='/login'>
                                                 <button className='w-full p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
                                             </Link>
