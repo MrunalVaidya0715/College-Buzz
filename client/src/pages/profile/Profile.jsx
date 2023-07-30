@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import newRequest from '../../../utils/newRequest'
 import Feed from '../../components/Feed'
-import { MdOutlineAddAPhoto } from 'react-icons/md'
 import Answered from '../../components/Answered'
 const Profile = () => {
     const [section, setSection] = useState("question")
@@ -42,8 +41,7 @@ const Profile = () => {
                 isUserLoading ? "Loading Info..." :
                     userError ? "Something went Wrong" : (
                         <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] max-h-[300px] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
-                            <div className=' relative w-fit h-[50%]'>
-                                <div className=' cursor-pointer absolute border-[1px] border-gray-200 -bottom-2 -right-4 p-2 bg-white hover:bg-slate-200 active:bg-slate-300 rounded-full transition-all duration-150 ease-in-out'><MdOutlineAddAPhoto size={16} /></div>
+                            <div className=' relative w-fit h-[30%]'>
                                 <img className="  object-contain w-full h-full rounded-lg" src={userData.profileImg || "/assets/noProfile.png"} alt="" />
                             </div>
                             <div className="flex w-full flex-col items-center">
