@@ -28,6 +28,7 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer ,data }) => {
             setUploading(false)
             alert("Answer Uploaded")
             setIsAnswer(false)
+            window.location.reload(true)
 
         } catch (error) {
             setErr(error.response.data)
