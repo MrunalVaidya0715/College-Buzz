@@ -17,7 +17,7 @@ import NotFound from './pages/notFound/NotFound';
 import AskButton from './components/AskButton';
 import { useState } from 'react';
 function App() {
-  const [ask, setAsk] = useState(0);
+  const [ask, setAsk] = useState(false);
   const handleAsk = () => setAsk(prev =>!prev)
   const queryClient = new QueryClient()
   const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
@@ -27,7 +27,7 @@ function App() {
       <div className=" min-h-screen flex w-full flex-col justify-between">
         <QueryClientProvider client={queryClient}>
           <GoogleOAuthProvider clientId={clientId}>
-            <Navbar />
+            <Navbar ask={ask} setAsk={setAsk} />
             <AskButton ask={ask} handleAsk={handleAsk} />
             <Routes>
               <Route exact path='/' element={< Home />}>
