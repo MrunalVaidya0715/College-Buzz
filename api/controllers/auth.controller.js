@@ -1,36 +1,24 @@
 import User from "../models/user.model.js";
-import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
-import createError from "../utils/createError.js";
-export const register = async (req, res, next) => {
+
+export const handleGoogleLogin = async (req, res, next) => {
   try {
-    await mongoose.connect(process.env.MONGO);
-    const hash = bcrypt.hashSync(req.body.password, 5);
-    const newUser = User({
-      ...req.body,
-      password: hash,
-    });
+    const { email, username, profileImg } = req.body; 
 
-    await newUser.save();
+    let user = await User.findOne({ email });
 
-    res.status(201).send("User has been Created");
-  } catch (error) {
-    next(error);
-  }
-};
+    if (!user) {
+     
+      const newUser = new User({
+        username,
+        email, 
+        profileImg
+      });
 
-export const login = async (req, res, next) => {
-  try {
-    await mongoose.connect(process.env.MONGO);
-    const { username, password } = req.body;
+      user = await newUser.save();
+    }
 
-    const user = await User.findOne({ username });
-    if (!user) return next(createError(404, "User not found"));
-
-    const isCorrect = bcrypt.compareSync(password, user.password);
-    if (!isCorrect) return next(createError(400, "Wrong credentials"));
-
+    // Generate a JWT token for the user
     const token = jwt.sign(
       {
         id: user._id,
