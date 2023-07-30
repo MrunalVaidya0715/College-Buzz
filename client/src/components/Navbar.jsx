@@ -84,6 +84,7 @@ const Navbar = () => {
             setDescription("")
             setQuestion("")
             setModal(false)
+            setOptions(false)
             navigate('/')
 
         } catch (error) {
