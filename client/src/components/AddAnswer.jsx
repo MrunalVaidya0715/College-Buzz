@@ -4,39 +4,47 @@ import ReactQuill from "react-quill"
 import { useNavigate } from "react-router-dom"
 import { format, formatDistanceToNow } from 'date-fns'
 import newRequest from '../../utils/newRequest';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-const AddAnswer = ({ handleCloseAnswer, setIsAnswer ,data }) => {
+const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
 
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
     const [description, setDescription] = useState('');
     const [uploading, setUploading] = useState(false);
     const [err, setErr] = useState(null)
+
     const [answer, setAnswer] = useState({
         desc: description,
     });
+    const queryClient = useQueryClient();
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-        setUploading(true)
-        try {
-            await newRequest.post('/answers', {
-                questionId: data._id,
-                desc: answer.desc,
+    const addAnswer = useMutation((data) => {
+        return newRequest.post(`answers`, {
+            questionId: data._id,
+            desc: answer.desc,
 
-            })
-            setUploading(false)
-            alert("Answer Uploaded")
+        });
+    }, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("answers");
             setIsAnswer(false)
-            window.location.reload(true)
+        }, 
+        onError: (error) => {
+            console.error("Upload error:", error);
+        },
+    });
 
+
+    const handleSubmit = async () => {
+        try {
+            await addAnswer.mutateAsync(data)
         } catch (error) {
-            setErr(error.response.data)
-            setUploading(false)
-            alert(error)
-
+            console.error(error);
         }
     }
+
+
     return (
         <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
 
