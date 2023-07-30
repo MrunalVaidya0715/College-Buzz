@@ -46,7 +46,7 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer ,data }) => {
                     </div>
                 </div>
                 <h1 className=' text-xl font-semibold'>{data.title}</h1>
-                <p className=" flex gap-1 items-baseline font-semibold"><span className=" font-normal text-sm text-gray-500">asked by</span>{data.userInfo.username}<span className="font-normal text-sm text-gray-500">on</span><span className=" text-sm">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</span><span className=" text-gray-500 text-sm">({formatDistanceToNow(new Date(data.createdAt))} ago)</span></p>
+                <p className=" flex justify-center flex-wrap gap-1 items-baseline font-semibold"><span className=" font-normal text-sm text-gray-500">asked by</span>{data.userInfo.username}<span className="font-normal text-sm text-gray-500">on</span><span className=" text-sm">{format(new Date(data.createdAt), 'dd-MM-yyyy')}</span><span className=" text-gray-500 text-sm">({formatDistanceToNow(new Date(data.createdAt))} ago)</span></p>
                 <div className='mt-4 flex flex-col w-full min-h-32 max-w-[500px]'>
 
                     <ReactQuill placeholder="Type Answer" theme="snow" value={answer.desc} onChange={(value) => setAnswer((prev) => ({ ...prev, desc: value }))} />
