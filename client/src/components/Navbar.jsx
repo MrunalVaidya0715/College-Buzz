@@ -108,7 +108,7 @@ const Navbar = () => {
                 </div>
                 <div className='flex items-center gap-2'>
                     {
-                        user ? (<img className=" rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src={user.profileImg || "/assets/noProfile.png"} alt="PI" />) : (
+                        user ? (<img className=" rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src={user?.profileImg || "/assets/noProfile.png"} alt="PI" />) : (
                             <>
                                 <Link to='/login'>
                                     <button className='hidden lg:block p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
