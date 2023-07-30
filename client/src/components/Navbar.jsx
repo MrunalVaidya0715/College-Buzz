@@ -143,7 +143,7 @@ const Navbar = () => {
                                         <button onClick={() => setModal(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
                                     </div>) : (
                                         <>
-                    
+
                                             <Link onClick={() => setOptions(false)} to='/login'>
                                                 <button className='w-full p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
                                             </Link>
@@ -154,7 +154,7 @@ const Navbar = () => {
                                 {
                                     links.map((link) => (
                                         <Link key={link.id} to={link.url}>
-                                            <div onClick={() => setOptions(false)} className={` ${location.pathname === link.url ? " text-black":"text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
+                                            <div onClick={() => setOptions(false)} className={` ${location.pathname === link.url ? " text-black" : "text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
                                                 <span className='group-hover:text-gray-800'>{link.icon}</span>
                                                 <p className=' whitespace-nowrap group-hover:text-gray-800'>{link.name}</p>
                                             </div>
@@ -165,13 +165,13 @@ const Navbar = () => {
                                     user && (
                                         <>
                                             <Link to={`/my-questions/${user._id}`}>
-                                                <div onClick={() => setOptions(false)} className={` ${location.pathname === `/my-questions/${user?._id}` ? " text-black":"text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
+                                                <div onClick={() => setOptions(false)} className={` ${location.pathname === `/my-questions/${user?._id}` ? " text-black" : "text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
                                                     <span className='group-hover:text-gray-800'><RiQuestionAnswerLine size={20} /></span>
                                                     <p className=' whitespace-nowrap group-hover:text-gray-800'>My Questions</p>
                                                 </div>
                                             </Link>
                                             <Link to={`/profile/${user._id}`}>
-                                                <div onClick={() => setOptions(false)} className={` ${location.pathname === `/profile/${user?._id}` ? " text-black":"text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
+                                                <div onClick={() => setOptions(false)} className={` ${location.pathname === `/profile/${user?._id}` ? " text-black" : "text-gray-400"} group cursor-pointer p-2 text-sm font-medium w-full hover:bg-gray-200 flex gap-2  items-center`}>
                                                     <span className='group-hover:text-gray-800'><CgProfile size={20} /></span>
                                                     <p className=' whitespace-nowrap group-hover:text-gray-800'>My Profile</p>
                                                 </div>
@@ -192,10 +192,13 @@ const Navbar = () => {
             {
                 modal && (
                     <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
-                        <div onClick={() => setModal(false)} className=' cursor-pointer absolute top-4 right-4 p-2 bg-white rounded-full'>
-                            <IoClose size={16} />
-                        </div>
+
                         <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
+                            <div className='flex w-full justify-end'>
+                                <div onClick={() => setModal(false)} className=' cursor-pointer  p-1 bg-white rounded-md'>
+                                    <IoClose size={22} />
+                                </div>
+                            </div>
                             <h1 className=' text-xl font-semibold'>Ask Question</h1>
                             <div className='flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Title</p>
@@ -218,7 +221,7 @@ const Navbar = () => {
                                 <ReactQuill theme="snow" value={question.desc} onChange={(value) => setQuestion((prev) => ({ ...prev, desc: value }))} />
                             </div>
                             <div className='mt-16 w-full flex justify-center'>
-                            <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
+                                <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
                                     {uploading ? <ImSpinner6 size={20} className="animate-spin" /> : <IoAddOutline size={20} />}Ask Question</button>
                             </div>
                             <div>

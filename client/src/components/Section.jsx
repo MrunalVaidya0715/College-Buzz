@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { BsDash } from 'react-icons/bs'
 import { IoAddOutline, IoClose } from 'react-icons/io5'
-import {ImSpinner6} from 'react-icons/im'
+import { ImSpinner6 } from 'react-icons/im'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import newRequest from '../../utils/newRequest';
@@ -66,10 +66,13 @@ const Section = ({ isLoading, error, data }) => {
             {
                 modal && (
                     <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
-                        <div onClick={() => setModal(false)} className=' cursor-pointer absolute top-4 right-4 p-2 bg-white rounded-full'>
-                            <IoClose size={16} />
-                        </div>
+
                         <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
+                            <div className='flex w-full justify-end'>
+                                <div onClick={() => setModal(false)} className=' cursor-pointer  p-1 bg-white rounded-md'>
+                                    <IoClose size={22} />
+                                </div>
+                            </div>
                             <h1 className=' text-xl font-semibold'>Ask Question</h1>
                             <div className='flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Title</p>
