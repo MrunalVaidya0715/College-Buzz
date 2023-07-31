@@ -11,6 +11,7 @@ const Login = () => {
   const handleGoogleLogin = async(response) => {
     try {
       const decodedResponse = jwt_decode(response.credential);
+      console.log(decodedResponse)
       const { email, given_name, family_name, picture } = decodedResponse;
       const res = await newRequest.post("auth/google-login", {
         username: given_name + ' ' + (family_name || ""),

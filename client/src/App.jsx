@@ -17,6 +17,7 @@ import NotFound from './pages/notFound/NotFound';
 import AskButton from './components/AskButton';
 import { useState } from 'react';
 function App() {
+  const user = JSON.parse(localStorage.getItem("currentUser"))
   const [ask, setAsk] = useState(false);
   const handleAsk = () => setAsk(prev =>!prev)
   const queryClient = new QueryClient()
@@ -28,7 +29,7 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <GoogleOAuthProvider clientId={clientId}>
             <Navbar ask={ask} setAsk={setAsk} />
-            <AskButton ask={ask} handleAsk={handleAsk} />
+            { user && <AskButton ask={ask} handleAsk={handleAsk} />}
             <Routes>
               <Route exact path='/' element={< Home />}>
                 <Route path='' element={<Posts />} />
