@@ -21,34 +21,61 @@ const Section = ({ isLoading, error, data }) => {
         category: "",
 
     });
+    console.log(question)
     const handleChange = (e) => {
         setQuestion((prev) => {
             return { ...prev, [e.target.name]: e.target.value };
         });
     };
+    const handleDescChange = (value) => {
+        setQuestion((prev) => ({ ...prev, desc: value }));
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setUploading(true)
+        setUploading(true);
+
+        if (question.title.trim() === "") {
+            setErr("Please enter a title.");
+            setUploading(false);
+            return;
+        }
+
+        if (question.category === "") {
+            setErr("Please select a Category");
+            setUploading(false);
+            return;
+        }
+        const sanitizedDesc = question.desc.trim();
+        const htmlRegex = /^<p>[\s]*<\/p>$/i;
+        if (htmlRegex.test(sanitizedDesc) || sanitizedDesc === "") {
+            setErr("Please provide Description for the Question");
+            setUploading(false);
+            return;
+        }
+
+
+
         try {
             await newRequest.post('/questions', {
                 ...question,
+            });
 
-            })
-            setUploading(false)
-            alert("Question Uploaded")
-            setDescription("")
-            setQuestion("")
-            setModal(false)
-            navigate('/')
-
+            setUploading(false);
+            alert("Question Uploaded");
+            setDescription("");
+            setQuestion({
+                title: "",
+                desc: "",
+                category: "",
+            });
+            setModal(false);
+            navigate('/');
         } catch (error) {
-            setErr(error.response.data)
-            setUploading(false)
-            console.log(error)
-
+            setErr(error.response.data);
+            setUploading(false);
+            console.log(error);
         }
-
-    }
+    };
     return (
         <div className=" w-[20%] hidden md:flex flex-col gap-8 p-2">
             {/** */}
@@ -92,7 +119,7 @@ const Section = ({ isLoading, error, data }) => {
                             </div>
                             <div className=' flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Enter Description</p>
-                                <ReactQuill theme="snow" value={question.desc} onChange={(value) => setQuestion((prev) => ({ ...prev, desc: value }))} />
+                                <ReactQuill theme="snow" value={question.desc} onChange={handleDescChange} />
                             </div>
                             <div className='mt-16 w-full flex justify-center'>
                                 <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>

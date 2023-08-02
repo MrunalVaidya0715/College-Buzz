@@ -34,7 +34,7 @@ const links = [
 
 ]
 
-const Navbar = ({ask, setAsk}) => {
+const Navbar = ({ ask, setAsk }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
     const location = useLocation()
@@ -56,7 +56,7 @@ const Navbar = ({ask, setAsk}) => {
             alert(error)
         }
     }
-    
+
     const [modal, setModal] = useState(false)
     const [description, setDescription] = useState('');
     const [uploading, setUploading] = useState(false);
@@ -75,6 +75,24 @@ const Navbar = ({ask, setAsk}) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUploading(true)
+        if (question.title.trim() === "") {
+            setErr("Please enter a title.");
+            setUploading(false);
+            return;
+        }
+
+        if (question.category === "") {
+            setErr("Please select a Category");
+            setUploading(false);
+            return;
+        }
+        const sanitizedDesc = question.desc.trim();
+        const htmlRegex = /^<p>[\s]*<\/p>$/i;
+        if (htmlRegex.test(sanitizedDesc) || sanitizedDesc === "") {
+            setErr("Please provide Description for the Question");
+            setUploading(false);
+            return;
+        }
         try {
             await newRequest.post('/questions', {
                 ...question,
