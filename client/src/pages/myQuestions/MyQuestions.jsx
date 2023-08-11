@@ -17,9 +17,9 @@ const MyQuestions = () => {
   return (
     <div className="flex w-full flex-col min-h-full h-auto">
      
-      <div className="mt-4 relative h-auto w-full flex flex-col items-center gap-4 md:gap-8">
+      <div className="mt-4 relative h-auto w-full flex flex-col gap-4 md:gap-8">
         {
-          isLoading ? <ImSpinner9 className=" text-2xl animate-spin text-blue-700"/> :
+          isLoading ? (<div className='flex w-full justify-center'><ImSpinner9 className=" text-2xl animate-spin text-blue-700"/></div>) :
             error ? (<h2 className=" text-center">Something went wrong</h2>) :
               data.length === 0 ? (
                 <div className="mt-12 flex w-full justify-center flex-col items-center">
