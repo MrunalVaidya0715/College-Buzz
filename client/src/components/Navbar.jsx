@@ -210,7 +210,7 @@ const Navbar = ({ ask, setAsk }) => {
             </div>
             {
                 (ask || modal) && (
-                    <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
+                    <div className='z-[1000] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
 
                         <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
                             <div className='flex w-full justify-end'>
