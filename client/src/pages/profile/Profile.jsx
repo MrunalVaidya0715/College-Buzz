@@ -5,6 +5,9 @@ import { useParams } from 'react-router-dom'
 import newRequest from '../../../utils/newRequest'
 import Feed from '../../components/Feed'
 import Answered from '../../components/Answered'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
+import { ImSpinner9 } from 'react-icons/im'
 const Profile = () => {
     const [section, setSection] = useState("question")
     const handleSection = (option) => {
@@ -36,11 +39,28 @@ const Profile = () => {
     });
 
     return (
-        <div className="flex flex-col w-full h-full ">
+        <div className=" flex flex-col items-center w-full h-full ">
             {
-                isUserLoading ? "Loading Info..." :
-                    userError ? "Something went Wrong" : (
+                isUserLoading ? (
+                    <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] max-h-[300px] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
+                        <div className=' relative w-[100px] h-[30%]'>
+
+                            <Skeleton baseColor='#f4f1f1' highlightColor='#e8dede' className='w-full h-full' />
+
+                        </div>
+
+                        <div className=' w-full px-4 max-w-[200px]'>
+                            <Skeleton baseColor='#f4f1f1' highlightColor='#e8dede' count={2} />
+                        </div>
+                    </div>
+                ) :
+                    userError ? (
                         <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] max-h-[300px] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
+
+                            <p className=' font-semibold'>Something went Wrong</p>
+                        </div>
+                    ) : (
+                        <div className=" relative flex flex-col gap-2 items-center justify-center w-full h-[50%] min-h-[300px] bg-gradient-to-b from-transparent via-blue-200 to-blue-400">
                             <div className=' relative w-fit h-[30%]'>
                                 <img className="  object-contain w-full h-full rounded-lg" src={userData.profileImg || "/assets/noProfile.png"} alt="" />
                             </div>
@@ -76,7 +96,7 @@ const Profile = () => {
                 section === "question" ? (
                     <div className="relative h-auto w-full flex flex-col gap-4 md:gap-8">
                         {
-                            isQuesLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
+                            isQuesLoading ? (<div className='flex w-full justify-center'><ImSpinner9 className=" text-2xl animate-spin text-blue-700"/></div>) :
                                 quesError ? (<h2 className=" text-center">Something went wrong</h2>) :
                                     quesData.length === 0 ? (
                                         <div className="mt-12 flex w-full justify-center flex-col items-center">
@@ -92,7 +112,7 @@ const Profile = () => {
                 ) : (
                     <div className="relative h-auto w-full flex flex-col gap-4 md:gap-8">
                         {
-                            isAnsLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
+                            isAnsLoading ? (<div className='flex w-full justify-center'><ImSpinner9 className=" text-2xl animate-spin text-blue-700"/></div>) :
                                 ansError ? (<h2 className=" text-center">Something went wrong</h2>) :
                                     ansData.length === 0 ? (
                                         <div className="mt-12 flex w-full justify-center flex-col items-center">
