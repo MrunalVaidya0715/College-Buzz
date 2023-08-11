@@ -7,6 +7,8 @@ import { ImSpinner6 } from 'react-icons/im'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import newRequest from '../../utils/newRequest';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const Section = ({ isLoading, error, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
@@ -21,7 +23,7 @@ const Section = ({ isLoading, error, data }) => {
         category: "",
 
     });
-    console.log(question)
+    
     const handleChange = (e) => {
         setQuestion((prev) => {
             return { ...prev, [e.target.name]: e.target.value };
@@ -77,15 +79,15 @@ const Section = ({ isLoading, error, data }) => {
         }
     };
     return (
-        <div className=" w-[20%] hidden md:flex flex-col gap-8 p-2">
+        <div className=" w-[20%] min-w-[20%] hidden md:flex flex-col gap-8 p-2">
             {/** */}
             <div className='w-full flex justify-center'>
                 {
                     user ? (
-                        <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                        <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                     ) : (
                         <Link className='w-full' to="/login">
-                            <button onClick={() => setModal(prev => !prev)} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                         </Link>
                     )
                 }
@@ -100,7 +102,7 @@ const Section = ({ isLoading, error, data }) => {
                                     <IoClose size={22} />
                                 </div>
                             </div>
-                            <h1 className=' text-xl font-semibold'>Ask Question</h1>
+                            <h1 className=' whitespace-nowrap text-xl font-semibold'>Ask Question</h1>
                             <div className='flex flex-col w-full max-w-[500px]'>
                                 <p className=' font-semibold'>Title</p>
                                 <input onChange={handleChange} className=' border-[1px] p-2' type="text" placeholder='Enter Title' name='title' />
@@ -135,9 +137,10 @@ const Section = ({ isLoading, error, data }) => {
             {/**Top Questions */}
             <div className="border-[1px] bg-white shadow-sm px-2 py-4 w-full flex flex-col gap-2">
                 <h1 className=" text-center font-bold">Top Questions</h1>
+                
                 <div className="mt-2 w-full overflow-x-auto flex flex-col gap-3">
                     {
-                        isLoading ? "Loading Top Ques..." :
+                        isLoading ? <Skeleton className=' w-full' count={5} /> :
                             error ? "Something went wrong" :
                                 data.map((que, i) => (
                                     <div key={i} className="w-full flex gap-1 items-baseline justify-between">

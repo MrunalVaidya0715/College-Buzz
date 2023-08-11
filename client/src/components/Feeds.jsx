@@ -4,6 +4,8 @@ import newRequest from "../../utils/newRequest"
 import FilterSort from "./FilterSort"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+import FeedSkeleton from "./FeedSkeleton"
+
 const Feeds = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['question._id'],
@@ -45,7 +47,7 @@ const Feeds = () => {
       <FilterSort handleCat={handleCat} handleSort={handleSort} cat={cat} sort={sort} />
       <div className=" relative h-auto w-full flex flex-col gap-4 md:gap-8">
         {
-          isLoading ? (<h2 className=" text-center">Loading Questions...</h2>) :
+          isLoading ? Array(3).fill().map((_, index) => <FeedSkeleton key={index} />) :
             error ? (<h2 className=" text-center">Something went wrong</h2>) :
               data.length === 0 ? (
                 <div className="mt-12 flex w-full justify-center flex-col items-center">
