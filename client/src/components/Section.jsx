@@ -140,7 +140,7 @@ const Section = ({ isLoading, error, data }) => {
                 
                 <div className="mt-2 w-full overflow-x-auto flex flex-col gap-3">
                     {
-                        isLoading ? <Skeleton className=' w-full' count={5} /> :
+                        isLoading ? <Skeleton className='mt-4 w-full' count={5} /> :
                             error ? "Something went wrong" :
                                 data.map((que, i) => (
                                     <div key={i} className="w-full flex gap-1 items-baseline justify-between">
