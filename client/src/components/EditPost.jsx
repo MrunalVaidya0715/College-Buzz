@@ -5,6 +5,7 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { useParams } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 const EditPost = ({ setIsEdit, data }) => {
     const { id } = useParams()
     const [description, setDescription] = useState('');
@@ -34,8 +35,20 @@ const EditPost = ({ setIsEdit, data }) => {
     const handleDescChange = (value) => {
         setQuestion((prev) => ({ ...prev, desc: value }));
     };
+    const queryClient = useQueryClient();
 
-    const handleSubmit = async (e) => {
+    const editMutation = useMutation((id) => newRequest.patch(`questions/updatePost/${id}`,{...question}),
+        {
+            onMutate: () => { },
+            onError: (error) => {
+                console.error("Edit error:", error);
+            },
+            onSettled: () => {
+                queryClient.invalidateQueries("question");
+            },
+        }
+    );
+    const handleEdit = async (e) => {
         setErr(null)
         e.preventDefault();
         setUploading(true);
@@ -51,7 +64,7 @@ const EditPost = ({ setIsEdit, data }) => {
             setUploading(false);
             return;
         }
-        
+
         const sanitizedDesc = question.desc.trim();
         const htmlRegex = /^<p>[\s]*<\/p>$|^<p><br><\/p>$/i;
         if (htmlRegex.test(sanitizedDesc) || sanitizedDesc === "") {
@@ -59,19 +72,23 @@ const EditPost = ({ setIsEdit, data }) => {
             setUploading(false);
             return;
         }
-        try {
-            await newRequest.patch(`questions/updatePost/${id}`, {
-                ...question
-            });
 
+        try {
+            await editMutation.mutateAsync(id);
             setUploading(false);
             alert("Question Updated");
             setIsEdit(false);
         } catch (error) {
+            setUploading(false)
             setErr(error.response.data);
             console.error(error);
+            
         }
-    }
+    };
+
+
+    
+
 
     return (
         <div className='z-[1000] fixed top-0 right-0 bg-black/50 flex w-full h-screen items-center justify-center'>
@@ -104,7 +121,7 @@ const EditPost = ({ setIsEdit, data }) => {
                     <ReactQuill theme="snow" value={question.desc} onChange={handleDescChange} />
                 </div>
                 <div className='mt-16 w-full flex justify-center'>
-                    <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
+                    <button disabled={uploading} onClick={handleEdit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
                         {uploading && <ImSpinner6 size={20} className="animate-spin" />}Update Question</button>
                 </div>
                 <div>
