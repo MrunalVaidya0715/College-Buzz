@@ -14,6 +14,7 @@ import parser from 'html-react-parser';
 import { formatDistanceToNow } from "date-fns"
 import AddAnswer from "../../components/AddAnswer"
 import PostSkeleton from "../../components/PostSkeleton"
+import EditPost from "../../components/EditPost"
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
 
@@ -109,6 +110,11 @@ const Post = () => {
     setIsAnswer(false)
   }
 
+  const [isEdit, setIsEdit] = useState(false);
+  const handleEdit = () =>{
+    setIsEdit(prev => !prev)
+  }
+
   return (
     <div className="flex flex-col w-full">
       {/**Post Details */}
@@ -147,7 +153,7 @@ const Post = () => {
                     {
                       user?._id === data.userInfo._id ? (
                         <>
-                          <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                          <div onClick={handleEdit} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                             <BiEditAlt size={20} />
                             <p>Edit</p>
                           </div>
@@ -171,6 +177,8 @@ const Post = () => {
 
                   </div>
                 </div>
+                {/* EditModal */}
+                { isEdit && <EditPost setIsEdit={setIsEdit} data={data}/>}
               </div>
               {/* Category */}
               <div className='rounded-full border-[1px] border-orange-600 w-fit px-4 py-1 bg-orange-400'>
