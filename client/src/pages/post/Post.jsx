@@ -1,4 +1,3 @@
-import { BiListPlus } from "react-icons/bi"
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
 import { RiFlagLine } from 'react-icons/ri'
@@ -210,13 +209,13 @@ const Post = () => {
                 {
                   user ? (
                     <div onClick={handleAnswer} className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
-                      <BiListPlus className='' size={22} />
+                      
                       <p className=" font-semibold">Answer</p>
                     </div>
                   ) : (
                     <Link to="/login">
                       <div className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
-                        <BiListPlus className='' size={22} />
+                        
                         <p className=" font-semibold">Answer</p>
                       </div>
                     </Link>
