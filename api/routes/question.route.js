@@ -10,7 +10,7 @@ router.get("/", getQuestions)
 router.get("/top-questions", getTopQuestions)
 router.get("/:userId", getQuestionsByUserId)
 router.delete("/:id", verifyToken, deleteQuestion)
-router.patch("/updatePost", verifyToken, updateQuestion)
+router.patch("/updatePost/:id", verifyToken, updateQuestion)
 router.patch("/upvote/:id", verifyToken, handleUpvote)
 router.patch("/downvote/:id", verifyToken, handleDownvote)
 
