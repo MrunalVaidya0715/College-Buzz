@@ -3,7 +3,10 @@ import { ImSpinner6 } from "react-icons/im";
 import { IoClose } from "react-icons/io5"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import { useParams } from "react-router-dom";
+import newRequest from "../../utils/newRequest";
 const EditPost = ({ setIsEdit, data }) => {
+    const { id } = useParams()
     const [description, setDescription] = useState('');
     const [question, setQuestion] = useState({
         title: "",
@@ -11,15 +14,15 @@ const EditPost = ({ setIsEdit, data }) => {
         category: "",
 
     });
-    console.log(question)
+
     useEffect(() => {
-        
+
         setQuestion({
-          title: data.title,
-          desc: data.desc,
-          category: data.category,
+            title: data.title,
+            desc: data.desc,
+            category: data.category,
         });
-      }, [data]);
+    }, [data]);
     const [uploading, setUploading] = useState(false);
     const [err, setErr] = useState(null)
 
@@ -32,9 +35,42 @@ const EditPost = ({ setIsEdit, data }) => {
         setQuestion((prev) => ({ ...prev, desc: value }));
     };
 
-    const handleSubmit = (e) =>{
-        e.preventDefault()
-        alert("Hello")
+    const handleSubmit = async (e) => {
+        setErr(null)
+        e.preventDefault();
+        setUploading(true);
+
+        if (question.title.trim() === "") {
+            setErr("Please enter a title.");
+            setUploading(false);
+            return;
+        }
+
+        if (question.category === "") {
+            setErr("Please select a Category");
+            setUploading(false);
+            return;
+        }
+        
+        const sanitizedDesc = question.desc.trim();
+        const htmlRegex = /^<p>[\s]*<\/p>$|^<p><br><\/p>$/i;
+        if (htmlRegex.test(sanitizedDesc) || sanitizedDesc === "") {
+            setErr("Please provide a valid description for the Question");
+            setUploading(false);
+            return;
+        }
+        try {
+            await newRequest.patch(`questions/updatePost/${id}`, {
+                ...question
+            });
+
+            setUploading(false);
+            alert("Question Updated");
+            setIsEdit(false);
+        } catch (error) {
+            setErr(error.response.data);
+            console.error(error);
+        }
     }
 
     return (
@@ -69,7 +105,7 @@ const EditPost = ({ setIsEdit, data }) => {
                 </div>
                 <div className='mt-16 w-full flex justify-center'>
                     <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
-                        {uploading && <ImSpinner6 size={20} className="animate-spin" /> }Update Question</button>
+                        {uploading && <ImSpinner6 size={20} className="animate-spin" />}Update Question</button>
                 </div>
                 <div>
                     <p className=" text-center text-red-500 font-semibold">{err && err}</p>
