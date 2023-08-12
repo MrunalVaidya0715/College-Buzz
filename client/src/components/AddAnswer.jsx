@@ -39,23 +39,26 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
     );
 
     const handleSubmit = async () => {
-        const trimmedDesc = answer.desc.trim();
-        const htmlRegex = /<[^>]*>/g;
-        if (htmlRegex.test(trimmedDesc)) {
-            setErr("Empty Answer");
-            return;
-        }
-        if (trimmedDesc === "") {
-            setErr("Empty Answer");
+        setErr(null)
+        setUploading(true)
+        const sanitizedDesc = answer.desc.trim();
+        const htmlRegex = /^<p>[\s]*<\/p>$|^<p><br><\/p>$/i;
+        if (htmlRegex.test(sanitizedDesc) || sanitizedDesc === "") {
+            setErr("Please provide a valid Answer");
+            setUploading(false);
             return;
         }
 
         try {
             await addAnswer.mutateAsync(data);
         } catch (error) {
+            setUploading(false)
             setErr(error.response.data);
             console.error(error);
         }
+    };
+    const handleDescChange = (value) => {
+        setAnswer((prev) => ({ ...prev, desc: value }));
     };
 
     return (
@@ -79,11 +82,7 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
                         placeholder="Type Answer"
                         theme="snow"
                         value={answer.desc}
-                        onChange={(value) => setAnswer((prev) => ({ ...prev, desc: value }))}
-                        onBlur={() => {
-                            const trimmedDesc = answer.desc.trim();
-                            setAnswer((prev) => ({ ...prev, desc: trimmedDesc }));
-                        }}
+                        onChange={handleDescChange}
                     />
                 </div>
                 <div className="mt-16 w-full flex justify-center">
