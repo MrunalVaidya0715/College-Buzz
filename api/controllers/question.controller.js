@@ -219,7 +219,7 @@ export const updateQuestion = async (req, res, next) => {
     }
     
     if (question.userId !== req.userId.toString()) {
-      return next(createError(403, "Only owner can delete their own post"));
+      return next(createError(403, "Only owner can update their own post"));
     }
     
     question.title = req.body.title || question.title;
