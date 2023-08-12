@@ -48,7 +48,10 @@ export const getQuestions = async (req, res, next) => {
 export const getQuestionsByUserId = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    const questions = await Question.find({ userId }).populate("userInfo", "-password");
+    const questions = await Question.find({ userId }).populate(
+      "userInfo",
+      "-password"
+    );
     res.status(200).send(questions);
   } catch (error) {
     next(error);
@@ -141,7 +144,6 @@ export const handleUpvote = async (req, res, next) => {
   }
 };
 
-
 export const handleDownvote = async (req, res, next) => {
   const questionId = req.params.id;
   const userId = req.userId;
@@ -179,24 +181,56 @@ export const handleDownvote = async (req, res, next) => {
   }
 };
 
-
-export const getTopQuestions = async(req, res, next) =>{
+export const getTopQuestions = async (req, res, next) => {
   try {
     const topQuestions = await Question.aggregate([
       {
         $addFields: {
-          netVote: { $subtract: ["$upvote", "$downvote"] }, 
+          netVote: { $subtract: ["$upvote", "$downvote"] },
         },
       },
       {
-        $sort: { netVote: -1 }, 
+        $sort: { netVote: -1 },
       },
       {
         $limit: 5,
       },
     ]);
-    res.status(200).send(topQuestions)
+    res.status(200).send(topQuestions);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
+
+
+
+
+export const updateQuestion = async (req, res, next) => {
+  const questionId = req.params.id;
+
+  try {
+    if (!mongoose.Types.ObjectId.isValid(questionId)) {
+      return next(createError(404, "Question Doesn't Exist"));
+    }
+    
+    const question = await Question.findById(questionId);
+    if (!question) {
+      return next(createError(404, "Question Doesn't Exist"));
+    }
+    
+    if (question.userId !== req.userId.toString()) {
+      return next(createError(403, "Only owner can delete their own post"));
+    }
+    
+    question.title = req.body.title || question.title;
+    question.desc = req.body.desc || question.desc;
+    question.category = req.body.category || question.category;
+
+    const updatedQuestion = await question.save();
+
+    res.status(200).send(updatedQuestion);
+  } catch (error) {
+    // Handle other errors
+    next(error);
+  }
+};
