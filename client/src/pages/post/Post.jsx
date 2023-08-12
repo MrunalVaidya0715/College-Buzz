@@ -14,9 +14,13 @@ import { formatDistanceToNow } from "date-fns"
 import AddAnswer from "../../components/AddAnswer"
 import PostSkeleton from "../../components/PostSkeleton"
 import EditPost from "../../components/EditPost"
+import Filter from 'bad-words'
+
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
-
+  const newBadWords = ['some', 'bad', 'word', 'shir'];
+  const filter = new Filter({ regex: /\*|\.|$/gi })
+  filter.addWords(...newBadWords);
   const { id } = useParams()
   const navigate = useNavigate()
   const queryClient = useQueryClient();
@@ -110,7 +114,7 @@ const Post = () => {
   }
 
   const [isEdit, setIsEdit] = useState(false);
-  const handleEdit = () =>{
+  const handleEdit = () => {
     setIsEdit(prev => !prev)
   }
 
@@ -118,8 +122,8 @@ const Post = () => {
     <div className="flex flex-col w-full">
       {/**Post Details */}
       {
-        isLoading ? <PostSkeleton/> :
-          error ? (<h2 className=" text-center">Something went wrong</h2>) : ( 
+        isLoading ? <PostSkeleton /> :
+          error ? (<h2 className=" text-center">Something went wrong</h2>) : (
             <div className=" relative px-4 py-2 bg-white border-[1px] shadow-sm flex flex-col w-full gap-2">
               {isOption && <div onClick={() => setisOption(false)} className=" absolute top-0 right-0 w-full h-full" />}
               {/**User, time */}
@@ -177,7 +181,7 @@ const Post = () => {
                   </div>
                 </div>
                 {/* EditModal */}
-                { isEdit && <EditPost setIsEdit={setIsEdit} data={data}/>}
+                {isEdit && <EditPost setIsEdit={setIsEdit} data={data} />}
               </div>
               {/* Category */}
               <div className='rounded-full border-[1px] border-orange-600 w-fit px-4 py-1 bg-orange-400'>
@@ -185,12 +189,12 @@ const Post = () => {
               </div>
               {/* Title */}
               <div className="">
-                <h1 className=" font-bold text-lg tracking-wide">{data.title}</h1>
+                <h1 className=" font-bold text-lg tracking-wide">{filter.clean(data.title)}</h1>
               </div>
               {/* Desc */}
               <div className='p-2 rounded-md border-[1px]'>
                 <div className=" text-gray-800 text-justify">
-                  {parser(data.desc)}
+                  {parser(filter.clean(data.desc))}
                 </div>
               </div>
               {/*Actions */}
@@ -209,13 +213,13 @@ const Post = () => {
                 {
                   user ? (
                     <div onClick={handleAnswer} className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
-                      
+
                       <p className=" font-semibold">Answer</p>
                     </div>
                   ) : (
                     <Link to="/login">
                       <div className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
-                        
+
                         <p className=" font-semibold">Answer</p>
                       </div>
                     </Link>
