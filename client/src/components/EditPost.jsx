@@ -82,7 +82,7 @@ const EditPost = ({ setIsEdit, data }) => {
                         <IoClose size={22} />
                     </div>
                 </div>
-                <h1 className=' whitespace-nowrap text-xl font-semibold'>Update Question</h1>
+                <h1 className=' whitespace-nowrap text-xl font-semibold'>Update Question.</h1>
                 <div className='flex flex-col w-full max-w-[500px]'>
                     <p className=' font-semibold'>Title</p>
                     <input onChange={handleChange} value={question.title} className=' border-[1px] p-2' type="text" placeholder='Enter Title' name='title' />
