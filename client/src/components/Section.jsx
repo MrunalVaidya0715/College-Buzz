@@ -13,20 +13,11 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Badwords from './Badwords'
 import Filter from 'bad-words'
 import { useQuery } from '@tanstack/react-query'
-const Section = ({ isLoading, error, data }) => {
+const Section = ({ isLoading, error, data, ask, handleAsk }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
-    const navigate = useNavigate()
-    const [modal, setModal] = useState(false)
-    const [description, setDescription] = useState('');
-    const [uploading, setUploading] = useState(false);
-    const [err, setErr] = useState(null)
+    
     const [isWidget, setIsWidget] = useState(false)
-    const [question, setQuestion] = useState({
-        title: "",
-        desc: description,
-        category: "",
-
-    });
+    
     const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
         queryKey: ["badwords"],
         queryFn: () =>
@@ -41,63 +32,11 @@ const Section = ({ isLoading, error, data }) => {
 
     const filter = new Filter({ regex: /\*|\.|$/gi })
     filter.addWords(...newBadWords);
-    const handleChange = (e) => {
-        setQuestion((prev) => {
-            return { ...prev, [e.target.name]: e.target.value };
-        });
-    };
-    const handleDescChange = (value) => {
-        setQuestion((prev) => ({ ...prev, desc: value }));
-    };
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setUploading(true);
-
-        if (question.title.trim() === "") {
-            setErr("Please enter a title.");
-            setUploading(false);
-            return;
-        }
-
-        if (question.category === "") {
-            setErr("Please select a Category");
-            setUploading(false);
-            return;
-        }
-        const sanitizedDesc = question.desc.trim();
-        const htmlRegex = /^<p>[\s]*<\/p>$/i;
-        if (htmlRegex.test(sanitizedDesc) || sanitizedDesc === "") {
-            setErr("Please provide Description for the Question");
-            setUploading(false);
-            return;
-        }
-
-
-
-        try {
-            await newRequest.post('/questions', {
-                ...question,
-            });
-
-            setUploading(false);
-            alert("Question Uploaded");
-            setDescription("");
-            setQuestion({
-                title: "",
-                desc: "",
-                category: "",
-            });
-            setModal(false);
-            navigate('/');
-        } catch (error) {
-            setErr(error.response.data);
-            setUploading(false);
-            console.log(error);
-        }
-    };
+    
     const handleWidget = () => {
         setIsWidget(prev => !prev)
     }
+
     return (
         <>
             { isWidget && <div onClick={()=>setIsWidget(false)} className='z-[200] md:hidden fixed top-0 right-0 h-full w-full bg-black/20' />}
@@ -109,56 +48,15 @@ const Section = ({ isLoading, error, data }) => {
                 <div className='w-full flex justify-center'>
                     {
                         user ? (
-                            <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            <button onClick={handleAsk} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                         ) : (
                             <Link className='w-full' to="/login">
-                                <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                                <button className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                             </Link>
                         )
                     }
                 </div>
-                {
-                    modal && (
-                        <div className='z-[100] top-0 right-0 bg-black/50 fixed flex w-full h-full items-center justify-center'>
-
-                            <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
-                                <div className='flex w-full justify-end'>
-                                    <div onClick={() => setModal(false)} className=' cursor-pointer  p-1 bg-white rounded-md'>
-                                        <IoClose size={22} />
-                                    </div>
-                                </div>
-                                <h1 className=' whitespace-nowrap text-xl font-semibold'>Ask Question</h1>
-                                <div className='flex flex-col w-full max-w-[500px]'>
-                                    <p className=' font-semibold'>Title</p>
-                                    <input onChange={handleChange} className=' border-[1px] p-2' type="text" placeholder='Enter Title' name='title' />
-                                </div>
-                                <div className='flex flex-col w-full max-w-[500px]'>
-                                    <p className=' font-semibold'>Select Category</p>
-                                    <select onChange={handleChange} className='cursor-pointer border-[1px] p-2' name="category" defaultValue="--select category--">
-                                        <option disabled>--select category--</option>
-                                        <option value="general">General</option>
-                                        <option value="technology">Technology</option>
-                                        <option value="sports">Sports</option>
-                                        <option value="faculty">Faculty</option>
-                                        <option value="exams">Examinations</option>
-                                        <option value="canteen">Canteen</option>
-                                    </select>
-                                </div>
-                                <div className=' flex flex-col w-full max-w-[500px]'>
-                                    <p className=' font-semibold'>Enter Description</p>
-                                    <ReactQuill theme="snow" value={question.desc} onChange={handleDescChange} />
-                                </div>
-                                <div className='mt-16 w-full flex justify-center'>
-                                    <button disabled={uploading} onClick={handleSubmit} className='bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full max-w-[500px] p-2 rounded-md text-white ease-in-out transition-all duration-200'>
-                                        {uploading ? <ImSpinner6 size={20} className="animate-spin" /> : <IoAddOutline size={20} />}Ask Question</button>
-                                </div>
-                                <div>
-                                    <p className=" text-center text-red-500 font-semibold">{err && err}</p>
-                                </div>
-                            </div>
-                        </div>
-                    )
-                }
+                
                 {/**Top Questions */}
                 <div className="border-[1px] bg-white shadow-sm px-2 py-4 w-full flex flex-col gap-2">
                     <h1 className=" text-center font-bold">Top Questions</h1>
