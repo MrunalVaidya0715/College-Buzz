@@ -11,7 +11,6 @@ const wordSchema = new Schema(
     word: {
       type: String,
       required: true,
-      unique:true
     },
   },
   {
