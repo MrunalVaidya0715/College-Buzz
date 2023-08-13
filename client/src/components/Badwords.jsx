@@ -90,9 +90,9 @@ const Badwords = () => {
                                 <FaInfoCircle title="Enhance the environment by adding offensive words for filtering, ensuring a positive and productive online experience." className=" text-blue-600" size={16} />
                             </div>
                         </div>
-                        <div className="flex items-center">
-                            <input className=" border-[1px] p-2 w-full" onChange={(e) => setWord(e.target.value)} type="text" name="word" id="word" />
-                            <button onClick={handleWord} disabled={isUploading} className="hover:opacity-70 active:opacity-50 flex items-center justify-center p-2 bg-blue-600 w-fit h-full">
+                        <div className="flex justify-items-center w-full h-full items-center ">
+                            <input className="flex border-[1px] p-2 w-full h-full" onChange={(e) => setWord(e.target.value)} type="text" name="word" id="word" />
+                            <button onClick={handleWord} disabled={isUploading} className="hover:opacity-70 active:opacity-50 flex items-center justify-end p-3 bg-blue-600 w-fit h-full ">
                                 {
                                     isUploading ? <ImSpinner6 className=" animate-spin text-white" size={16} /> : <AiOutlinePlus className=" text-white" size={16} />
                                 }
