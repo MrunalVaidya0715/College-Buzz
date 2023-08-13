@@ -196,7 +196,9 @@ const Section = ({ isLoading, error, data }) => {
 
                 </div>
             </div>
-            <Badwords/>
+            {
+                user && <Badwords/>
+            }
         </div>
     )
 }
