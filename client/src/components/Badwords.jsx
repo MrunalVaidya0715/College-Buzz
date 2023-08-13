@@ -5,14 +5,16 @@ import { FaInfoCircle } from 'react-icons/fa'
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 const Badwords = () => {
+    const user = JSON.parse(localStorage.getItem("currentUser"))
+   
     const [word, setWord] = useState("")
     const [err, setErr] = useState(null);
     const [isUploading, setisUploading] = useState(false)
     const [isManage, setIsManage] = useState(false)
     const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
-        queryKey: ["badwords"],
+        queryKey: ["badwordsUser"],
         queryFn: () =>
-            newRequest.get(`badwords`).then((res) => {
+            newRequest.get(`badwords/${user?._id}`).then((res) => {
                 return res.data;
             }),
     });

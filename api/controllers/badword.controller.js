@@ -26,7 +26,17 @@ export const createBadword = async (req, res, next) => {
 export const getBadwords = async (req, res, next) => {
   try {
     const userId  = req.userId
-    const badwords = await Word.find({userId: userId});
+    const badwords = await Word.find();
+    res.status(200).send(badwords);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getBadwordsByUserId = async (req, res, next) => {
+  try {
+    const userId  = req.userId
+    const badwords = await Word.find({userId});
     res.status(200).send(badwords);
   } catch (error) {
     next(error);
@@ -34,8 +44,9 @@ export const getBadwords = async (req, res, next) => {
 };
 
 export const deleteBadword = async (req, res, next) => {
-  const wordId = req.params.wordId;
+  
   try {
+    const wordId = req.params.wordId;
     
     const badword = await Word.findById(wordId);
     if (!badword) {
