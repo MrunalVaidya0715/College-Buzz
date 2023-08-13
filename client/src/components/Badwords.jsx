@@ -50,7 +50,7 @@ const Badwords = () => {
                 isManage ? (
                     <div className=" flex flex-col items-center w-full gap-2">
                         <div className=" flex-wrap-reverse flex items-center gap-2">
-                            <p className="font-semibold">Manage Badwords</p>
+                            <p className="font-semibold text-center">Manage Offensive Words</p>
 
                         </div>
                         <div className=" scrollbar-none w-full bg-white flex  overflow-y-auto max-h-[150px] border-[1px] rounded-lg overflow-hidden flex-col items-center">
@@ -77,15 +77,15 @@ const Badwords = () => {
                             )
                         }
                         <div onClick={() => setIsManage(false)} className="flex w-full justify-center  delay-1000">
-                            <button className=" text-blue-500">Add Badwords</button>
+                            <button className=" text-blue-500">Add Words</button>
                         </div>
                     </div>
                 ) : (
                     <div className=" flex flex-col items-center w-full gap-2">
-                        <div className=" flex-wrap-reverse flex items-center gap-2">
-                            <p className="font-semibold">Add Badword</p>
+                        <div className=" flex-wrap-reverse flex justify-center items-center gap-2">
+                            <p className="font-semibold text-center">Add Offensive words</p>
                             <div>
-                                <FaInfoCircle title="Add Offensive Words for Filtering" className=" text-blue-600" size={16} />
+                                <FaInfoCircle title="Enhance the environment by adding offensive words for filtering, ensuring a positive and productive online experience." className=" text-blue-600" size={16} />
                             </div>
                         </div>
                         <div className="flex items-center">
