@@ -31,7 +31,7 @@ function App() {
             <Navbar ask={ask} setAsk={setAsk} />
             { user && <AskButton ask={ask} handleAsk={handleAsk} />}
             <Routes>
-              <Route exact path='/' element={< Home />}>
+              <Route exact path='/' element={< Home  ask={ask} handleAsk={handleAsk}  />}>
                 <Route path='' element={<Posts />} />
                 <Route path='/explore' element={<Explore />} />
                 <Route path='/contribute' element={<Contribute />} />
