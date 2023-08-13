@@ -9,6 +9,7 @@ import 'react-quill/dist/quill.snow.css';
 import newRequest from '../../utils/newRequest';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import Badwords from './Badwords'
 
 const Section = ({ isLoading, error, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
@@ -181,6 +182,7 @@ const Section = ({ isLoading, error, data }) => {
 
                 </div>
             </div>
+            <Badwords/>
         </div>
     )
 }
