@@ -10,7 +10,8 @@ import newRequest from '../../utils/newRequest';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Badwords from './Badwords'
-
+import Filter from 'bad-words'
+import { useQuery } from '@tanstack/react-query'
 const Section = ({ isLoading, error, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
@@ -24,7 +25,20 @@ const Section = ({ isLoading, error, data }) => {
         category: "",
 
     });
-    
+    const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
+        queryKey: ["badwords"],
+        queryFn: () =>
+            newRequest.get(`badwords`).then((res) => {
+                return res.data;
+            }),
+    });
+    const newBadWords = [];
+    if (!(isBWLoading || BWError)) {
+        badwords.map((word) => newBadWords.push(word.word))
+    }
+
+    const filter = new Filter({ regex: /\*|\.|$/gi })
+    filter.addWords(...newBadWords);
     const handleChange = (e) => {
         setQuestion((prev) => {
             return { ...prev, [e.target.name]: e.target.value };
@@ -149,7 +163,7 @@ const Section = ({ isLoading, error, data }) => {
                                             <p className=' font-semibold'>{i + 1}.</p>
                                             <Link to={`posts/${que._id}`}>
                                                 <div className='group flex overflow-x-auto scrollbar-none flex-nowrap items-centers'>
-                                                    <p className='group-hover:text-blue-500 group-hover:underline-offset-2 group-hover:underline whitespace-nowrap text-sm '>{que.title}</p>
+                                                    <p className='group-hover:text-blue-500 group-hover:underline-offset-2 group-hover:underline whitespace-nowrap text-sm '>{filter.clean(que.title)}</p>
                                                 </div>
                                             </Link>
                                         </div>
