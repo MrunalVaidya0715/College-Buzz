@@ -5,7 +5,7 @@ import FilterSort from "./FilterSort"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import FeedSkeleton from "./FeedSkeleton"
-
+import Filter from 'bad-words'
 const Feeds = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['question._id'],
@@ -14,6 +14,20 @@ const Feeds = () => {
     })
 
   })
+  const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
+    queryKey: ["badwords"],
+    queryFn: () =>
+      newRequest.get(`badwords`).then((res) => {
+        return res.data;
+      }),
+  });
+  const newBadWords = [];
+  if (!(isBWLoading || BWError)) {
+    badwords.map((word) => newBadWords.push(word.word))
+  }
+
+  const filter = new Filter({ regex: /\*|\.|$/gi })
+  filter.addWords(...newBadWords);
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -56,7 +70,7 @@ const Feeds = () => {
                 </div>
               ) :
                 data.map((feed) => (
-                  <Feed key={feed._id} refetch={refetch} {...feed} />
+                  <Feed key={feed._id} refetch={refetch} {...feed} title={filter.clean(feed.title)} desc={filter.clean(feed.desc)} />
                 ))
         }
       </div>
