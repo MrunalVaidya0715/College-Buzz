@@ -100,7 +100,7 @@ const Section = ({ isLoading, error, data }) => {
     }
     return (
         <div className={`z-[200] md:z-[0] bg-white md:bg-transparent border-[1px] md:border-0 rounded-lg fixed ${isWidget? "translate-x-0":"translate-x-[100%]"} md:translate-x-0 translate-y-[10%] md:translate-y-0 right-0 md:static max-w-[200px] md:w-[20%] md:min-w-[20%] flex flex-col gap-8 p-2 transition-all ease-in-out duration-700`}>
-            <div onClick={handleWidget} className='p-1 rounded-full absolute top-[10%] -translate-x-8 z-[100] bg-blue-700'>
+            <div onClick={handleWidget} className='md:hidden p-1 rounded-full absolute top-[10%] -translate-x-8 z-[100] bg-blue-700'>
                     <MdOutlineChevronLeft className=' text-white text-xl'/>
             </div>
             {/** */}
