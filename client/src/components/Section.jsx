@@ -109,10 +109,10 @@ const Section = ({ isLoading, error, data }) => {
                 <div className='w-full flex justify-center'>
                     {
                         user ? (
-                            <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                         ) : (
                             <Link className='w-full' to="/login">
-                                <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                                <button onClick={() => setModal(prev => !prev)} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                             </Link>
                         )
                     }
