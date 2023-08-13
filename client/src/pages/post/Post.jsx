@@ -18,7 +18,18 @@ import Filter from 'bad-words'
 
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
-  const newBadWords = ['some', 'bad', 'word', 'shir'];
+  const { isLoading:isBWLoading, error:BWError, data: badwords } = useQuery({
+    queryKey: ["badwords"],
+    queryFn: () =>
+      newRequest.get(`badwords`).then((res) => {
+        return res.data;
+      }),
+  });
+  const newBadWords = [];
+  if(!(isBWLoading || BWError)){
+    badwords.map((word)=>newBadWords.push(word.word))
+  }
+  
   const filter = new Filter({ regex: /\*|\.|$/gi })
   filter.addWords(...newBadWords);
   const { id } = useParams()
