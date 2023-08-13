@@ -1,9 +1,9 @@
 import { useState } from "react"
 import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
-import { ImSpinner6 } from 'react-icons/im'
+import { ImSpinner6, ImSpinner9 } from 'react-icons/im'
 import { FaInfoCircle } from 'react-icons/fa'
 import newRequest from "../../utils/newRequest";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 const Badwords = () => {
     const [word, setWord] = useState("")
     const [err, setErr] = useState(null);
@@ -26,26 +26,24 @@ const Badwords = () => {
         try {
             setisUploading(true)
             await newRequest.post('badwords', { word })
+            setWord("")
             setisUploading(false)
             alert("Word Added for Filtering")
-            setWord("")
+            
         } catch (error) {
             setisUploading(false)
             setErr(error.response.data)
             console.error(error)
         }
     }
-    const handleDelete = async (wordId) => {
-
-        try {
-            await newRequest.delete(`badwords/${wordId}`)
-
-        } catch (error) {
-
-            setErr(error.response.data)
-            console.error(error)
-        }
-    }
+    const queryClient = useQueryClient();
+    const deleteWord = useMutation((id) => {
+        return newRequest.delete(`badwords/${id}`);
+    }, {
+        onSuccess: () => {
+            queryClient.invalidateQueries("badwords");
+        },
+    });
     return (
         <div className="py-2 flex flex-col items-center w-full gap-2">
             {
@@ -57,12 +55,13 @@ const Badwords = () => {
                         </div>
                         <div className=" scrollbar-none w-full bg-white flex  overflow-y-auto max-h-[150px] border-[1px] rounded-lg overflow-hidden flex-col items-center">
                             {
-                                isBWLoading ? "Loading.." :
-                                    BWError ? "-" : (
+                                isBWLoading ? <ImSpinner9 className=" text-xl animate-spin text-blue-700"/>:
+                                    BWError ? "-" : 
+                                    badwords.length === 0 ? "Empty List":(
                                         badwords.map((wd) => (
                                             <div className="flex border-b-[1px] border-black/50 py-2 px-3 w-full items-center justify-between" key={wd._id}>
                                                 <p>{wd.word}</p>
-                                                <button onClick={() => handleDelete(wd._id)} className="hover:bg-gray-200 active:bg-gray-300 p-1 border-[1px] rounded-full">
+                                                <button onClick={() => {deleteWord.mutate(wd._id)}} className="hover:bg-gray-200 active:bg-gray-300 p-1 border-[1px] rounded-full">
                                                     <AiOutlineMinus className=" text-red-700" size={16} />
                                                 </button>
                                             </div>
