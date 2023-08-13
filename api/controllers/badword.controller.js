@@ -1,6 +1,5 @@
 import Word from "../models/badword.model.js";
 import createError from "../utils/createError.js";
-import mongoose from "mongoose";
 
 export const createBadword  = async(req, res, next) =>{
     try {
@@ -29,19 +28,18 @@ export const getBadwords = async (req, res, next) => {
 };
 
 export const deleteBadword = async (req, res, next) => {
+  const wordId = req.params.wordId;
   try {
-    const {word} = req.body;
     
-    const badword = await Word.findOne({word: word});
+    
+    const badword = await Word.findById(wordId);
     if (!badword) {
       return next(createError(404, "Word not found"));
     }
 
-   
+    await Word.findByIdAndRemove(wordId);
 
-    await Word.findOneAndDelete({word:word});
-
-    res.status(200).json({ message: "Word deleted successfully" });
+    res.status(200).send("Word deleted successfully");
   } catch (error) {
     next(error);
   }

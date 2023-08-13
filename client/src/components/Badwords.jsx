@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { AiOutlinePlus,AiOutlineMinus } from 'react-icons/ai'
+import { AiOutlinePlus, AiOutlineMinus } from 'react-icons/ai'
 import { ImSpinner6 } from 'react-icons/im'
 import { FaInfoCircle } from 'react-icons/fa'
 import newRequest from "../../utils/newRequest";
@@ -35,35 +35,36 @@ const Badwords = () => {
             console.error(error)
         }
     }
-    const handleDelete = async (wordSelected) => {
-        
+    const handleDelete = async (wordId) => {
+
         try {
-            
-            await newRequest.delete('badwords', { wordSelected })
-            
+            await newRequest.delete(`badwords/${wordId}`)
+
         } catch (error) {
-            
+
             setErr(error.response.data)
             console.error(error)
         }
     }
     return (
-        <div className="py-2 group flex flex-col items-center w-full gap-2">
+        <div className="py-2 flex flex-col items-center w-full gap-2">
             {
                 isManage ? (
                     <div className=" flex flex-col items-center w-full gap-2">
                         <div className=" flex-wrap-reverse flex items-center gap-2">
-                            <p className="font-semibold">Manage BadWords</p>
+                            <p className="font-semibold">Manage Badwords</p>
 
                         </div>
-                        <div className=" scrollbar-none w-full bg-white flex  overflow-y-auto max-h-[100px] border-[1px] rounded-lg overflow-hidden flex-col items-center">
+                        <div className=" scrollbar-none w-full bg-white flex  overflow-y-auto max-h-[150px] border-[1px] rounded-lg overflow-hidden flex-col items-center">
                             {
                                 isBWLoading ? "Loading.." :
                                     BWError ? "-" : (
                                         badwords.map((wd) => (
                                             <div className="flex border-b-[1px] border-black/50 py-2 px-3 w-full items-center justify-between" key={wd._id}>
                                                 <p>{wd.word}</p>
-                                                <AiOutlineMinus onClick={()=>handleDelete(wd.word)} className=" text-red-700" size={16}/>
+                                                <button onClick={() => handleDelete(wd._id)} className="hover:bg-gray-200 active:bg-gray-300 p-1 border-[1px] rounded-full">
+                                                    <AiOutlineMinus className=" text-red-700" size={16} />
+                                                </button>
                                             </div>
                                         ))
                                     )
@@ -76,7 +77,7 @@ const Badwords = () => {
                                 </div>
                             )
                         }
-                        <div onClick={() => setIsManage(false)} className="group-hover:flex hidden w-full justify-center  delay-1000">
+                        <div onClick={() => setIsManage(false)} className="flex w-full justify-center  delay-1000">
                             <button className=" text-blue-500">Add Badwords</button>
                         </div>
                     </div>
@@ -103,8 +104,8 @@ const Badwords = () => {
                                 </div>
                             )
                         }
-                        <div onClick={() => setIsManage(true)} className="group-hover:flex hidden w-full justify-center  delay-1000">
-                            <button className=" text-blue-500">manage</button>
+                        <div onClick={() => setIsManage(true)} className="flex w-full justify-center  delay-1000">
+                            <button className=" text-blue-500">Manage</button>
                         </div>
                     </div>
                 )

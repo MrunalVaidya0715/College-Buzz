@@ -6,6 +6,6 @@ const router = Router();
 
 router.post("/", verifyToken, createBadword)
 router.get("/", getBadwords)
-router.delete("/", verifyToken, deleteBadword)
+router.delete("/:wordId", deleteBadword)
 
 export default router;
