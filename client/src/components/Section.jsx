@@ -100,8 +100,8 @@ const Section = ({ isLoading, error, data }) => {
     }
     return (
         <>
-            { isWidget && <div onClick={()=>setIsWidget(false)} className='z-[199] md:hidden fixed top-0 right-0 h-full w-full bg-black/20' />}
-            <div className={`z-[200] md:z-[0] bg-white md:bg-transparent rounded-l-lg fixed ${isWidget ? "translate-x-0" : "translate-x-[100%]"} md:translate-x-0  md:translate-y-0 right-0 md:static max-w-[75%] sm:max-w-[60%] md:w-[20%] md:min-w-[20%] flex flex-col gap-8 p-2 transition-all ease-in-out duration-700`}>
+            { isWidget && <div onClick={()=>setIsWidget(false)} className='z-[200] md:hidden fixed top-0 right-0 h-full w-full bg-black/20' />}
+            <div className={`z-[201] bg-white md:bg-transparent rounded-l-lg fixed ${isWidget ? "translate-x-0" : "translate-x-[100%]"} md:translate-x-0  md:translate-y-0 right-0 md:static max-w-[75%] sm:max-w-[60%] md:w-[20%] md:min-w-[20%] flex flex-col gap-8 p-2 transition-all ease-in-out duration-500`}>
                 <div onClick={handleWidget} className={`${isWidget ? "opacity-100": "opacity-50"} hover:opacity-100 cursor-pointer md:hidden p-2 rounded-full absolute top-[10%] ${isWidget? "-translate-x-8":"-translate-x-9"} z-[100] bg-blue-700 transition-all ease-in-out duration-500`}>
                     <MdOutlineChevronLeft className={` text-white text-2xl ${isWidget?" rotate-180":""} transition-all ease-in-out duration-500 `} />
                 </div>
@@ -119,7 +119,7 @@ const Section = ({ isLoading, error, data }) => {
                 </div>
                 {
                     modal && (
-                        <div className='z-[100] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
+                        <div className='z-[100] top-0 right-0 bg-black/50 fixed flex w-full h-full items-center justify-center'>
 
                             <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
                                 <div className='flex w-full justify-end'>
@@ -168,7 +168,7 @@ const Section = ({ isLoading, error, data }) => {
                             isLoading ? <Skeleton className='mt-4 w-full' count={5} /> :
                                 error ? "Something went wrong" :
                                     data.map((que, i) => (
-                                        <div key={i} className="w-full flex gap-1 items-baseline justify-between">
+                                        <div onClick={()=>setIsWidget(false)} key={i} className="w-full flex gap-1 items-baseline justify-between">
                                             <div className='flex overflow-x-auto scrollbar-none items-center gap-1'>
                                                 <p className=' font-semibold'>{i + 1}.</p>
                                                 <Link to={`posts/${que._id}`}>
