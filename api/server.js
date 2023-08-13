@@ -8,6 +8,7 @@ import authRoute from './routes/auth.route.js'
 import userRoute from './routes/user.route.js'
 import questionRoute from './routes/question.route.js'
 import answerRoute from './routes/answer.route.js'
+import badwordRoute from './routes/badword.route.js'
 
 const app = express()
 dotenv.config()
@@ -33,6 +34,8 @@ app.use('/api/auth', authRoute)
 app.use('/api/users', userRoute)
 app.use('/api/questions', questionRoute)
 app.use('/api/answers', answerRoute)
+app.use('/api/badwords', badwordRoute)
+
 
 app.use('/about', (req,res)=>{
     res.send("About: CollegeBuzz is a student-focused web platform where students can ask questions and get answers from experienced college seniors and alumni, helping them with their academic queries and providing valuable guidance.")
