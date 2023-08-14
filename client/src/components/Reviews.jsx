@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 import newRequest from "../../utils/newRequest"
 import { useParams } from "react-router-dom"
 import {ImSpinner9} from 'react-icons/im'
-
+import Filter from 'bad-words'
 const Reviews = () => {
   const { id } = useParams();
   const { isLoading, error, data, refetch } = useQuery({
@@ -13,6 +13,20 @@ const Reviews = () => {
     })
 
   })
+  const { isLoading:isBWLoading, error:BWError, data: badwords } = useQuery({
+    queryKey: ["badwords"],
+    queryFn: () =>
+      newRequest.get(`badwords`).then((res) => {
+        return res.data;
+      }),
+  });
+  const newBadWords = [];
+  if(!(isBWLoading || BWError)){
+    badwords.map((word)=>newBadWords.push(word.word))
+  }
+  
+  const filter = new Filter({ regex: /\*|\.|$/gi })
+  filter.addWords(...newBadWords);
 
   return (
     <div className=" mt-8 w-full flex flex-col gap-2">
@@ -28,7 +42,7 @@ const Reviews = () => {
                 </div>
               ) :
                 data.map((ans) => (
-                  <Review key={ans._id} refetch={refetch} {...ans} />
+                  <Review key={ans._id} refetch={refetch} {...ans} desc={filter.clean(ans.desc)} />
                 ))
         }
       </div>
