@@ -4,16 +4,29 @@ import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom";
 import { format, formatDistanceToNow } from "date-fns";
 import newRequest from "../../utils/newRequest";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ImSpinner6 } from "react-icons/im";
-
+import Filter from 'bad-words'
 const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     const navigate = useNavigate();
     const [description, setDescription] = useState("");
     const [uploading, setUploading] = useState(false);
     const [err, setErr] = useState(null);
+    const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
+        queryKey: ["badwords"],
+        queryFn: () =>
+            newRequest.get(`badwords`).then((res) => {
+                return res.data;
+            }),
+    });
+    const newBadWords = [];
+    if (!(isBWLoading || BWError)) {
+        badwords.map((word) => newBadWords.push(word.word))
+    }
 
+    const filter = new Filter({ regex: /\*|\.|$/gi })
+    filter.addWords(...newBadWords);
     const [answer, setAnswer] = useState({
         desc: description,
     });
@@ -71,7 +84,7 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
                             <IoClose size={22} />
                         </div>
                     </div>
-                    <h1 className="text-xl font-semibold">{data.title}</h1>
+                    <h1 className="text-xl font-semibold">{filter.clean(data.title)}</h1>
                     <p className="flex justify-center flex-wrap gap-1 items-baseline font-semibold">
                         <span className="font-normal text-sm text-gray-500">asked by</span>
                         {data.userInfo.username}
