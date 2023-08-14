@@ -3,7 +3,7 @@ import parse from 'html-react-parser'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom'
-const Answered = ({ userId, queTitle, questionId, desc, upvote, downvote, createdAt }) => {
+const Answered = ({ userId, userInfo, queTitle, questionId, desc, upvote, downvote, createdAt }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const vote = upvote - downvote
     return (
@@ -20,7 +20,7 @@ const Answered = ({ userId, queTitle, questionId, desc, upvote, downvote, create
                     </div>
                 </div>
                 <div className="flex w-full gap-1 items-center">
-                    <img className=" w-8 h-8 object-cover object-center rounded-full" src={questionId.userInfo.profileImg || "/assets/noProfile.png"} alt={questionId.userInfo.username} />
+                    <img className=" w-8 h-8 object-cover object-center rounded-full" src={user?.profileImg || "/assets/noProfile.png"} alt={questionId.userInfo.username} />
                     <div className=' overflow-x-auto flex flex-wrap items-center gap-1'>
                         <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span>
                             <span className=" whitespace-nowrap font-semibold text-blue-500">
