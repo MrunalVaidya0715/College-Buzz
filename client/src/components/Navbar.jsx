@@ -11,6 +11,8 @@ import { IoAddOutline, IoClose } from 'react-icons/io5'
 import newRequest from '../../utils/newRequest'
 import { LiaHandsHelpingSolid } from 'react-icons/lia'
 import { ImSpinner6 } from 'react-icons/im'
+import { useContext } from 'react';
+import { AskButtonContext } from '../context/AskButtonContext'
 
 const links = [
     {
@@ -34,8 +36,9 @@ const links = [
 
 ]
 
-const Navbar = ({ ask, setAsk }) => {
+const Navbar = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
+    const {ask, setAsk} = useContext(AskButtonContext)
     const navigate = useNavigate()
     const location = useLocation()
     const [options, setOptions] = useState(false)
@@ -56,8 +59,6 @@ const Navbar = ({ ask, setAsk }) => {
             alert(error)
         }
     }
-
-    const [modal, setModal] = useState(false)
     const [description, setDescription] = useState('');
     const [uploading, setUploading] = useState(false);
     const [question, setQuestion] = useState({
@@ -159,7 +160,7 @@ const Navbar = ({ ask, setAsk }) => {
                                 <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
                                 {
                                     user ? (<div className='md:hidden w-full flex justify-center'>
-                                        <button onClick={() => setModal(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
+                                        <button onClick={() => setAsk(true)} className='bg-blue-700 hover:opacity-70 active:opacity-30 w-full max-w-[200px] p-2 rounded-md text-white transition-all duration-200 ease-in-out'>Ask Question</button>
                                     </div>) : (
                                         <>
 
@@ -209,14 +210,13 @@ const Navbar = ({ ask, setAsk }) => {
 
             </div>
             {
-                (ask || modal) && (
+                ask && (
                     <div className='z-[1000] top-0 right-0 bg-black/50 absolute flex w-full h-screen items-center justify-center'>
 
                         <div className='py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center w-[90%] max-w-[700px] h-[600px] p-4 bg-white'>
                             <div className='flex w-full justify-end'>
                                 <div onClick={() => {
                                     setAsk(false)
-                                    setModal(false)
                                 }} className=' cursor-pointer  p-1 bg-white rounded-md'>
                                     <IoClose size={22} />
                                 </div>
