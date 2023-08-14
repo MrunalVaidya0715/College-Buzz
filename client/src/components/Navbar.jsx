@@ -201,7 +201,7 @@ const Navbar = () => {
                 ask && (
                     <>
                     <div onClick={()=>setAsk(false)} className=' fixed z-[1000] top-0 right-0 bg-black/50 flex w-full h-screen items-center justify-center' />
-                        <div className=' fixed  z-[1001] top-10 w-[90%] max-w-[700px] h-[600px]'>
+                        <div className=' fixed  z-[1001] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] w-[90%] max-w-[700px] h-[600px]'>
                             <div className='  py-4 overflow-y-auto scrollbar-w-2 scrollbar-thumb-gray-400 scrollbar scrollbar-thumb-rounded-lg scrollbar-track-gray-200  flex flex-col gap-4 items-center  w-full h-full p-4 bg-white'>
                                 <div className='flex w-full justify-end'>
                                     <div onClick={() => {
