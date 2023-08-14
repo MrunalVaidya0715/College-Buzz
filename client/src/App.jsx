@@ -31,9 +31,9 @@ function App() {
           <QueryClientProvider client={queryClient}>
             <GoogleOAuthProvider clientId={clientId}>
               <Navbar ask={ask} setAsk={setAsk} />
-              {user && <AskButton/>}
+              <AskButton />
               <Routes>
-                <Route exact path='/' element={< Home/>}>
+                <Route exact path='/' element={< Home />}>
                   <Route path='' element={<Posts />} />
                   <Route path='/explore' element={<Explore />} />
                   <Route path='/contribute' element={<Contribute />} />
