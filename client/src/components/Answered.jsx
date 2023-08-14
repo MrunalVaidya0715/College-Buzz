@@ -3,7 +3,7 @@ import parse from 'html-react-parser'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom'
-const Answered = ({ userId, questionId, desc, upvote, downvote, createdAt }) => {
+const Answered = ({ userId, queTitle, questionId, desc, upvote, downvote, createdAt }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const vote = upvote - downvote
     return (
@@ -16,7 +16,7 @@ const Answered = ({ userId, questionId, desc, upvote, downvote, createdAt }) => 
                     </div>
                     {/**Title */}
                     <div>
-                        <h1 className=" font-bold text-lg tracking-wide">{questionId.title}</h1>
+                        <h1 className=" font-bold text-lg tracking-wide">{queTitle}</h1>
                     </div>
                 </div>
                 <div className="flex w-full gap-1 items-center">
