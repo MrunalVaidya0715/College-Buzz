@@ -5,9 +5,9 @@ import FilterSort from "../../components/FilterSort"
 import { useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
 import FeedSkeleton from '../../components/FeedSkeleton'
-import useBadwordsFilter from "../../hooks/useBadwordsFilter"
+import Filter from 'bad-words'
 const Contribute = () => {
-  const filter = useBadwordsFilter()
+  
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['question._id'],
     queryFn: () => newRequest.get(`/questions?category=${cat}&sort=${sort}`).then((res) => {
@@ -15,6 +15,19 @@ const Contribute = () => {
     })
 
   })
+  const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
+    queryKey: ["badwords"],
+    queryFn: () =>
+      newRequest.get(`badwords`).then((res) => {
+        return res.data;
+      }),
+  });
+  const newBadWords = [];
+  if (!(isBWLoading || BWError)) {
+    badwords.map((word) => newBadWords.push(word.word))
+  }
+  const filter = new Filter({ regex: /\*|\.|$/gi })
+  filter.addWords(...newBadWords);
 
   const filterPosts = data?.filter((post) => post.answers.length === 0)
 
@@ -57,7 +70,7 @@ const Contribute = () => {
                 </div>
               ) :
                 filterPosts.map((feed) => (
-                  <Feed key={feed._id} refetch={refetch} {...feed} title={filter?.clean(feed.title)} desc= {filter?.clean(feed.desc)} />
+                  <Feed key={feed._id} refetch={refetch} {...feed} title={filter.clean(feed.title)} desc={filter.clean(feed.desc)} />
                 ))
         }
       </div>
