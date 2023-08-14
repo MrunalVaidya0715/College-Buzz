@@ -4,7 +4,7 @@ import Sidebar from "../../components/Sidebar"
 import { useQuery } from "@tanstack/react-query"
 import newRequest from "../../../utils/newRequest"
 
-const Home = ({ask, handleAsk}) => {
+const Home = () => {
     const { isLoading, error, data } = useQuery({
         queryKey: ['topquestions'],
         queryFn: () => newRequest.get(`questions/top-questions`).then((res) => {
@@ -21,7 +21,7 @@ const Home = ({ask, handleAsk}) => {
                     <Outlet />
                 </div>
 
-                <Section isLoading={isLoading} error={error} data={data}  ask={ask} handleAsk={handleAsk}  />
+                <Section isLoading={isLoading} error={error} data={data} />
             </div>
         </div>
     )

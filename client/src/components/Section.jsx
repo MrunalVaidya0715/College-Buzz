@@ -1,11 +1,9 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { BsDash } from 'react-icons/bs'
-import { IoAddOutline, IoClose } from 'react-icons/io5'
-import { ImSpinner6 } from 'react-icons/im'
+import { IoAddOutline} from 'react-icons/io5'
 import { MdOutlineChevronLeft } from 'react-icons/md'
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import newRequest from '../../utils/newRequest';
 import Skeleton from 'react-loading-skeleton'
@@ -13,9 +11,13 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import Badwords from './Badwords'
 import Filter from 'bad-words'
 import { useQuery } from '@tanstack/react-query'
-const Section = ({ isLoading, error, data, ask, handleAsk }) => {
+import { useContext } from 'react';
+import { AskButtonContext } from '../context/AskButtonContext'
+
+const Section = ({ isLoading, error, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
-    
+    const {ask, setAsk} = useContext(AskButtonContext)
+
     const [isWidget, setIsWidget] = useState(false)
     
     const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
@@ -48,7 +50,7 @@ const Section = ({ isLoading, error, data, ask, handleAsk }) => {
                 <div className='w-full flex justify-center'>
                     {
                         user ? (
-                            <button onClick={handleAsk} className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
+                            <button onClick={()=>setAsk(true)}  className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
                         ) : (
                             <Link className='w-full' to="/login">
                                 <button className=' whitespace-nowrap bg-blue-700 hover:opacity-70 active:opacity-30 hidden md:flex items-center justify-center gap-1 w-full p-2 rounded-md text-white ease-in-out transition-all duration-200'><IoAddOutline size={20} />Ask Question</button>
