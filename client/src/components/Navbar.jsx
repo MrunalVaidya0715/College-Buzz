@@ -161,7 +161,13 @@ const Navbar = () => {
                         <div className='lg:hidden mr-2 absolute bg-white/70 backdrop-blur-md rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
                             <div className='flex flex-col gap-2 w-full'>
                                 <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
-
+                                {
+                                    !user && (
+                                        <Link className=' w-full' to='/login'>
+                                            <button onClick={() => setOptions(false)} className='w-full md:hidden p-2 bg-white text-blue-600 rounded-md border-[1px] border-blue-600 whitespace-nowrap'>Sign In</button>
+                                        </Link>
+                                    )
+                                }
                                 {
                                     links.map((link) => (
                                         <Link key={link.id} to={link.url}>
