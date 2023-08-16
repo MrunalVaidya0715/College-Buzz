@@ -16,6 +16,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google'
 import NotFound from './pages/notFound/NotFound';
 import AskButton from './components/AskButton';
 import { AskButtonContext } from './context/AskButtonContext';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useState } from 'react';
 function App() {
   const user = JSON.parse(localStorage.getItem("currentUser"))
@@ -46,6 +47,7 @@ function App() {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </GoogleOAuthProvider>
+            <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </div>
       </AskButtonContext.Provider>
