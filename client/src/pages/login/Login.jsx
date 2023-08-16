@@ -12,11 +12,12 @@ const Login = () => {
     try {
       const decodedResponse = jwt_decode(response.credential);
       console.log(decodedResponse)
-      const { email, given_name, family_name, picture } = decodedResponse;
+      const { email, given_name, family_name, picture, exp } = decodedResponse;
       const res = await newRequest.post("auth/google-login", {
         username: given_name + ' ' + (family_name || ""),
         email: email,
-        profileImg: picture
+        profileImg: picture,
+        exp: exp
 
       })
       localStorage.setItem("currentUser", JSON.stringify(res.data))

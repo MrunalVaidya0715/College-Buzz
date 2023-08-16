@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 export const handleGoogleLogin = async (req, res, next) => {
   try {
-    const { email, username, profileImg } = req.body; 
+    const { email, username, profileImg, exp } = req.body; 
 
     let user = await User.findOne({ email });
 
@@ -23,18 +23,17 @@ export const handleGoogleLogin = async (req, res, next) => {
       {
         id: user._id,
       },
-      process.env.JWT_KEY
+      process.env.JWT_KEY, {expiresIn: exp}
     );
 
     const { password: _, ...info } = user._doc;
+    info.exp = exp;
     res
       .cookie("accessToken", token, {
         httpOnly: true,
         sameSite: "none",
         secure: true,
-      })
-      .status(200)
-      .send(info);
+      }).status(200).send(info);
   } catch (error) {
     next(error);
   }
