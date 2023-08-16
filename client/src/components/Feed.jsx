@@ -4,10 +4,26 @@ import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
 import { formatDistanceToNow } from 'date-fns';
 
+const formatTimeAgo = (createdAt) => {
+    const secondsAgo = Math.floor((new Date() - new Date(createdAt)) / 1000);
+  
+    if (secondsAgo < 60) {
+      return `${secondsAgo}s ago`;
+    } else if (secondsAgo < 3600) {
+      const minutesAgo = Math.floor(secondsAgo / 60);
+      return `${minutesAgo}m ago`;
+    } else if (secondsAgo < 86400) {
+      const hoursAgo = Math.floor(secondsAgo / 3600);
+      return `${hoursAgo}h ago`;
+    } else {
+      return formatDistanceToNow(new Date(createdAt), { addSuffix: true });
+    }
+  };
+
 const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const vote = up - dwn;
-    const timeAgo = formatDistanceToNow(new Date(createdAt));
+    const timeAgo = formatTimeAgo(createdAt);
     const htmlToString = desc.replace(/<[^>]+>/g, '');
 
     
