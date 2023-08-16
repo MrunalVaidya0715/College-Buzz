@@ -76,19 +76,19 @@ const Navbar = () => {
     };
     const queryClient = useQueryClient();
     const addQuestion = useMutation(
-        (question) => {
-            return newRequest.post(`questions`, question)
+        async(question) => {
+            const res =  await newRequest.post(`questions`, question)
+            return res;
         },
         {
-            onSuccess: () => {
+            onSuccess: (res) => {
                 queryClient.invalidateQueries("question._id");
                 setUploading(false)
-                alert("Question Uploaded")
                 setDescription("")
                 setQuestion("")
                 setAsk(false)
                 setOptions(false)
-                navigate('/')
+                navigate(`/posts/${res.data._id}`)
             },
             onError: (error) => {
                 setUploading(false)
