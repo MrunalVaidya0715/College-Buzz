@@ -103,7 +103,6 @@ const Navbar = () => {
             alert("Question Uploaded")
             setDescription("")
             setQuestion("")
-            setModal(false)
             setOptions(false)
             navigate('/')
 
