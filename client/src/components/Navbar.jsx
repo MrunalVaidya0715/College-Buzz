@@ -13,6 +13,7 @@ import { LiaHandsHelpingSolid } from 'react-icons/lia'
 import { ImSpinner6 } from 'react-icons/im'
 import { useContext } from 'react';
 import { AskButtonContext } from '../context/AskButtonContext'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const links = [
     {
@@ -73,6 +74,29 @@ const Navbar = () => {
             return { ...prev, [e.target.name]: e.target.value };
         });
     };
+    const queryClient = useQueryClient();
+    const addQuestion = useMutation(
+        (question) => {
+            return newRequest.post(`questions`, question)
+        },
+        {
+            onSuccess: () => {
+                queryClient.invalidateQueries("question._id");
+                setUploading(false)
+                alert("Question Uploaded")
+                setDescription("")
+                setQuestion("")
+                setAsk(false)
+                setOptions(false)
+                navigate('/')
+            },
+            onError: (error) => {
+                setUploading(false)
+                // setErr(error.response.data)
+                console.error("Upload error:", error);
+            },
+        }
+    )
     const handleSubmit = async (e) => {
         e.preventDefault();
         setUploading(true)
@@ -95,19 +119,9 @@ const Navbar = () => {
             return;
         }
         try {
-            await newRequest.post('/questions', {
-                ...question,
-
-            })
-            setUploading(false)
-            alert("Question Uploaded")
-            setDescription("")
-            setQuestion("")
-            setOptions(false)
-            navigate('/')
-
+            await addQuestion.mutateAsync(question);
         } catch (error) {
-            setErr(error.response.data)
+            // setErr(error.response.data)
             setUploading(false)
             console.log(error)
 
