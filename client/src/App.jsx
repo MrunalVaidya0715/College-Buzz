@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 import Navbar from "./components/Navbar"
 import Home from "./pages/Home/Home"
 import Login from './pages/login/Login';
@@ -23,8 +23,23 @@ import AdminPosts from './pages/admin/adminPosts/AdminPosts';
 import Dashboard from './pages/admin/dashboard/Dashboard';
 import ReportedPosts from './pages/admin/reportedPosts/ReportedPosts';
 import Users from './pages/admin/users/Users';
+
+
+const useAuth = () => {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  if (user) {
+    return true;
+  }
+  return false;
+};
+
+const ProtectedRoutes = () => {
+  const auth = useAuth();
+
+  return auth ? <Outlet /> : <Navigate to="/login" />;
+};
+
 function App() {
-  const user = JSON.parse(localStorage.getItem("currentUser"))
   const [ask, setAsk] = useState(false);
   const handleAsk = () => setAsk(prev => !prev)
   const queryClient = new QueryClient()
@@ -44,14 +59,18 @@ function App() {
                   <Route path='/explore' element={<Explore />} />
                   <Route path='/contribute' element={<Contribute />} />
                   <Route path='/posts/:id' element={<Post />} />
-                  <Route path='/profile/:userId' element={<Profile />} />
-                  <Route path='/my-questions/:userId' element={<MyQuestions />} />
+                  <Route element={<ProtectedRoutes />}>
+                    <Route path='/profile/:userId' element={<Profile />} />
+                    <Route path='/my-questions/:userId' element={<MyQuestions />} />
+                  </Route>
                 </Route>
-                <Route exact path='/admin' element={< Admin />}>
-                  <Route path='' element={<Dashboard/>} />
-                  <Route path='admin-posts' element={<AdminPosts />} />
-                  <Route path='users' element={<Users />} />
-                  <Route path='reports-posts' element={<ReportedPosts />} />
+                <Route element={<ProtectedRoutes />}>
+                  <Route exact path='/admin' element={< Admin />}>
+                    <Route path='' element={<Dashboard />} />
+                    <Route path='admin-posts' element={<AdminPosts />} />
+                    <Route path='users' element={<Users />} />
+                    <Route path='reports-posts' element={<ReportedPosts />} />
+                  </Route>
                 </Route>
 
                 <Route exact path='/login' element={< Login />}></Route>
