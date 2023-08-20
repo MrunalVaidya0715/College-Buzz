@@ -18,6 +18,11 @@ import AskButton from './components/AskButton';
 import { AskButtonContext } from './context/AskButtonContext';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { useState } from 'react';
+import Admin from './pages/admin/Admin';
+import AdminPosts from './pages/admin/adminPosts/AdminPosts';
+import Dashboard from './pages/admin/dashboard/Dashboard';
+import ReportedPosts from './pages/admin/reportedPosts/ReportedPosts';
+import Users from './pages/admin/users/Users';
 function App() {
   const user = JSON.parse(localStorage.getItem("currentUser"))
   const [ask, setAsk] = useState(false);
@@ -41,6 +46,12 @@ function App() {
                   <Route path='/posts/:id' element={<Post />} />
                   <Route path='/profile/:userId' element={<Profile />} />
                   <Route path='/my-questions/:userId' element={<MyQuestions />} />
+                </Route>
+                <Route exact path='/admin' element={< Admin />}>
+                  <Route path='' element={<Dashboard/>} />
+                  <Route path='admin-posts' element={<AdminPosts />} />
+                  <Route path='users' element={<Users />} />
+                  <Route path='reports-posts' element={<ReportedPosts />} />
                 </Route>
 
                 <Route exact path='/login' element={< Login />}></Route>
