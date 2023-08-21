@@ -129,7 +129,7 @@ const Navbar = () => {
 
     }
     return (
-        <div className=" z-[100] fixed top-0 left-0 h-16 w-full  bg-white flex justify-center  shadow-md">
+        <div className={` ${location.pathname.includes("/admin") ? "hidden":"flex"}  z-[100] fixed top-0 left-0 h-16 w-full  bg-white  justify-center  shadow-md`}>
             <div className=" relative px-2 w-full h-full max-w-[1200px] flex gap-4 items-center justify-between">
                 <div>
                     <Link to='/'>
