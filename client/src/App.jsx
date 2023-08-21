@@ -69,7 +69,7 @@ function App() {
                     <Route path='' element={<Dashboard />} />
                     <Route path='admin-posts' element={<AdminPosts />} />
                     <Route path='users' element={<Users />} />
-                    <Route path='reports-posts' element={<ReportedPosts />} />
+                    <Route path='reported-posts' element={<ReportedPosts />} />
                   </Route>
                 </Route>
 
