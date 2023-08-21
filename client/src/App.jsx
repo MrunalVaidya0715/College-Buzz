@@ -48,7 +48,7 @@ function App() {
   return (
     <Router>
       <AskButtonContext.Provider value={{ ask, setAsk }}>
-        <div className="md:pt-6 min-h-screen flex w-full flex-col justify-between">
+        <div className="min-h-screen flex w-full flex-col justify-between">
           <QueryClientProvider client={queryClient}>
             <GoogleOAuthProvider clientId={clientId}>
               <Navbar ask={ask} setAsk={setAsk} />
