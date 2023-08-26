@@ -28,9 +28,9 @@ const Badwords = () => {
         try {
             setisUploading(true)
             await newRequest.post('badwords', { word })
-            setWord("")
             setisUploading(false)
             alert("Word Added for Filtering")
+            setWord("")
             
         } catch (error) {
             setisUploading(false)
@@ -91,7 +91,7 @@ const Badwords = () => {
                             </div>
                         </div>
                         <div className="flex justify-items-center w-full h-full items-center ">
-                            <input className="flex border-[1px] p-2 w-full h-full" onChange={(e) => setWord(e.target.value)} type="text" name="word" id="word" />
+                            <input className="flex border-[1px] p-2 w-full h-full" onChange={(e) => setWord(e.target.value)} type="text" name="word" id="word" value={word} />
                             <button onClick={handleWord} disabled={isUploading} className="hover:opacity-70 active:opacity-50 flex items-center justify-end p-3 bg-blue-600 w-fit h-full ">
                                 {
                                     isUploading ? <ImSpinner6 className=" animate-spin text-white" size={16} /> : <AiOutlinePlus className=" text-white" size={16} />
