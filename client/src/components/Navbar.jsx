@@ -13,7 +13,7 @@ import { LiaHandsHelpingSolid } from 'react-icons/lia'
 import { ImSpinner6 } from 'react-icons/im'
 import { useContext } from 'react';
 import { AskButtonContext } from '../context/AskButtonContext'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import {toast} from 'react-hot-toast'
 const links = [
     {
@@ -129,6 +129,20 @@ const Navbar = () => {
         }
 
     }
+    const { isLoading, error, data, refetch } = useQuery({
+        queryKey: ['question._id'],
+        queryFn: () => newRequest.get(`/questions?search=exams`).then((res) => {
+          return res.data
+        })
+    
+      })
+      console.log(data)
+    const [searchQuery, setSearchQuery] = useState("");
+    const [isSearch, setIsSearch] = useState(false);
+    const handleSearch = (e)=>{
+        setIsSearch(true)
+        setSearchQuery(e.target.value)
+    }
     return (
         <div className={` ${location.pathname.includes("/admin") ? "hidden":"flex"}  z-[100] fixed top-0 left-0 h-16 w-full  bg-white  justify-center  shadow-md`}>
             <div className=" relative px-2 w-full h-full max-w-[1200px] flex gap-4 items-center justify-between">
@@ -141,7 +155,7 @@ const Navbar = () => {
 
                     <div className="flex gap-2 text-gray-400 bg-gray-200 items-center px-2 py-1 rounded-lg">
                         <BiSearch className=' text-[22px]' />
-                        <input className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder={user?.username} />
+                        <input value={searchQuery} onChange={handleSearch} className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder="Search by title" />
                     </div>
                 </div>
                 <div className='flex items-center gap-2'>
