@@ -15,7 +15,7 @@ import AddAnswer from "../../components/AddAnswer"
 import PostSkeleton from "../../components/PostSkeleton"
 import EditPost from "../../components/EditPost"
 import Filter from 'bad-words'
-
+import {toast} from 'react-hot-toast'
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
   const { isLoading:isBWLoading, error:BWError, data: badwords } = useQuery({
@@ -173,7 +173,7 @@ const Post = () => {
                           </div>
                           <div onClick={() => {
                             deletePost.mutate(data._id)
-                            alert("Question Deleted")
+                            toast.success("Question Deleted")
                             navigate('/')
                           }} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                             <MdOutlineDeleteOutline className=" text-red-600" size={20} />

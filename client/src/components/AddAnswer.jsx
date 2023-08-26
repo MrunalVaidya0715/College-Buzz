@@ -6,7 +6,8 @@ import { format, formatDistanceToNow } from "date-fns";
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ImSpinner6 } from "react-icons/im";
-import Filter from 'bad-words'
+import Filter from 'bad-words';
+import {toast} from 'react-hot-toast'
 const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"));
     const navigate = useNavigate();
@@ -42,11 +43,12 @@ const AddAnswer = ({ handleCloseAnswer, setIsAnswer, data }) => {
         {
             onSuccess: () => {
                 queryClient.invalidateQueries("answers");
-                alert("Answer Uploaded");
+                toast.success("Answered Successfully")
                 setIsAnswer(false);
             },
             onError: (error) => {
                 console.error("Upload error:", error);
+                toast.error(error)
             },
         }
     );

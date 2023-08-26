@@ -6,6 +6,7 @@ import 'react-quill/dist/quill.snow.css';
 import { useParams } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import {toast} from 'react-hot-toast'
 const EditPost = ({ setIsEdit, data }) => {
     const { id } = useParams()
     const [description, setDescription] = useState('');
@@ -76,7 +77,7 @@ const EditPost = ({ setIsEdit, data }) => {
         try {
             await editMutation.mutateAsync(id);
             setUploading(false);
-            alert("Question Updated");
+            toast.success("Question Updated");
             setIsEdit(false);
         } catch (error) {
             setUploading(false)

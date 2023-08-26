@@ -4,6 +4,7 @@ import { ImSpinner6, ImSpinner9 } from 'react-icons/im'
 import { FaInfoCircle } from 'react-icons/fa'
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {toast} from 'react-hot-toast'
 const Badwords = () => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
    
@@ -29,7 +30,7 @@ const Badwords = () => {
             setisUploading(true)
             await newRequest.post('badwords', { word })
             setisUploading(false)
-            alert("Word Added for Filtering")
+            toast.success("Word Added for Filtering")
             setWord("")
             
         } catch (error) {
@@ -44,6 +45,7 @@ const Badwords = () => {
     }, {
         onSuccess: () => {
             queryClient.invalidateQueries("badwords");
+            toast.success("Word Removed")
         },
     });
     return (

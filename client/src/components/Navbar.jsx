@@ -14,7 +14,7 @@ import { ImSpinner6 } from 'react-icons/im'
 import { useContext } from 'react';
 import { AskButtonContext } from '../context/AskButtonContext'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-
+import {toast} from 'react-hot-toast'
 const links = [
     {
         id: 1,
@@ -55,9 +55,10 @@ const Navbar = () => {
             localStorage.setItem('currentUser', null)
             navigate('/')
             window.location.reload(true)
+            
         } catch (error) {
             setErr(err.response.data)
-            alert(error)
+            toast.error(error)
         }
     }
     const [description, setDescription] = useState('');

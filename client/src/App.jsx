@@ -23,7 +23,7 @@ import AdminPosts from './pages/admin/adminPosts/AdminPosts';
 import Dashboard from './pages/admin/dashboard/Dashboard';
 import ReportedPosts from './pages/admin/reportedPosts/ReportedPosts';
 import Users from './pages/admin/users/Users';
-
+import { Toaster } from 'react-hot-toast';
 
 const useAuth = () => {
   const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -80,6 +80,7 @@ function App() {
             <ReactQueryDevtools initialIsOpen={false} />
           </QueryClientProvider>
         </div>
+        <Toaster position="top-center" reverseOrder={false}/>
       </AskButtonContext.Provider>
 
     </Router>
