@@ -147,7 +147,7 @@ const Navbar = () => {
                     {
                         user ? (
                             <Link to={`/profile/${user._id}`}>
-                                <img className=" rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src={user?.profileImg || "/assets/noProfile.png"} alt="PI" />
+                                <img className="rounded-full w-9 min-w-9 h-9 min-h-9 object-cover  object-center" src={user?.profileImg || "/assets/noProfile.png"} alt="PI" />
                             </Link>
                         ) : (
                             <>
