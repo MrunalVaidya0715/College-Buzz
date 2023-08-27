@@ -19,19 +19,8 @@ const Answered = ({ userId, userInfo, queTitle, questionId, desc, upvote, downvo
                         <h1 className=" font-bold text-lg tracking-wide">{queTitle}</h1>
                     </div>
                 </div>
-                <div className="flex w-full gap-1 items-center">
-                    <img className=" w-8 h-8 object-cover object-center rounded-full" src={user?.profileImg || "/assets/noProfile.png"} alt={questionId.userInfo.username} />
-                    <div className=' overflow-x-auto flex flex-wrap items-center gap-1'>
-                        <p className="flex items-center gap-1 text-gray-500 text-sm"><span className="hidden sm:block">answered by </span>
-                            <span className=" whitespace-nowrap font-semibold text-blue-500">
-                                {
-                                    user?._id === userId ? "You" : questionId.userInfo.username
-                                }
-                            </span>
-                        </p>
-                        <RxDotFilled className=" text-gray-500" size={16} />
-                        <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(createdAt))}</p>
-                    </div>
+                <div className="flex w-full gap-1 items-center justify-end">
+                <p className=" whitespace-nowrap text-sm">{formatDistanceToNow(new Date(createdAt))} ago</p>
                 </div>
                 <div className='p-2 rounded-md border-[1px] max-h-[200px] overflow-y-auto scrollbar-none'>
                     <div className=" text-gray-800 text-justify">
