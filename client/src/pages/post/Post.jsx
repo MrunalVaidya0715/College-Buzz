@@ -15,10 +15,10 @@ import AddAnswer from "../../components/AddAnswer"
 import PostSkeleton from "../../components/PostSkeleton"
 import EditPost from "../../components/EditPost"
 import Filter from 'bad-words'
-import {toast} from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
-  const { isLoading:isBWLoading, error:BWError, data: badwords } = useQuery({
+  const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
     queryKey: ["badwords"],
     queryFn: () =>
       newRequest.get(`badwords`).then((res) => {
@@ -26,22 +26,27 @@ const Post = () => {
       }),
   });
   const newBadWords = [];
-  if(!(isBWLoading || BWError)){
-    badwords.map((word)=>newBadWords.push(word.word))
+  if (!(isBWLoading || BWError)) {
+    badwords.map((word) => newBadWords.push(word.word))
   }
-  
+
   const filter = new Filter({ regex: /\*|\.|$/gi })
   filter.addWords(...newBadWords);
   const { id } = useParams()
+
   const navigate = useNavigate()
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["question"],
     queryFn: () =>
       newRequest.get(`/questions/single/${id}`).then((res) => {
         return res.data;
       }),
   });
+  useEffect(() => {
+    console.log("Changed")
+    refetch()
+  }, [id, refetch])
   const deletePost = useMutation((id) => {
     return newRequest.delete(`questions/${id}`);
   }, {
