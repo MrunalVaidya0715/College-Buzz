@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AiOutlineHome } from 'react-icons/ai'
 import { BiSearch } from 'react-icons/bi'
 import { MdOutlineExplore, MdOutlineLogout } from 'react-icons/md'
@@ -13,7 +13,8 @@ import { LiaHandsHelpingSolid } from 'react-icons/lia'
 import { ImSpinner6 } from 'react-icons/im'
 import { useContext } from 'react';
 import { AskButtonContext } from '../context/AskButtonContext'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import SearchContent from './SearchContent'
 
 const links = [
     {
@@ -76,8 +77,8 @@ const Navbar = () => {
     };
     const queryClient = useQueryClient();
     const addQuestion = useMutation(
-        async(question) => {
-            const res =  await newRequest.post(`questions`, question)
+        async (question) => {
+            const res = await newRequest.post(`questions`, question)
             return res;
         },
         {
@@ -128,8 +129,31 @@ const Navbar = () => {
         }
 
     }
+    
+    const [searchQuery, setSearchQuery] = useState(null)
+    const handleSearch = (e) => {
+        if(searchQuery === ""){
+            setSearchQuery(null);
+        }
+        setSearchQuery(e.target.value)
+    }
+    const { isLoading, error, data: dataSearch, refetch } = useQuery({
+        queryKey: ['search'],
+        queryFn: () => newRequest.get(`/questions?search=${searchQuery}`).then((res) => {
+            return res.data
+        })
+
+    })
+    useEffect(() => {
+        if (searchQuery === "") {
+            queryClient.setQueryData(['search'], null);
+        } else {
+            refetch(); 
+        }
+    }, [searchQuery, refetch, queryClient]);
+
     return (
-        <div className={` ${location.pathname.includes("/admin") ? "hidden":"flex"}  z-[100] fixed top-0 left-0 h-16 w-full  bg-white  justify-center  shadow-md`}>
+        <div className={` ${location.pathname.includes("/admin") ? "hidden" : "flex"}  z-[100] fixed top-0 left-0 h-16 w-full  bg-white  justify-center  shadow-md`}>
             <div className=" relative px-2 w-full h-full max-w-[1200px] flex gap-4 items-center justify-between">
                 <div>
                     <Link to='/'>
@@ -138,11 +162,16 @@ const Navbar = () => {
                 </div>
                 <div className='hidden md:flex '>
 
-                    <div className="flex gap-2 text-gray-400 bg-gray-200 items-center px-2 py-1 rounded-lg">
+                    <div className=" relative flex gap-2 text-gray-400 bg-gray-200 items-center px-2 py-1 rounded-lg">
                         <BiSearch className=' text-[22px]' />
-                        <input className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder={user?.username} />
+                        <input value={searchQuery ? searchQuery : ""} onChange={handleSearch} className='text-black w-full bg-transparent outline-none p-1 rounded-md' type="text" placeholder="Search by title" />
+
                     </div>
+
                 </div>
+                {
+                    searchQuery && <SearchContent isLoading={isLoading} error={error} data={dataSearch} setSearchQuery={setSearchQuery} />
+                }
                 <div className='flex items-center gap-2'>
                     {
                         user ? (
@@ -174,7 +203,7 @@ const Navbar = () => {
                     options && (
                         <div className='lg:hidden mr-2 absolute bg-white/70 backdrop-blur-md rounded-lg right-0 w-fit top-20 p-4 border-[1px] border-gray-300'>
                             <div className='flex flex-col gap-2 w-full'>
-                                <input className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search for Topics' />
+                                <input  value={searchQuery ? searchQuery : ""} onChange={handleSearch} className='md:hidden text-black w-full border-[1px] border-gray-300 bg-transparent outline-none p-1 rounded-md' type="text" placeholder='Search by Title' />
                                 {
                                     !user && (
                                         <Link className=' w-full' to='/login'>
