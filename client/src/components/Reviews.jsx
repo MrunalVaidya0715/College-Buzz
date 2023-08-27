@@ -4,6 +4,7 @@ import newRequest from "../../utils/newRequest"
 import { useParams } from "react-router-dom"
 import {ImSpinner9} from 'react-icons/im'
 import Filter from 'bad-words'
+import { useEffect } from "react"
 const Reviews = () => {
   const { id } = useParams();
   const { isLoading, error, data, refetch } = useQuery({
@@ -13,6 +14,9 @@ const Reviews = () => {
     })
 
   })
+  useEffect(() => {
+    refetch()
+  }, [id, refetch])
   const { isLoading:isBWLoading, error:BWError, data: badwords } = useQuery({
     queryKey: ["badwords"],
     queryFn: () =>
