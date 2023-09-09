@@ -1,6 +1,8 @@
+import UserLayout from "../../../components/admin/UserLayout"
+
 const Users = () => {
   return (
-    <div>Users</div>
+    <UserLayout/>
   )
 }
 
