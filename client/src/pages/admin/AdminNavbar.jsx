@@ -58,7 +58,7 @@ const AdminNavbar = () => {
     }
 
     return (
-        <div className="z-[100] top-0 left-0 h-16 w-full">
+        <div className="fixed z-[100] top-0 left-0 h-16 w-full">
             <div className=" flex px-2 h-full w-full items-center justify-between  bg-white border-b-[1px] border-gray-200">
                 {/**Profile Img */}
                 <div>
