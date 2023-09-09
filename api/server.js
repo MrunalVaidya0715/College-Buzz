@@ -9,6 +9,7 @@ import userRoute from './routes/user.route.js'
 import questionRoute from './routes/question.route.js'
 import answerRoute from './routes/answer.route.js'
 import badwordRoute from './routes/badword.route.js'
+import adminRoute from './routes/admin.route.js'
 
 const app = express()
 dotenv.config()
@@ -35,6 +36,7 @@ app.use('/api/users', userRoute)
 app.use('/api/questions', questionRoute)
 app.use('/api/answers', answerRoute)
 app.use('/api/badwords', badwordRoute)
+app.use('/api/admin', adminRoute)
 
 
 app.use('/about', (req,res)=>{
