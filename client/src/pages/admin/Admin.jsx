@@ -16,7 +16,7 @@ const Admin = () => {
     };
   }, []);
   return (
-    <div className="w-full min-h-screen bg-blue-50 flex justify-center">
+    <div className="w-full min-h-screen max-h-screen bg-blue-50 flex justify-center">
       <div className={`flex flex-1 ${isMobile ? "flex-col" : "flex-row"}`}>
         {
           isMobile ? <AdminNavbar /> : <AdminSidebar />
