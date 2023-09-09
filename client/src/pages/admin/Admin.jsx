@@ -21,7 +21,7 @@ const Admin = () => {
         {
           isMobile ? <AdminNavbar /> : <AdminSidebar />
         }
-        <div className="flex-1 border-2 overflow-y-auto scrollbar-none h-full w-full flex flex-col  p-2 scroll-smooth">
+        <div className="flex-1  overflow-y-auto scrollbar-none h-full w-full flex flex-col  p-2 scroll-smooth">
           <Outlet />
         </div>
 
