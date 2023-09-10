@@ -3,18 +3,17 @@ import { formatDistanceToNow } from 'date-fns'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import newRequest from '../../../../utils/newRequest'
-import Feed from '../../../components/Feed'
 import Answered from '../../../components/Answered'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { ImSpinner9 } from 'react-icons/im'
-import Filter from 'bad-words'
+import FeedAdmin from '../../../components/admin/FeedAdmin'
+import AnsweredAdmin from '../../../components/admin/AnsweredAdmin'
 const UserInfo = () => {
     const [section, setSection] = useState("question")
     const handleSection = (option) => {
         setSection(option)
     }
-    const user = JSON.parse(localStorage.getItem("currentUser"))
 
     const { userId } = useParams()
     const { isLoading: isUserLoading, error: userError, data: userData } = useQuery({
@@ -38,19 +37,7 @@ const UserInfo = () => {
                 return res.data;
             }),
     });
-    const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
-        queryKey: ["badwords"],
-        queryFn: () =>
-            newRequest.get(`badwords`).then((res) => {
-                return res.data;
-            }),
-    });
-    const newBadWords = [];
-    if (!(isBWLoading || BWError)) {
-        badwords.map((word) => newBadWords.push(word.word))
-    }
-    const filter = new Filter({ regex: /\*|\.|$/gi })
-    filter.addWords(...newBadWords);
+    
 
     return (
         <div className=" self-center flex flex-col items-center w-full max-w-[800px] h-full ">
@@ -121,7 +108,7 @@ const UserInfo = () => {
                                         </div>
                                     ) :
                                         quesData.map((feed) => (
-                                            <Feed key={feed._id} {...feed} title={filter.clean(feed.title)} desc={filter.clean(feed.desc)} />
+                                            <FeedAdmin key={feed._id} {...feed} title={feed.title} desc={feed.desc} />
                                         ))
                         }
                     </div>
@@ -137,7 +124,7 @@ const UserInfo = () => {
                                         </div>
                                     ) :
                                         ansData.map((ans) => (
-                                            <Answered key={ans._id} {...ans} queTitle={filter.clean(ans.questionId.title)} desc={filter.clean(ans.desc)} />
+                                            <AnsweredAdmin key={ans._id} {...ans} queTitle={ans.questionId.title} desc={ans.desc} />
                                         ))
                         }
                     </div>
