@@ -32,10 +32,10 @@ const FeedAdmin = ({ _id, title, desc, category, createdAt, userInfo: pstby, upv
     
     const queryClient = useQueryClient();
     const deletePost = useMutation((id) => {
-        return newRequest.delete(`questions/${id}`);
+        return newRequest.delete(`admin/posts/${id}`);
     }, {
         onSuccess: () => {
-            queryClient.invalidateQueries("question");
+            queryClient.invalidateQueries("adminPosts");
             
         },
     });

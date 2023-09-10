@@ -8,12 +8,13 @@ import FilterSortAdmin from "../../../components/admin/FilterSortAdmin";
 import FeedAdmin from "../../../components/admin/FeedAdmin";
 const AdminPosts = () => {
   const { isLoading, error, data, refetch } = useQuery({
-    queryKey: ['question._id'],
-    queryFn: () => newRequest.get(`/questions?category=${cat}&sort=${sort}`).then((res) => {
+    queryKey: ['adminPosts'],
+    queryFn: () => newRequest.get(`/admin/posts?category=${cat}&sort=${sort}`).then((res) => {
       return res.data
     })
 
   })
+ 
   
   const navigate = useNavigate();
   const location = useLocation();

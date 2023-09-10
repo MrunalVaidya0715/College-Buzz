@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import Question from "../models/question.model.js";
 import Answer from "../models/answer.model.js";
+import mongoose from "mongoose";
 export const getUsers = async (req, res, next) => {
   try {
     const users = await User.find();
@@ -10,9 +11,6 @@ export const getUsers = async (req, res, next) => {
   }
 };
 
-export const getPosts = async (req, res, next) => {
-  res.status(200).send("Hello2");
-};
 
 export const getAdminQuestions = async (req, res, next) => {
   try {
