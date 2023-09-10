@@ -24,6 +24,7 @@ import Dashboard from './pages/admin/dashboard/Dashboard';
 import ReportedPosts from './pages/admin/reportedPosts/ReportedPosts';
 import Users from './pages/admin/users/Users';
 import { Toaster } from 'react-hot-toast';
+import UserInfo from './pages/admin/users/UserInfo';
 
 const useAuth = () => {
   const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -69,6 +70,7 @@ function App() {
                     <Route path='' element={<Dashboard />} />
                     <Route path='admin-posts' element={<AdminPosts />} />
                     <Route path='users' element={<Users />} />
+                    <Route path='users/:userId' element={<UserInfo/>}/>
                     <Route path='reported-posts' element={<ReportedPosts />} />
                   </Route>
                 </Route>
