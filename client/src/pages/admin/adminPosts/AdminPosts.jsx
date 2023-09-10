@@ -3,10 +3,9 @@ import FilterSort from "../../../components/FilterSort"
 import { useLocation, useNavigate } from "react-router-dom";
 import newRequest from "../../../../utils/newRequest";
 import { useQuery } from "@tanstack/react-query";
-import Filter from 'bad-words'
-import Feed from "../../../components/Feed";
 import FeedSkeleton from "../../../components/FeedSkeleton";
 import FilterSortAdmin from "../../../components/admin/FilterSortAdmin";
+import FeedAdmin from "../../../components/admin/FeedAdmin";
 const AdminPosts = () => {
   const { isLoading, error, data, refetch } = useQuery({
     queryKey: ['question._id'],
@@ -15,20 +14,7 @@ const AdminPosts = () => {
     })
 
   })
-  const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
-    queryKey: ["badwords"],
-    queryFn: () =>
-      newRequest.get(`badwords`).then((res) => {
-        return res.data;
-      }),
-  });
-  const newBadWords = [];
-  if (!(isBWLoading || BWError)) {
-    badwords.map((word) => newBadWords.push(word.word))
-  }
-
-  const filter = new Filter({ regex: /\*|\.|$/gi })
-  filter.addWords(...newBadWords);
+  
   const navigate = useNavigate();
   const location = useLocation();
   const params = new URLSearchParams(location.search);
@@ -73,7 +59,7 @@ const AdminPosts = () => {
                   </div>
                 ) :
                   data.map((feed) => (
-                    <Feed key={feed._id} refetch={refetch} {...feed} title={filter.clean(feed.title)} desc={filter.clean(feed.desc)} />
+                    <FeedAdmin key={feed._id} refetch={refetch} {...feed} title={feed.title} desc={feed.desc} />
                   ))
           }
         </div>
