@@ -26,18 +26,18 @@ import Users from './pages/admin/users/Users';
 import { Toaster } from 'react-hot-toast';
 import UserInfo from './pages/admin/users/UserInfo';
 
-const useAuth = () => {
+const useAuth = (allowedRoles) => {
   const user = JSON.parse(localStorage.getItem('currentUser'));
-  if (user) {
+  if (user && user.role && allowedRoles.includes(user.role)) {
     return true;
   }
   return false;
 };
 
-const ProtectedRoutes = () => {
-  const auth = useAuth();
+const ProtectedRoutes = ({ allowedRoles }) => {
+  const auth = useAuth(allowedRoles);
 
-  return auth ? <Outlet /> : <Navigate to="/login" />;
+  return auth ? <Outlet /> : <Navigate to="/" />;
 };
 
 function App() {
@@ -60,12 +60,12 @@ function App() {
                   <Route path='/explore' element={<Explore />} />
                   <Route path='/contribute' element={<Contribute />} />
                   <Route path='/posts/:id' element={<Post />} />
-                  <Route element={<ProtectedRoutes />}>
+                  <Route element={<ProtectedRoutes  allowedRoles={'user'} />}>
                     <Route path='/profile/:userId' element={<Profile />} />
                     <Route path='/my-questions/:userId' element={<MyQuestions />} />
                   </Route>
                 </Route>
-                <Route element={<ProtectedRoutes />}>
+                <Route element={<ProtectedRoutes allowedRoles={'admin'} />}>
                   <Route exact path='/admin' element={< Admin />}>
                     <Route path='' element={<Dashboard />} />
                     <Route path='admin-posts' element={<AdminPosts />} />
