@@ -1,6 +1,6 @@
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
-import { RiFlagLine } from 'react-icons/ri'
+import { RiFlagFill, RiFlagLine } from 'react-icons/ri'
 import { BiEditAlt } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { useEffect, useState } from "react"
@@ -30,6 +30,7 @@ const Post = () => {
     badwords.map((word) => newBadWords.push(word.word))
   }
 
+
   const filter = new Filter({ regex: /\*|\.|$/gi })
   filter.addWords(...newBadWords);
   const { id } = useParams()
@@ -43,6 +44,7 @@ const Post = () => {
         return res.data;
       }),
   });
+  console.log("Reportedby: ",data?.reportedBy," (",data?.report,")")
   useEffect(() => {
     console.log("Changed")
     refetch()
@@ -105,6 +107,7 @@ const Post = () => {
     }
   };
 
+
   const [vote, setVote] = useState(0);
 
   // Updating the vote state once the data is available or changes
@@ -114,6 +117,32 @@ const Post = () => {
       setVote(newVote);
     }
   }, [data]);
+
+  const reportMutation = useMutation((id) => newRequest.patch(`/questions/report/${id}`),
+    {
+      onMutate: () => { 
+        toast.success("Question Reported")
+      },
+      onError: (error) => {
+        console.error("Report error:", error);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("question");
+      },
+    }
+  );
+
+  const handleReport = async () => {
+    if (!user) {
+      navigate('/login')
+    }
+
+    try {
+      await reportMutation.mutateAsync(id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
 
@@ -186,9 +215,13 @@ const Post = () => {
                           </div>
                         </>
                       ) : (
-                        <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
-                          <RiFlagLine size={18} />
-                          <p>Report</p>
+                        <div onClick={handleReport} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                          {
+                            data.reportedBy.includes(user?._id) ? <RiFlagFill className=' text-red-500' size={18} /> : <RiFlagLine className=' text-gray-500' size={18} />
+                          }
+                          {
+                            data.reportedBy.includes(user?._id) ? "Unreport" : "Report"
+                          }
                         </div>
                       )
                     }

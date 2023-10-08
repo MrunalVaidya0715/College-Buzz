@@ -181,6 +181,8 @@ export const handleDownvote = async (req, res, next) => {
   }
 };
 
+
+
 export const getTopQuestions = async (req, res, next) => {
   try {
     const topQuestions = await Question.aggregate([
@@ -231,6 +233,32 @@ export const updateQuestion = async (req, res, next) => {
     res.status(200).send(updatedQuestion);
   } catch (error) {
     // Handle other errors
+    next(error);
+  }
+};
+
+export const handleReport = async (req, res, next) => {
+  const questionId = req.params.id;
+  const userId = req.userId;
+  try {
+    const question = await Question.findById(questionId);
+    // Check if the user's ID is already in the reportedBy array
+    if (question.reportedBy.includes(userId)) {
+      // If the user already reported, remove the user's ID from the array
+      question.reportedBy = question.reportedBy.filter(
+        (id) => id.toString() !== userId
+      );
+      question.report -= 1;
+    } else {
+      // If the user hasn't reported then add the user's ID to the array
+      question.reportedBy.push(userId);
+      question.report += 1;
+    }
+    // Save the updated question
+    await question.save();
+
+    res.status(200).send(question);
+  } catch (error) {
     next(error);
   }
 };
