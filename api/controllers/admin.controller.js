@@ -63,3 +63,13 @@ export const deleteAdminQuestion = async (req, res, next) => {
     next(err);
   }
 };
+
+export const getReportedPosts = async(req, res, next) =>{
+  try {
+    const reportedPosts = await Question.find({ report: { $gt: 0 } })
+    res.status(200).send(reportedPosts)
+    
+  } catch (error) {
+    next(error)
+  }
+}
