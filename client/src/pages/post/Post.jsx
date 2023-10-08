@@ -44,7 +44,7 @@ const Post = () => {
         return res.data;
       }),
   });
-  console.log("Reportedby: ",data?.reportedBy," (",data?.report,")")
+  
   useEffect(() => {
     console.log("Changed")
     refetch()
@@ -118,6 +118,7 @@ const Post = () => {
     }
   }, [data]);
 
+
   const reportMutation = useMutation((id) => newRequest.patch(`/questions/report/${id}`),
     {
       onMutate: () => { 
@@ -135,6 +136,7 @@ const Post = () => {
       },
     }
   );
+  
 
   const handleReport = async () => {
     if (!user) {
@@ -173,7 +175,7 @@ const Post = () => {
       {
         isLoading ? <PostSkeleton /> :
           error ? (<h2 className=" text-center">Something went wrong</h2>) : (
-            <div className=" relative px-4 py-2 bg-white border-[1px] shadow-sm flex flex-col w-full gap-2">
+            <div className={`relative px-4 py-2 ${data.reportedBy.includes(user?._id)? "border-red-400 bg-red-100":"bg-white"}  border-[1px]  shadow-sm flex flex-col w-full gap-2`}>
               {isOption && <div onClick={() => setisOption(false)} className=" absolute top-0 right-0 w-full h-full" />}
               {/**User, time */}
               <div className="flex w-full items-center justify-between">
