@@ -121,7 +121,11 @@ const Post = () => {
   const reportMutation = useMutation((id) => newRequest.patch(`/questions/report/${id}`),
     {
       onMutate: () => { 
-        toast.success("Question Reported")
+        if(data.reportedBy.includes(user?._id)){
+          toast.success("Question Unreported")
+        }else{
+          toast.success("Question Reported")
+        }
       },
       onError: (error) => {
         console.error("Report error:", error);
