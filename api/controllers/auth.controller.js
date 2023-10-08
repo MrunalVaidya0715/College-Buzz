@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 
 export const handleGoogleLogin = async (req, res, next) => {
   try {
-    const { email, username, profileImg, exp } = req.body; 
+    const { email, username, profileImg, exp, role } = req.body; 
 
     let user = await User.findOne({ email });
 
@@ -22,6 +22,7 @@ export const handleGoogleLogin = async (req, res, next) => {
     const token = jwt.sign(
       {
         id: user._id,
+        role: user.role
       },
       process.env.JWT_KEY, {expiresIn: exp}
     );
