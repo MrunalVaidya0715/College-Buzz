@@ -3,10 +3,10 @@ import { ImSpinner6 } from "react-icons/im";
 import { IoClose } from "react-icons/io5"
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
-import { useParams } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import {toast} from 'react-hot-toast'
+import { toast } from 'react-hot-toast'
+import { useParams } from "react-router-dom";
 const EditPost = ({ setIsEdit, data }) => {
     const { id } = useParams()
     const [description, setDescription] = useState('');
@@ -17,8 +17,8 @@ const EditPost = ({ setIsEdit, data }) => {
 
     });
 
-    useEffect(() => {
 
+    useEffect(() => {
         setQuestion({
             title: data.title,
             desc: data.desc,
@@ -38,7 +38,7 @@ const EditPost = ({ setIsEdit, data }) => {
     };
     const queryClient = useQueryClient();
 
-    const editMutation = useMutation((id) => newRequest.patch(`questions/updatePost/${id}`,{...question}),
+    const editMutation = useMutation((id) => newRequest.patch(`questions/updatePost/${id}`, { ...question }),
         {
             onMutate: () => { },
             onError: (error) => {
@@ -83,12 +83,12 @@ const EditPost = ({ setIsEdit, data }) => {
             setUploading(false)
             setErr(error.response.data);
             console.error(error);
-            
+
         }
     };
 
 
-    
+
 
 
     return (
@@ -133,4 +133,4 @@ const EditPost = ({ setIsEdit, data }) => {
     )
 }
 
-export default EditPost
+export default EditPost;
