@@ -5,6 +5,7 @@ import { CgProfile } from 'react-icons/cg'
 import { LiaHandsHelpingSolid } from 'react-icons/lia'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import newRequest from '../../utils/newRequest'
+import {toast} from 'react-hot-toast'
 const links = [
     {
         id: 1,
@@ -38,7 +39,7 @@ const Sidebar = () => {
             navigate('/')
             window.location.reload(true)
         } catch (error) {
-            alert(error)
+            toast.error(error)
         }
     }
 

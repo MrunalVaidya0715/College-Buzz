@@ -10,6 +10,7 @@ import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
 import { BiEditAlt } from "react-icons/bi";
 import { MdOutlineDeleteOutline } from "react-icons/md";
+import {toast} from 'react-hot-toast'
 const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvote: dwn, downvotedBy, upvotedBy }) => {
     const user = JSON.parse(localStorage.getItem("currentUser"))
     const navigate = useNavigate()
@@ -110,7 +111,7 @@ const Review = ({ _id: id, desc, createdAt, userInfo: pstby, upvote: up, downvot
                                     </div>
                                     <div onClick={() => {
                                         deletePost.mutate(id)
-                                        alert("Answer Deleted")
+                                        toast.success("Answer Deleted")
                                     }} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                                         <MdOutlineDeleteOutline className=" text-red-600" size={20} />
                                         <p>Delete</p>

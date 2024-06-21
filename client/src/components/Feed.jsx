@@ -1,14 +1,32 @@
-import { BiCommentDetail, BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
+import { BiUpArrowAlt, BiDownArrowAlt } from 'react-icons/bi'
 import { RxDotFilled } from 'react-icons/rx'
 import { Link } from 'react-router-dom';
 import LinesEllipsis from 'react-lines-ellipsis';
-import parse from 'html-react-parser';
 import { formatDistanceToNow } from 'date-fns';
+
+const formatTimeAgo = (createdAt) => {
+    const secondsAgo = Math.floor((new Date() - new Date(createdAt)) / 1000);
+  
+    if (secondsAgo < 60) {
+      return `${secondsAgo}s ago`;
+    } else if (secondsAgo < 3600) {
+      const minutesAgo = Math.floor(secondsAgo / 60);
+      return `${minutesAgo}m ago`;
+    } else if (secondsAgo < 86400) {
+      const hoursAgo = Math.floor(secondsAgo / 3600);
+      return `${hoursAgo}h ago`;
+    } else {
+      return formatDistanceToNow(new Date(createdAt), { addSuffix: true });
+    }
+  };
+
 const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: up, downvote: dwn, cmt }) => {
-    const user =JSON.parse(localStorage.getItem("currentUser"))
+    const user = JSON.parse(localStorage.getItem("currentUser"))
     const vote = up - dwn;
-    const timeAgo = formatDistanceToNow(new Date(createdAt));
+    const timeAgo = formatTimeAgo(createdAt);
     const htmlToString = desc.replace(/<[^>]+>/g, '');
+
+    
     return (
         <Link to={`/posts/${_id}`}>
             <div className=" cursor-pointer flex p-2 w-full justify-start bg-white border-[1px] border-gray-100 shadow-sm hover:shadow-lg ease-in-out duration-300 transition-all">
@@ -64,25 +82,7 @@ const Feed = ({ _id, title, desc, category, createdAt, userInfo: pstby, upvote: 
                         </div>
 
                     </div>
-                    {/* <div className='mt-1 flex flex-wrap w-full  text-gray-500 items-center gap-1'>
-                        <div className='flex gap-1 items-center'>
-                            <p className='flex gap-1 items-center'><span>{up}</span><span className='hidden md:block'>upvotes</span><BiUpArrowAlt className='md:hidden' size={20} /></p>
-                        </div>
-                        <div className=' flex'>
-                            <RxDotFilled size={16} />
-                        </div>
-                        <div className='flex gap-1 items-center'>
-                            <p className='flex gap-1 items-center'><span>{dwn}</span><span className='hidden md:block'>downvotes</span><BiDownArrowAlt className='md:hidden' size={20} /></p>
-                        </div>
-                        <div className=' flex'>
-                            <RxDotFilled size={16} />
-                        </div>
-                        <div className=' flex items-center gap-1'>
-                            <BiCommentDetail className='' size={20} />
-                            <span>{cmt}</span>
-                        </div>
-                    </div> */}
-
+                    
                 </div>
             </div>
         </Link>

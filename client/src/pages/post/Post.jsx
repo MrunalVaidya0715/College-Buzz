@@ -1,7 +1,6 @@
-import { BiListPlus } from "react-icons/bi"
 import { BsThreeDotsVertical } from 'react-icons/bs'
 import { FaArrowUp, FaArrowDown } from 'react-icons/fa'
-import { RiFlagLine } from 'react-icons/ri'
+import { RiFlagFill, RiFlagLine } from 'react-icons/ri'
 import { BiEditAlt } from 'react-icons/bi'
 import { MdOutlineDeleteOutline } from 'react-icons/md'
 import { useEffect, useState } from "react"
@@ -15,19 +14,41 @@ import { formatDistanceToNow } from "date-fns"
 import AddAnswer from "../../components/AddAnswer"
 import PostSkeleton from "../../components/PostSkeleton"
 import EditPost from "../../components/EditPost"
+import Filter from 'bad-words'
+import { toast } from 'react-hot-toast'
 const Post = () => {
   const user = JSON.parse(localStorage.getItem("currentUser"))
+  const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
+    queryKey: ["badwords"],
+    queryFn: () =>
+      newRequest.get(`badwords`).then((res) => {
+        return res.data;
+      }),
+  });
+  const newBadWords = [];
+  if (!(isBWLoading || BWError)) {
+    badwords.map((word) => newBadWords.push(word.word))
+  }
 
+
+  const filter = new Filter({ regex: /\*|\.|$/gi })
+  filter.addWords(...newBadWords);
   const { id } = useParams()
+
   const navigate = useNavigate()
   const queryClient = useQueryClient();
-  const { isLoading, error, data } = useQuery({
+  const { isLoading, error, data, refetch } = useQuery({
     queryKey: ["question"],
     queryFn: () =>
       newRequest.get(`/questions/single/${id}`).then((res) => {
         return res.data;
       }),
   });
+  
+  useEffect(() => {
+    console.log("Changed")
+    refetch()
+  }, [id, refetch])
   const deletePost = useMutation((id) => {
     return newRequest.delete(`questions/${id}`);
   }, {
@@ -86,6 +107,7 @@ const Post = () => {
     }
   };
 
+
   const [vote, setVote] = useState(0);
 
   // Updating the vote state once the data is available or changes
@@ -95,6 +117,38 @@ const Post = () => {
       setVote(newVote);
     }
   }, [data]);
+
+
+  const reportMutation = useMutation((id) => newRequest.patch(`/questions/report/${id}`),
+    {
+      onMutate: () => { 
+        if(data.reportedBy.includes(user?._id)){
+          toast.success("Question Unreported")
+        }else{
+          toast.success("Question Reported")
+        }
+      },
+      onError: (error) => {
+        console.error("Report error:", error);
+      },
+      onSettled: () => {
+        queryClient.invalidateQueries("question");
+      },
+    }
+  );
+  
+
+  const handleReport = async () => {
+    if (!user) {
+      navigate('/login')
+    }
+
+    try {
+      await reportMutation.mutateAsync(id);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
 
 
@@ -111,7 +165,7 @@ const Post = () => {
   }
 
   const [isEdit, setIsEdit] = useState(false);
-  const handleEdit = () =>{
+  const handleEdit = () => {
     setIsEdit(prev => !prev)
   }
 
@@ -119,9 +173,9 @@ const Post = () => {
     <div className="flex flex-col w-full">
       {/**Post Details */}
       {
-        isLoading ? <PostSkeleton/> :
-          error ? (<h2 className=" text-center">Something went wrong</h2>) : ( 
-            <div className=" relative px-4 py-2 bg-white border-[1px] shadow-sm flex flex-col w-full gap-2">
+        isLoading ? <PostSkeleton /> :
+          error ? (<h2 className=" text-center">Something went wrong</h2>) : (
+            <div className={`relative px-4 py-2 ${data.reportedBy.includes(user?._id)? "border-red-400 bg-red-100":"bg-white"}  border-[1px]  shadow-sm flex flex-col w-full gap-2`}>
               {isOption && <div onClick={() => setisOption(false)} className=" absolute top-0 right-0 w-full h-full" />}
               {/**User, time */}
               <div className="flex w-full items-center justify-between">
@@ -159,7 +213,7 @@ const Post = () => {
                           </div>
                           <div onClick={() => {
                             deletePost.mutate(data._id)
-                            alert("Question Deleted")
+                            toast.success("Question Deleted")
                             navigate('/')
                           }} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
                             <MdOutlineDeleteOutline className=" text-red-600" size={20} />
@@ -167,9 +221,13 @@ const Post = () => {
                           </div>
                         </>
                       ) : (
-                        <div className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
-                          <RiFlagLine size={18} />
-                          <p>Report</p>
+                        <div onClick={handleReport} className="px-2 py-1 flex w-full cursor-pointer items-center gap-1 hover:bg-gray-100 active:bg-gray-50 transition-all ease-in-out duration-200">
+                          {
+                            data.reportedBy.includes(user?._id) ? <RiFlagFill className=' text-red-500' size={18} /> : <RiFlagLine className=' text-gray-500' size={18} />
+                          }
+                          {
+                            data.reportedBy.includes(user?._id) ? "Unreport" : "Report"
+                          }
                         </div>
                       )
                     }
@@ -178,7 +236,7 @@ const Post = () => {
                   </div>
                 </div>
                 {/* EditModal */}
-                { isEdit && <EditPost setIsEdit={setIsEdit} data={data}/>}
+                {isEdit && <EditPost setIsEdit={setIsEdit} data={data} />}
               </div>
               {/* Category */}
               <div className='rounded-full border-[1px] border-orange-600 w-fit px-4 py-1 bg-orange-400'>
@@ -186,12 +244,12 @@ const Post = () => {
               </div>
               {/* Title */}
               <div className="">
-                <h1 className=" font-bold text-lg tracking-wide">{data.title}</h1>
+                <h1 className=" font-bold text-lg tracking-wide">{filter.clean(data.title)}</h1>
               </div>
               {/* Desc */}
               <div className='p-2 rounded-md border-[1px]'>
                 <div className=" text-gray-800 text-justify">
-                  {parser(data.desc)}
+                  {parser(filter.clean(data.desc))}
                 </div>
               </div>
               {/*Actions */}
@@ -210,13 +268,13 @@ const Post = () => {
                 {
                   user ? (
                     <div onClick={handleAnswer} className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
-                      <BiListPlus className='' size={22} />
+
                       <p className=" font-semibold">Answer</p>
                     </div>
                   ) : (
                     <Link to="/login">
                       <div className=' cursor-pointer border-[1px]   border-gray-300 hover:shadow-md py-1 px-2 rounded-md flex items-center gap-1 bg-gradient-to-br from-gray-100 to-gray-300 transition-all ease-in-out duration-200'>
-                        <BiListPlus className='' size={22} />
+
                         <p className=" font-semibold">Answer</p>
                       </div>
                     </Link>

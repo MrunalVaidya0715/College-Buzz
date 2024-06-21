@@ -43,6 +43,15 @@ const questionSchema = new Schema(
         ref: 'User' 
       }
     ],
+    report: {
+      type: Number,
+      default: 0,
+    },
+    reportedBy: [
+      { type: mongoose.Schema.Types.ObjectId, 
+        ref: 'User' 
+      }
+    ],
     answers: [{
       type: Schema.Types.ObjectId,
       ref: 'Answer',

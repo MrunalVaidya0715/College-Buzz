@@ -8,6 +8,7 @@ import Answered from '../../components/Answered'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { ImSpinner9 } from 'react-icons/im'
+import Filter from 'bad-words'
 const Profile = () => {
     const [section, setSection] = useState("question")
     const handleSection = (option) => {
@@ -37,6 +38,19 @@ const Profile = () => {
                 return res.data;
             }),
     });
+    const { isLoading: isBWLoading, error: BWError, data: badwords } = useQuery({
+        queryKey: ["badwords"],
+        queryFn: () =>
+          newRequest.get(`badwords`).then((res) => {
+            return res.data;
+          }),
+      });
+      const newBadWords = [];
+      if (!(isBWLoading || BWError)) {
+        badwords.map((word) => newBadWords.push(word.word))
+      }
+      const filter = new Filter({ regex: /\*|\.|$/gi })
+      filter.addWords(...newBadWords);
 
     return (
         <div className=" flex flex-col items-center w-full h-full ">
@@ -105,7 +119,7 @@ const Profile = () => {
                                         </div>
                                     ) :
                                         quesData.map((feed) => (
-                                            <Feed key={feed._id} {...feed} />
+                                            <Feed key={feed._id} {...feed} title={filter.clean(feed.title)} desc={filter.clean(feed.desc)} />
                                         ))
                         }
                     </div>
@@ -121,7 +135,7 @@ const Profile = () => {
                                         </div>
                                     ) :
                                         ansData.map((ans) => (
-                                            <Answered key={ans._id} {...ans} />
+                                            <Answered key={ans._id} {...ans} queTitle = {filter.clean(ans.questionId.title)}  desc={filter.clean(ans.desc)} />
                                         ))
                         }
                     </div>

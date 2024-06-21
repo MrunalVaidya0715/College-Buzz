@@ -6,7 +6,8 @@ export const verifyToken = (req, res, next) => {
 
   jwt.verify(token, process.env.JWT_KEY, async(err, payload)=>{
     if (err) return next(createError(403,"Token is Invalid"))
-    req.userId = payload.id
+    req.userId = payload.id,
+    req.role = payload.role
     next()
 })
 };
