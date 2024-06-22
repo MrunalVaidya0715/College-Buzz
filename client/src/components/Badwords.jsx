@@ -75,7 +75,9 @@ const Badwords = () => {
                         ) : BWError ? (
                             "-"
                         ) : badwords.length === 0 ? (
-                            "Empty List"
+                            <div className=" h-10 flex items-center">
+                                <p className=" text-gray-500">Empty List</p>
+                            </div>
                         ) : (
                             badwords.map((wd) => (
                                 <div className="flex border-b-[1px] border-black/50 py-2 px-3 w-full items-center justify-between" key={wd._id}>
