@@ -73,7 +73,9 @@ const Badwords = () => {
                         {isBWLoading ? (
                             <ImSpinner9 className="text-xl animate-spin text-blue-700" />
                         ) : BWError ? (
-                            "-"
+                            <div className=" h-10 flex items-center">
+                                <p className=" text-gray-500">-</p>
+                            </div>
                         ) : badwords.length === 0 ? (
                             <div className=" h-10 flex items-center">
                                 <p className=" text-gray-500">Empty List</p>
