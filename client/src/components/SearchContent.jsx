@@ -10,7 +10,7 @@ const SearchContent = ({ isLoading, error, data, setSearchQuery }) => {
         <>
             <div className='fixed top-[4.5rem] left-[50%] -translate-x-[50%] w-[80%] max-w-[500px] flex flex-col gap-2 items-center justify-start overflow-visible   '>
 
-                <div className="p-2 flex gap-2 w-full   max-h-[150px] bg-white items-center  justify-start flex-col rounded-lg border-[1px] border-gray-300 overflow-y-auto scrollbar-none">
+                <div className="p-2 flex gap-2 w-full   max-h-[200px] bg-white items-center  justify-start flex-col rounded-lg border-[1px] border-gray-300 overflow-y-auto scrollbar-none">
                     {
                         isLoading ? <ImSpinner9 className=" text-2xl animate-spin text-blue-700" /> :
                             error ? <p className="font-semibold">Something went wrong</p> :
